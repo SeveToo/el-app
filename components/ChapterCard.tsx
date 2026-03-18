@@ -20,30 +20,36 @@ const ChapterCard: React.FC<Props> = ({
   href,
 }) => {
   return (
-    <Card className="p-4">
-      <CardHeader>
-        <h3 className="text-lg font-semibold">{title}</h3>
+    <Card className="p-3 w-full">
+      <CardHeader className="pb-1">
+        <h3 className="text-base font-bold leading-tight">{title}</h3>
       </CardHeader>
-      <CardBody>
-        <p className="text-default-600 text-sm mb-4">
-          {subtitle || 'placeholder'}
-        </p>
-        <div className="mb-2">
-          <Progress value={Math.max(0, Math.min(100, progress))} />
-        </div>
-        <div className="text-xs text-default-500">
+      <CardBody className="py-2 gap-2">
+        {subtitle && (
+          <p className="text-default-500 text-xs">{subtitle}</p>
+        )}
+        <Progress
+          value={Math.max(0, Math.min(100, progress))}
+          size="sm"
+          aria-label="postep"
+        />
+        <div className="text-xs text-default-400">
           Postęp: {progress}%
         </div>
       </CardBody>
-      <CardFooter className="pt-3">
+      <CardFooter className="pt-2">
         {href ? (
-          <NextLink href={href}>
-            <Button variant="ghost" size="sm">
+          <NextLink href={href} className="w-full">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full font-semibold"
+            >
               Otwórz
             </Button>
           </NextLink>
         ) : (
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" className="w-full font-semibold">
             Otwórz
           </Button>
         )}

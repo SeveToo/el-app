@@ -90,8 +90,7 @@ export default function StudyLoop({ words }: { words: Word[] }) {
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4">
-      {/* Nagłówek i progres pętli */}
-      <div className="mb-12 space-y-4">
+      <div className="mb-8 space-y-4">
         <div className="flex justify-between items-center text-sm font-bold uppercase tracking-widest text-default-400">
           <span>
             Grupa {currentGroupIndex + 1} /{' '}
@@ -104,6 +103,26 @@ export default function StudyLoop({ words }: { words: Word[] }) {
       </div>
 
       <div className="flex flex-col gap-6">
+        {/* Pasek postępu etapów na dole */}
+        <div className="mt-16 flex justify-center gap-4 w-full max-w-md mx-auto">
+          {['flashcards', 'fast_review', 'matching', 'written'].map(
+            (s, idx) => (
+              <div
+                key={s}
+                className={`h-2 flex-1 rounded-full shadow-sm transition-all duration-500 ${
+                  [
+                    'flashcards',
+                    'fast_review',
+                    'matching',
+                    'written',
+                  ].indexOf(stage) >= idx
+                    ? 'bg-primary'
+                    : 'bg-default-200'
+                }`}
+              />
+            )
+          )}
+        </div>
         {stage === 'flashcards' && (
           <Flashcards
             words={currentGroup}
@@ -127,27 +146,6 @@ export default function StudyLoop({ words }: { words: Word[] }) {
             words={currentGroup}
             onComplete={handleStageComplete}
           />
-        )}
-      </div>
-
-      {/* Pasek postępu etapów na dole */}
-      <div className="mt-16 flex justify-center gap-4 w-full max-w-md mx-auto">
-        {['flashcards', 'fast_review', 'matching', 'written'].map(
-          (s, idx) => (
-            <div
-              key={s}
-              className={`h-2 flex-1 rounded-full shadow-sm transition-all duration-500 ${
-                [
-                  'flashcards',
-                  'fast_review',
-                  'matching',
-                  'written',
-                ].indexOf(stage) >= idx
-                  ? 'bg-primary'
-                  : 'bg-default-200'
-              }`}
-            />
-          )
         )}
       </div>
     </div>

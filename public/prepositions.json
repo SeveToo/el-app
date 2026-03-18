@@ -1,0 +1,83 @@
+[
+  {
+    "id": "above",
+    "en": "Above",
+    "pl": "Nad",
+    "en_example": "The bird is flying above the clouds.",
+    "pl_example": "Ptak leci nad chmurami.",
+    "image": "/prepositions/Above.jpg",
+    "status": 0
+  },
+  {
+    "id": "behind",
+    "en": "Behind",
+    "pl": "Za",
+    "en_example": "The rabbit is hiding behind the tree.",
+    "pl_example": "Królik chowa się za drzewem.",
+    "image": "/prepositions/Behind.jpg",
+    "status": 0
+  },
+  {
+    "id": "between",
+    "en": "Between",
+    "pl": "Pomiędzy",
+    "en_example": "The ball is between the two boxes.",
+    "pl_example": "Piłka jest pomiędzy dwoma pudełkami.",
+    "image": "/prepositions/Between.jpg",
+    "status": 0
+  },
+  {
+    "id": "in",
+    "en": "In",
+    "pl": "W",
+    "en_example": "The keys are in my pocket.",
+    "pl_example": "Klucze są w mojej kieszeni.",
+    "image": "/prepositions/In.jpg",
+    "status": 0
+  },
+  {
+    "id": "in_front_of",
+    "en": "In front of",
+    "pl": "Przed",
+    "en_example": "He is standing in front of the house.",
+    "pl_example": "On stoi przed domem.",
+    "image": "/prepositions/In_front_of.jpg",
+    "status": 0
+  },
+  {
+    "id": "near",
+    "en": "Near",
+    "pl": "Blisko",
+    "en_example": "The school is near my home.",
+    "pl_example": "Szkoła jest blisko mojego domu.",
+    "image": "/prepositions/Near.jpg",
+    "status": 0
+  },
+  {
+    "id": "next_to",
+    "en": "Next to",
+    "pl": "Obok",
+    "en_example": "Sit next to me.",
+    "pl_example": "Usiądź obok mnie.",
+    "image": "/prepositions/Next_to.jpg",
+    "status": 0
+  },
+  {
+    "id": "on",
+    "en": "On",
+    "pl": "Na",
+    "en_example": "The book is on the table.",
+    "pl_example": "Książka leży na stole.",
+    "image": "/prepositions/On.jpg",
+    "status": 0
+  },
+  {
+    "id": "under",
+    "en": "Under",
+    "pl": "Pod",
+    "en_example": "The cat is under the chair.",
+    "pl_example": "Kot jest pod krzesłem.",
+    "image": "/prepositions/Under.jpg",
+    "status": 0
+  }
+]

@@ -1,0 +1,155 @@
+[
+  {
+    "id": "bowl",
+    "en": "Bowl",
+    "pl": "Miska",
+    "en_example": "I put the cereal in a bowl.",
+    "pl_example": "Nasypałem płatki do miski.",
+    "image": "/kitchen_tools/bowl.jpg",
+    "status": 0
+  },
+  {
+    "id": "cup",
+    "en": "Cup",
+    "pl": "Filiżanka",
+    "en_example": "Would you like a cup of tea?",
+    "pl_example": "Czy chciałbyś filiżankę herbaty?",
+    "image": "/kitchen_tools/cup.jpg",
+    "status": 0
+  },
+  {
+    "id": "fork",
+    "en": "Fork",
+    "pl": "Widelec",
+    "en_example": "Use a fork to eat your salad.",
+    "pl_example": "Użyj widelca do zjedzenia sałatki.",
+    "image": "/kitchen_tools/fork.jpg",
+    "status": 0
+  },
+  {
+    "id": "frying_pan",
+    "en": "Frying Pan",
+    "pl": "Patelnia",
+    "en_example": "Fry the eggs in a frying pan.",
+    "pl_example": "Smaż jajka na patelni.",
+    "image": "/kitchen_tools/frying_pan.jpg",
+    "status": 0
+  },
+  {
+    "id": "glass",
+    "en": "Glass",
+    "pl": "Szklanka",
+    "en_example": "He drank a glass of water.",
+    "pl_example": "Wypił szklankę wody.",
+    "image": "/kitchen_tools/glass.jpg",
+    "status": 0
+  },
+  {
+    "id": "kettle",
+    "en": "Kettle",
+    "pl": "Czajnik",
+    "en_example": "The kettle is boiling.",
+    "pl_example": "Czajnik gotuje wodę.",
+    "image": "/kitchen_tools/kettle.jpg",
+    "status": 0
+  },
+  {
+    "id": "knife",
+    "en": "Knife",
+    "pl": "Nóż",
+    "en_example": "Be careful with that sharp knife.",
+    "pl_example": "Uważaj na ten ostry nóż.",
+    "image": "/kitchen_tools/knife.jpg",
+    "status": 0
+  },
+  {
+    "id": "ladle",
+    "en": "Ladle",
+    "pl": "Chochla",
+    "en_example": "Use a ladle to serve the soup.",
+    "pl_example": "Użyj chochli do podania zupy.",
+    "image": "/kitchen_tools/ladle.jpg",
+    "status": 0
+  },
+  {
+    "id": "mug",
+    "en": "Mug",
+    "pl": "Kubek",
+    "en_example": "I prefer a large mug for coffee.",
+    "pl_example": "Wolę duży kubek na kawę.",
+    "image": "/kitchen_tools/mug.jpg",
+    "status": 0
+  },
+  {
+    "id": "peeler",
+    "en": "Peeler",
+    "pl": "Obieraczka",
+    "en_example": "Use the peeler for the potatoes.",
+    "pl_example": "Użyj obieraczki do ziemniaków.",
+    "image": "/kitchen_tools/peeler.jpg",
+    "status": 0
+  },
+  {
+    "id": "plate",
+    "en": "Plate",
+    "pl": "Talerz",
+    "en_example": "Put the sandwich on a plate.",
+    "pl_example": "Połóż kanapkę na talerzu.",
+    "image": "/kitchen_tools/plate.jpg",
+    "status": 0
+  },
+  {
+    "id": "pot",
+    "en": "Pot",
+    "pl": "Garnek",
+    "en_example": "The soup is cooking in a large pot.",
+    "pl_example": "Zupa gotuje się w dużym garnku.",
+    "image": "/kitchen_tools/pot.jpg",
+    "status": 0
+  },
+  {
+    "id": "saucepan",
+    "en": "Saucepan",
+    "pl": "Rondel",
+    "en_example": "Heat the milk in a saucepan.",
+    "pl_example": "Podgrzej mleko w rondlu.",
+    "image": "/kitchen_tools/saucepan.jpg",
+    "status": 0
+  },
+  {
+    "id": "spatula",
+    "en": "Spatula",
+    "pl": "Łopatka",
+    "en_example": "Flip the pancakes with a spatula.",
+    "pl_example": "Odwróć naleśniki łopatką.",
+    "image": "/kitchen_tools/spatula.jpg",
+    "status": 0
+  },
+  {
+    "id": "spoon",
+    "en": "Spoon",
+    "pl": "Łyżka",
+    "en_example": "Eat your soup with a spoon.",
+    "pl_example": "Jedz zupę łyżką.",
+    "image": "/kitchen_tools/spoon.jpg",
+    "status": 0
+  },
+  {
+    "id": "tongs",
+    "en": "Tongs",
+    "pl": "Szczypce",
+    "en_example": "Use tongs to serve the salad.",
+    "pl_example": "Użyj szczypiec do podania sałatki.",
+    "image": "/kitchen_tools/tongs.jpg",
+    "status": 0
+  },
+  {
+    "id": "tray",
+    "en": "Tray",
+    "pl": "Taca",
+    "en_example": "The waiter carried the drinks on a tray.",
+    "pl_example": "Kelner niósł napoje na tacy.",
+    "image": "/kitchen_tools/tray.jpg",
+    "status": 0
+  }
+]

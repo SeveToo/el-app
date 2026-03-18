@@ -1,0 +1,137 @@
+[
+  {
+    "id": "artist",
+    "en": "Artist",
+    "pl": "Artysta",
+    "en_example": "The artist is painting a beautiful picture.",
+    "pl_example": "Artysta maluje piękny obraz.",
+    "image": "/jobs/Artist.jpg",
+    "status": 0
+  },
+  {
+    "id": "builder",
+    "en": "Builder",
+    "pl": "Budowniczy",
+    "en_example": "The builder is working on a new house.",
+    "pl_example": "Budowniczy pracuje nad nowym domem.",
+    "image": "/jobs/Builder.jpg",
+    "status": 0
+  },
+  {
+    "id": "chef",
+    "en": "Chef",
+    "pl": "Szef kuchni",
+    "en_example": "The chef prepares delicious meals.",
+    "pl_example": "Szef kuchni przygotowuje pyszne posiłki.",
+    "image": "/jobs/Chef.jpg",
+    "status": 0
+  },
+  {
+    "id": "cook",
+    "en": "Cook",
+    "pl": "Kucharz",
+    "en_example": "The cook is in the kitchen.",
+    "pl_example": "Kucharz jest w kuchni.",
+    "image": "/jobs/Cook.jpg",
+    "status": 0
+  },
+  {
+    "id": "doctor",
+    "en": "Doctor",
+    "pl": "Lekarz",
+    "en_example": "The doctor helps sick people.",
+    "pl_example": "Lekarz pomaga chorym ludziom.",
+    "image": "/jobs/Doctor.jpg",
+    "status": 0
+  },
+  {
+    "id": "farmer",
+    "en": "Farmer",
+    "pl": "Rolnik",
+    "en_example": "The farmer grows vegetables.",
+    "pl_example": "Rolnik uprawia warzywa.",
+    "image": "/jobs/Farmer.jpg",
+    "status": 0
+  },
+  {
+    "id": "firefighter",
+    "en": "Firefighter",
+    "pl": "Strażak",
+    "en_example": "The firefighter puts out fires.",
+    "pl_example": "Strażak gasi pożary.",
+    "image": "/jobs/Firefighter.jpg",
+    "status": 0
+  },
+  {
+    "id": "mechanic",
+    "en": "Mechanic",
+    "pl": "Mechanik",
+    "en_example": "The mechanic is fixing the car.",
+    "pl_example": "Mechanik naprawia samochód.",
+    "image": "/jobs/Mechanic.jpg",
+    "status": 0
+  },
+  {
+    "id": "nurse",
+    "en": "Nurse",
+    "pl": "Pielęgniarka",
+    "en_example": "The nurse works in a hospital.",
+    "pl_example": "Pielęgniarka pracuje w szpitalu.",
+    "image": "/jobs/Nurse.jpg",
+    "status": 0
+  },
+  {
+    "id": "pilot",
+    "en": "Pilot",
+    "pl": "Pilot",
+    "en_example": "The pilot flies the airplane.",
+    "pl_example": "Pilot lata samolotem.",
+    "image": "/jobs/Pilot.jpg",
+    "status": 0
+  },
+  {
+    "id": "police_officer",
+    "en": "Police Officer",
+    "pl": "Policjant",
+    "en_example": "The police officer keeps us safe.",
+    "pl_example": "Policjant dba o nasze bezpieczeństwo.",
+    "image": "/jobs/Police_Officer.jpg",
+    "status": 0
+  },
+  {
+    "id": "scientist",
+    "en": "Scientist",
+    "pl": "Naukowiec",
+    "en_example": "The scientist does experiments.",
+    "pl_example": "Naukowiec przeprowadza eksperymenty.",
+    "image": "/jobs/Scientist.jpg",
+    "status": 0
+  },
+  {
+    "id": "teacher",
+    "en": "Teacher",
+    "pl": "Nauczyciel",
+    "en_example": "The teacher explains the lesson.",
+    "pl_example": "Nauczyciel wyjaśnia lekcję.",
+    "image": "/jobs/Teacher.jpg",
+    "status": 0
+  },
+  {
+    "id": "postman",
+    "en": "Postman",
+    "pl": "Listonosz",
+    "en_example": "The postman delivers letters.",
+    "pl_example": "Listonosz dostarcza listy.",
+    "image": "/jobs/postman.jpg",
+    "status": 0
+  },
+  {
+    "id": "waiter",
+    "en": "Waiter",
+    "pl": "Kelner",
+    "en_example": "The waiter serves food.",
+    "pl_example": "Kelner serwuje jedzenie.",
+    "image": "/jobs/weater.jpg",
+    "status": 0
+  }
+]

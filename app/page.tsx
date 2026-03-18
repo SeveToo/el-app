@@ -11,24 +11,56 @@ const chapters = [
     title: 'Action Verbs',
     progress: 0,
     subject: 'english',
+    subtitle: 'Czasowniki czynnościowe',
+  },
+  {
+    id: 'jobs',
+    title: 'Jobs & Professions',
+    progress: 0,
+    subject: 'english',
+    subtitle: 'Zawody i profesje',
+  },
+  {
+    id: 'kitchen_tools',
+    title: 'Kitchen Tools',
+    progress: 0,
+    subject: 'english',
+    subtitle: 'Przybory kuchenne',
+  },
+  {
+    id: 'prepositions',
+    title: 'Prepositions of Place',
+    progress: 0,
+    subject: 'english',
+    subtitle: 'Przyimki miejsca',
+  },
+  {
+    id: 'weather',
+    title: 'Weather',
+    progress: 0,
+    subject: 'english',
+    subtitle: 'Pogoda',
   },
   {
     id: 1,
     title: 'Podstawy: Present Simple',
     progress: 20,
     subject: 'english',
+    subtitle: 'Czasy i słownictwo',
   },
   {
     id: 4,
     title: 'Matematyka: Ułamki',
     progress: 15,
     subject: 'math',
+    subtitle: 'Zadania i logika',
   },
   {
     id: 5,
     title: 'Matematyka: Potęgi',
     progress: 40,
     subject: 'math',
+    subtitle: 'Zadania i logika',
   },
 ]
 
@@ -41,28 +73,22 @@ function HomeContent() {
   )
 
   return (
-    <section className="py-8 md:py-10">
-      <div className="container mx-auto px-6">
-        <h1 className="text-3xl font-semibold mb-8 text-center uppercase tracking-widest text-primary">
+    <section className="py-6 md:py-10">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <h1 className="text-3xl font-semibold mb-6 text-center uppercase tracking-widest text-primary">
           {subjectParam === 'math' ? 'Matematyka' : 'Język Angielski'}
         </h1>
 
-        <div className="flex flex-col items-center gap-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-            {filteredChapters.map((c) => (
-              <ChapterCard
-                key={c.id}
-                href={`/chapters/${c.id}`}
-                progress={c.progress}
-                subtitle={
-                  c.subject === 'math'
-                    ? 'Zadania i logika'
-                    : 'Czasy i słownictwo'
-                }
-                title={c.title}
-              />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredChapters.map((c) => (
+            <ChapterCard
+              key={c.id}
+              href={`/chapters/${c.id}`}
+              progress={c.progress}
+              subtitle={c.subtitle}
+              title={c.title}
+            />
+          ))}
         </div>
       </div>
     </section>
@@ -81,4 +107,3 @@ export default function Home() {
     </Suspense>
   )
 }
-
