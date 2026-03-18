@@ -33,7 +33,7 @@ export default async function ChapterPage(props: any) {
     <section className="py-6 md:py-10 min-h-screen bg-background">
       <div className="container mx-auto px-4 max-w-4xl">
         {words.length > 0 ? (
-          <StudyLoop words={words} />
+        <StudyLoop words={words} chapterId={id} />
         ) : (
           <div className="flex flex-col items-center gap-6 text-center mt-20">
             <div className="text-center p-10 bg-card rounded-2xl border-2 border-dashed border-default-200 max-w-md">

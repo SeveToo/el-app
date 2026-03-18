@@ -11,6 +11,7 @@ type Props = {
   subtitle?: string
   progress?: number
   href?: string
+  completed?: boolean
 }
 
 const ChapterCard: React.FC<Props> = ({
@@ -18,11 +19,15 @@ const ChapterCard: React.FC<Props> = ({
   subtitle,
   progress = 0,
   href,
+  completed = false,
 }) => {
   return (
-    <Card className="p-3 w-full">
-      <CardHeader className="pb-1">
+    <Card className={`p-3 w-full transition-all duration-300 ${completed ? 'border-2 border-success/40 bg-success/5' : ''}`}>
+      <CardHeader className="pb-1 flex items-start justify-between gap-2">
         <h3 className="text-base font-bold leading-tight">{title}</h3>
+        {completed && (
+          <span className="text-success text-lg shrink-0">✅</span>
+        )}
       </CardHeader>
       <CardBody className="py-2 gap-2">
         {subtitle && (
@@ -31,21 +36,27 @@ const ChapterCard: React.FC<Props> = ({
         <Progress
           value={Math.max(0, Math.min(100, progress))}
           size="sm"
+          color={completed ? 'success' : 'primary'}
           aria-label="postep"
         />
         <div className="text-xs text-default-400">
-          Postęp: {progress}%
+          {completed ? (
+            <span className="text-success font-semibold">Ukończone 🎉</span>
+          ) : (
+            `Postęp: ${progress}%`
+          )}
         </div>
       </CardBody>
       <CardFooter className="pt-2">
         {href ? (
           <NextLink href={href} className="w-full">
             <Button
-              variant="ghost"
+              variant={completed ? 'flat' : 'ghost'}
+              color={completed ? 'success' : 'default'}
               size="sm"
               className="w-full font-semibold"
             >
-              Otwórz
+              {completed ? 'Powtórz' : 'Otwórz'}
             </Button>
           </NextLink>
         ) : (

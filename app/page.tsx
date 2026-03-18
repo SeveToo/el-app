@@ -1,64 +1,57 @@
 'use client'
 
 import * as React from 'react'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import ChapterCard from '@/components/ChapterCard'
+import { getAllProgress, calcPercent } from '@/lib/progress'
 
-const chapters = [
+const CHAPTERS = [
   {
     id: 'action_verbs',
     title: 'Action Verbs',
-    progress: 0,
     subject: 'english',
     subtitle: 'Czasowniki czynnościowe',
   },
   {
     id: 'jobs',
     title: 'Jobs & Professions',
-    progress: 0,
     subject: 'english',
     subtitle: 'Zawody i profesje',
   },
   {
     id: 'kitchen_tools',
     title: 'Kitchen Tools',
-    progress: 0,
     subject: 'english',
     subtitle: 'Przybory kuchenne',
   },
   {
     id: 'prepositions',
     title: 'Prepositions of Place',
-    progress: 0,
     subject: 'english',
     subtitle: 'Przyimki miejsca',
   },
   {
     id: 'weather',
     title: 'Weather',
-    progress: 0,
     subject: 'english',
     subtitle: 'Pogoda',
   },
   {
-    id: 1,
+    id: '1',
     title: 'Podstawy: Present Simple',
-    progress: 20,
     subject: 'english',
     subtitle: 'Czasy i słownictwo',
   },
   {
-    id: 4,
+    id: '4',
     title: 'Matematyka: Ułamki',
-    progress: 15,
     subject: 'math',
     subtitle: 'Zadania i logika',
   },
   {
-    id: 5,
+    id: '5',
     title: 'Matematyka: Potęgi',
-    progress: 40,
     subject: 'math',
     subtitle: 'Zadania i logika',
   },
@@ -68,9 +61,19 @@ function HomeContent() {
   const searchParams = useSearchParams()
   const subjectParam = searchParams.get('subject') || 'english'
 
-  const filteredChapters = chapters.filter(
-    (c) => c.subject === subjectParam
-  )
+  // Wczytaj postęp z localStorage (client-side)
+  const [progressMap, setProgressMap] = useState<Record<string, number>>({})
+
+  useEffect(() => {
+    const all = getAllProgress()
+    const pct: Record<string, number> = {}
+    for (const [id, p] of Object.entries(all)) {
+      pct[id] = calcPercent(p)
+    }
+    setProgressMap(pct)
+  }, [])
+
+  const filteredChapters = CHAPTERS.filter((c) => c.subject === subjectParam)
 
   return (
     <section className="py-6 md:py-10">
@@ -84,9 +87,10 @@ function HomeContent() {
             <ChapterCard
               key={c.id}
               href={`/chapters/${c.id}`}
-              progress={c.progress}
+              progress={progressMap[c.id] ?? 0}
               subtitle={c.subtitle}
               title={c.title}
+              completed={progressMap[c.id] === 100}
             />
           ))}
         </div>
@@ -102,7 +106,8 @@ export default function Home() {
         <div className="text-center py-20 font-bold uppercase tracking-widest animate-pulse">
           Ładowanie Centrum Nauki...
         </div>
-      }>
+      }
+    >
       <HomeContent />
     </Suspense>
   )

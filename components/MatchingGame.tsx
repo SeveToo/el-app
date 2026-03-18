@@ -87,13 +87,13 @@ export default function MatchingGame({ words, onComplete }: Props) {
       </div>
 
       {/* Legenda */}
-      <div className="flex gap-4 text-xs text-default-400 font-semibold uppercase tracking-widest w-full px-2">
+      <div className="flex gap-3 text-xs text-default-400 font-semibold uppercase tracking-widest w-full px-2">
         <span className="flex-1 text-center border-b-2 border-default-200 pb-1">📖 Słowa</span>
-        <span className="flex-1 text-center border-b-2 border-default-200 pb-1">🖼️ Obrazki</span>
+        <span className="flex-[2] text-center border-b-2 border-default-200 pb-1">🖼️ Obrazki</span>
       </div>
 
-      {/* Grid dopasowywania */}
-      <div className="grid grid-cols-2 gap-3 w-full px-2">
+      {/* Grid: 1 kolumna słów + 2 kolumny obrazków */}
+      <div className="grid grid-cols-3 gap-3 w-full px-2">
         {/* Kolumna słów */}
         <div className="flex flex-col gap-3">
           {shuffleWords.map((word) => (
@@ -101,7 +101,7 @@ export default function MatchingGame({ words, onComplete }: Props) {
               key={word.id}
               layout
               transition={{ duration: 0.3 }}
-              className={`h-14 sm:h-16 cursor-pointer rounded-2xl border-2 flex items-center justify-center font-black text-sm sm:text-base uppercase tracking-wider shadow-sm transition-all duration-200 ${getWordStyle(word.id)}`}
+              className={`h-14 sm:h-16 cursor-pointer rounded-2xl border-2 flex items-center justify-center font-black text-xs sm:text-sm uppercase tracking-wider shadow-sm transition-all duration-200 ${getWordStyle(word.id)}`}
               onClick={() => !matchedIds.includes(word.id) && setSelectedWord(word.id)}
             >
               {word.en}
@@ -109,20 +109,20 @@ export default function MatchingGame({ words, onComplete }: Props) {
           ))}
         </div>
 
-        {/* Kolumna obrazków */}
-        <div className="flex flex-col gap-3">
+        {/* 2 kolumny obrazków — każdy obrazek jest ~2× wyższy niż słowo */}
+        <div className="col-span-2 grid grid-cols-2 gap-3">
           {shuffleImages.map((word) => (
             <motion.button
               key={word.id}
               layout
               transition={{ duration: 0.3 }}
-              className={`h-14 sm:h-16 cursor-pointer rounded-2xl border-2 overflow-hidden shadow-sm transition-all duration-200 bg-white ${getImageStyle(word.id)}`}
+              className={`h-[6.5rem] sm:h-[8rem] cursor-pointer rounded-2xl border-2 overflow-hidden shadow-sm transition-all duration-200 bg-white ${getImageStyle(word.id)}`}
               onClick={() => !matchedIds.includes(word.id) && setSelectedImage(word.id)}
             >
               <img
                 src={word.image}
                 alt="match"
-                className="w-full h-full object-contain p-1"
+                className="w-full h-full object-contain p-1.5"
                 draggable={false}
               />
             </motion.button>

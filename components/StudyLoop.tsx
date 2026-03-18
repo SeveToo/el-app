@@ -8,6 +8,7 @@ import WrittenTest from '@/components/WrittenTest'
 import { Progress } from '@heroui/progress'
 import { Button } from '@heroui/button'
 import Link from 'next/link'
+import { saveProgress } from '@/lib/progress'
 
 interface Word {
   id: string
@@ -24,7 +25,13 @@ type Stage = 'flashcards' | 'fast_review' | 'matching' | 'written' | 'completed'
 const STAGES: Stage[] = ['flashcards', 'fast_review', 'matching', 'written']
 const WORDS_PER_LOOP = 10
 
-export default function StudyLoop({ words }: { words: Word[] }) {
+export default function StudyLoop({
+  words,
+  chapterId,
+}: {
+  words: Word[]
+  chapterId: string
+}) {
   const [allWords] = useState<Word[]>(words)
 
   // Indeks bieżącej "rundy" (grupy 10 słówek)
@@ -45,6 +52,17 @@ export default function StudyLoop({ words }: { words: Word[] }) {
   const [usedCount, setUsedCount] = useState(WORDS_PER_LOOP)
 
   const stageIndex = STAGES.indexOf(stage)
+
+  // ---------------------------------------------------------------------------
+  // Zapis postępu
+  // ---------------------------------------------------------------------------
+  const persistProgress = (learned: number, completed = false) => {
+    saveProgress(chapterId, {
+      learnedCount: learned,
+      totalWords: words.length,
+      completedAt: completed ? new Date().toISOString() : undefined,
+    })
+  }
 
   // ---------------------------------------------------------------------------
   // Zebranie błędów z etapu + przejście do następnego
@@ -81,8 +99,10 @@ export default function StudyLoop({ words }: { words: Word[] }) {
           ...newWords.slice(0, slotsForNew),
         ]
 
+        const newUsed = usedCount + newWords.slice(0, slotsForNew).length
+        persistProgress(newUsed)
         setCurrentGroup(shuffled(nextGroup))
-        setUsedCount(usedCount + newWords.slice(0, slotsForNew).length)
+        setUsedCount(newUsed)
         setRoundIndex(roundIndex + 1)
         setStage('flashcards')
       } else if (updatedErrors.length > 0) {
@@ -90,12 +110,14 @@ export default function StudyLoop({ words }: { words: Word[] }) {
         const errorWords = updatedErrors
           .map((id) => allWords.find((w) => w.id === id)!)
           .filter(Boolean)
+        persistProgress(allWords.length) // dotarliśmy do końca
         setCurrentGroup(shuffled(errorWords))
         setGlobalErrorIds([]) // reset błędów — ta runda je wyczyści
         setRoundIndex(roundIndex + 1)
         setStage('flashcards')
       } else {
         // Wszystko ukończone bez błędów
+        persistProgress(allWords.length, true)
         setStage('completed')
       }
     }
