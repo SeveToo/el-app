@@ -34,8 +34,13 @@ export default function Flashcards({ words, onComplete }: Props) {
   React.useEffect(() => {
     if (isFlipped && currentWord) {
       audioService.speak(currentWord.en)
+      if (currentWord.en_example) {
+        // Speak example with a tiny bit of queuing (natural queuing in Web Speech API)
+        audioService.speak(currentWord.en_example, { cancel: false })
+      }
     }
   }, [isFlipped, currentWord])
+
 
 
   const handleNext = (isKnown: boolean) => {

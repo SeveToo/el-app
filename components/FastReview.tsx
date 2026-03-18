@@ -32,8 +32,12 @@ export default function FastReview({ words, onComplete }: Props) {
   useEffect(() => {
     if (currentWord) {
       audioService.speak(currentWord.en)
+      if (currentWord.en_example) {
+        audioService.speak(currentWord.en_example, { cancel: false })
+      }
     }
   }, [currentIndex, currentWord])
+
 
   const handleAction = (isOk: boolean) => {
     const newErrorIds = !isOk ? [...errorIds, currentWord.id] : errorIds

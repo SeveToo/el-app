@@ -79,7 +79,9 @@ export default function WrittenTest({ words, onComplete }: Props) {
       const left = repeatLeft - 1
       setRepeatStatus('ok')
       audioService.playSuccess()
+      audioService.speak(currentWord.en) // Pronounce on every successful repeat
       setTimeout(() => {
+
 
         setRepeatInput('')
         setRepeatStatus('idle')

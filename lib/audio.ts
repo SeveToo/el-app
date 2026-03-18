@@ -17,11 +17,16 @@ class AudioService {
   /**
    * Pronounces the given text using the Web Speech API.
    */
-  speak(text: string, lang: string = 'en-US') {
+  speak(text: string, options: { lang?: string; cancel?: boolean } = {}) {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
+    const { lang = 'en-US', cancel = true } = options;
+
+    if (cancel) {
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+    }
+
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang;
