@@ -40,10 +40,13 @@ export default function SentenceFill({ words, onComplete }: Props) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
 
 
+  const [isPlRevealed, setIsPlRevealed] = useState(false)
+
   const currentWord = words[activeIndex]
 
   // Focus current input when activeIndex changes
   useEffect(() => {
+    setIsPlRevealed(false)
     if (!showHint) {
       inputRefs.current[activeIndex]?.focus()
     }
@@ -267,12 +270,26 @@ export default function SentenceFill({ words, onComplete }: Props) {
                 alt={currentWord.pl}
                 className="h-32 w-32 object-contain rounded-2xl bg-white p-2 shadow-sm"
               />
-              <div className="text-center">
-                <h2 className="text-2xl font-black text-primary uppercase tracking-tight flex items-center justify-center text-center">
-                  {renderPlExample(currentWord)}
-                </h2>
+              <div className="text-center w-full max-w-sm mx-auto">
+                <div 
+                  className="relative cursor-pointer group flex justify-center items-center py-2 min-h-[60px]"
+                  onClick={() => setIsPlRevealed(true)}
+                >
+                  <h2 className={`text-xl sm:text-2xl font-black text-primary uppercase tracking-tight flex items-center justify-center text-center transition-all duration-300 w-full ${!isPlRevealed ? 'blur-md opacity-30 select-none' : 'blur-0 opacity-100'}`}>
+                    {renderPlExample(currentWord)}
+                  </h2>
+                  
+                  {!isPlRevealed && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <span className="bg-background shadow-xl px-4 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest text-primary border-2 border-primary/20 transform group-hover:scale-105 group-active:scale-95 transition-all">
+                        👁️ Pokaż tłumaczenie
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-                <div className="flex items-center justify-center gap-2 mt-1">
+                <div className="flex items-center justify-center gap-2 mt-2">
+
                   <p className="text-xs font-bold text-default-400 uppercase tracking-widest">
                     Wpisz brakujące słowo:
                   </p>
