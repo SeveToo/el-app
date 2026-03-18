@@ -88,14 +88,29 @@ export default function FastReview({ words, onComplete }: Props) {
                 alt={currentWord.en}
                 className="w-full h-40 object-contain rounded-md"
               />
-              <div className="text-center space-y-1">
-                <p className="text-3xl font-black text-primary">
-                  {currentWord.en}
-                </p>
-                <p className="text-xl font-medium text-success">
-                  {currentWord.pl}
-                </p>
+              <div className="text-center space-y-3">
+                <div className="space-y-1">
+                  <p className="text-3xl font-black text-primary uppercase">
+                    {currentWord.en}
+                  </p>
+                  <p className="text-xl font-medium text-success uppercase">
+                    {currentWord.pl}
+                  </p>
+                </div>
+                {currentWord.en_example && (
+                  <div className="pt-2 border-t border-warning/10">
+                    <p className="text-sm font-bold text-primary italic">
+                      "{currentWord.en_example}"
+                    </p>
+                    {currentWord.pl_example && (
+                      <p className="text-[10px] font-medium text-default-400 mt-1 uppercase tracking-wider">
+                        {currentWord.pl_example}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
+
             </CardBody>
           </Card>
         </motion.div>
