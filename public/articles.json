@@ -1,0 +1,182 @@
+[
+  {
+    "id": "a_teacher",
+    "en": "A",
+    "pl": "przedrostek \"a\" (jakiś przed spółgłoską)",
+    "en_example": "I want to be a teacher.",
+    "pl_example": "Chcę być (jakimś) nauczycielem.",
+    "image": "/jobs/Teacher.jpg",
+    "status": 0
+  },
+  {
+    "id": "an_artist",
+    "en": "An",
+    "pl": "przedrostek \"an\" (jakiś przed samogłoską)",
+    "en_example": "She is an artist.",
+    "pl_example": "Ona jest artystką.",
+    "image": "/jobs/Artist.jpg",
+    "status": 0
+  },
+  {
+    "id": "the_sun",
+    "en": "The",
+    "pl": "przedrostek \"the\" (konkretny)",
+    "en_example": "Look at the sun.",
+    "pl_example": "Spójrz na słońce.",
+    "image": "/weather/Sunny.jpg",
+    "status": 0
+  },
+  {
+    "id": "at_home",
+    "en": "At",
+    "pl": "w (w konkretnym miejscu lub o czasie)",
+    "en_example": "I am at home right now.",
+    "pl_example": "Teraz jestem w domu.",
+    "image": "/action_verbs/Cook.jpg",
+    "status": 0
+  },
+  {
+    "id": "a_cup",
+    "en": "A",
+    "pl": "przedrostek \"a\"",
+    "en_example": "Give me a cup of water, please.",
+    "pl_example": "Daj mi kubek wody, proszę.",
+    "image": "/kitchen_tools/Cup.jpg",
+    "status": 0
+  },
+  {
+    "id": "an_astronaut",
+    "en": "An",
+    "pl": "przedrostek \"an\"",
+    "en_example": "He wants to be an astronaut.",
+    "pl_example": "On chce być astronautą.",
+    "image": "/jobs/Astronaut.jpg",
+    "status": 0
+  },
+  {
+    "id": "the_chef",
+    "en": "The",
+    "pl": "przedrostek \"the\"",
+    "en_example": "The chef cooks well.",
+    "pl_example": "Szef kuchni (ten konkretny) gotuje dobrze.",
+    "image": "/jobs/Chef.jpg",
+    "status": 0
+  },
+  {
+    "id": "at_night",
+    "en": "At",
+    "pl": "w nocy / o porze",
+    "en_example": "They sleep at night.",
+    "pl_example": "Oni śpią w nocy.",
+    "image": "/weather/Cloudy.jpg",
+    "status": 0
+  },
+  {
+    "id": "a_knife",
+    "en": "A",
+    "pl": "przedrostek \"a\"",
+    "en_example": "I need a knife to cut this.",
+    "pl_example": "Potrzebuję noża, by to przekroić.",
+    "image": "/kitchen_tools/Knife.jpg",
+    "status": 0
+  },
+  {
+    "id": "the_sky",
+    "en": "The",
+    "pl": "przedrostek \"the\"",
+    "en_example": "The sky is very blue today.",
+    "pl_example": "Niebo (to konkretne, jedyne) jest dziś bardzo niebieskie.",
+    "image": "/weather/Clear.jpg",
+    "status": 0
+  },
+  {
+    "id": "an_engine",
+    "en": "An",
+    "pl": "przedrostek \"an\"",
+    "en_example": "This car has an engine problem.",
+    "pl_example": "To auto ma problem z silnikiem.",
+    "image": "/action_verbs/Drive.jpg",
+    "status": 0
+  },
+  {
+    "id": "at_work",
+    "en": "At",
+    "pl": "w pracy",
+    "en_example": "The doctor is at work.",
+    "pl_example": "Lekarz jest w pracy.",
+    "image": "/jobs/Doctor.jpg",
+    "status": 0
+  },
+  {
+    "id": "a_bowl",
+    "en": "A",
+    "pl": "przedrostek \"a\"",
+    "en_example": "There is a bowl on the table.",
+    "pl_example": "Na stole leży (jakaś) miska.",
+    "image": "/kitchen_tools/Bowl.jpg",
+    "status": 0
+  },
+  {
+    "id": "the_moon",
+    "en": "The",
+    "pl": "przedrostek \"the\"",
+    "en_example": "Look at the moon.",
+    "pl_example": "Spójrz na księżyc.",
+    "image": "/action_verbs/Climb.jpg",
+    "status": 0
+  },
+  {
+    "id": "an_apple",
+    "en": "An",
+    "pl": "przedrostek \"an\"",
+    "en_example": "I eat an apple every day.",
+    "pl_example": "Piję jedno jabłko każdego dnia.",
+    "image": "/kitchen_tools/Plate.jpg",
+    "status": 0
+  },
+  {
+    "id": "at_school",
+    "en": "At",
+    "pl": "w szkole",
+    "en_example": "The teacher is at school.",
+    "pl_example": "Nauczyciel jest w szkole.",
+    "image": "/jobs/Teacher.jpg",
+    "status": 0
+  },
+  {
+    "id": "the_car",
+    "en": "The",
+    "pl": "przedrostek \"the\"",
+    "en_example": "He washes the car.",
+    "pl_example": "On myje ten samochód.",
+    "image": "/action_verbs/Drive.jpg",
+    "status": 0
+  },
+  {
+    "id": "at_seven",
+    "en": "At",
+    "pl": "o (godzinie)",
+    "en_example": "Wake up at seven o'clock.",
+    "pl_example": "Obudź się o siódmej (godzinie).",
+    "image": "/weather/Sunny.jpg",
+    "status": 0
+  },
+  {
+    "id": "a_bird",
+    "en": "A",
+    "pl": "przedrostek \"a\"",
+    "en_example": "A bird is flying.",
+    "pl_example": "Ptaszek (jakiś) sobie leci.",
+    "image": "/action_verbs/Fly.jpg",
+    "status": 0
+  },
+  {
+    "id": "the_end",
+    "en": "The",
+    "pl": "przedrostek \"the\"",
+    "en_example": "This is the end of the lesson.",
+    "pl_example": "To jest (ten) koniec lekcji.",
+    "image": "/action_verbs/Create.jpg",
+    "status": 0
+  }
+]

@@ -11,6 +11,8 @@ const JSON_LESSONS = [
   'kitchen_tools',
   'prepositions',
   'weather',
+  'articles',
+  'final_test',
 ]
 
 export default async function ChapterPage(props: { params: Promise<{ id: string }> }) {

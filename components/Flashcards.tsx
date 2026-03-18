@@ -129,11 +129,16 @@ export default function Flashcards({ words, onComplete }: Props) {
             {/* Przód karty (PL - najpierw po polsku) */}
             <Card className="absolute inset-0 backface-hidden flex items-center justify-center p-8 border-none bg-content1 shadow-2xl rounded-[2.5rem]">
               <CardBody className="flex flex-col items-center justify-center gap-6">
-                <img
-                  src={currentWord.image}
-                  alt={currentWord.pl}
-                  className="w-full max-h-[50%] object-contain rounded-2xl"
-                />
+                <div className="flex gap-4 items-center justify-center w-full max-h-[50%] flex-wrap">
+                  {currentWord.image.split(',').map((imgSrc, idx) => (
+                    <img
+                      key={idx}
+                      src={imgSrc.trim()}
+                      alt={currentWord.pl}
+                      className="max-h-32 md:max-h-40 object-contain rounded-2xl shadow-sm"
+                    />
+                  ))}
+                </div>
                 <div className="text-center space-y-4">
                   <h2 className="text-5xl font-black tracking-tighter text-primary uppercase">
                     {currentWord.pl}
@@ -148,17 +153,27 @@ export default function Flashcards({ words, onComplete }: Props) {
             {/* Tył karty (ANG - po kliknięciu) */}
             <Card className="absolute inset-0 backface-hidden rotate-y-180 flex items-center justify-center p-8 border-none bg-content1 shadow-2xl rounded-[2.5rem]">
               <CardBody className="flex flex-col items-center justify-center gap-6">
-                 <img
-                  src={currentWord.image}
-                  alt={currentWord.en}
-                  className="w-full max-h-[50%] object-contain rounded-2xl invisible"
-                />
+                 <div className="flex gap-4 items-center justify-center w-full max-h-[50%] invisible flex-wrap">
+                  {currentWord.image.split(',').map((imgSrc, idx) => (
+                    <img
+                      key={idx}
+                      src={imgSrc.trim()}
+                      alt={currentWord.en}
+                      className="max-h-32 md:max-h-40 object-contain rounded-2xl"
+                    />
+                  ))}
+                 </div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 gap-6">
-                   <img
-                    src={currentWord.image}
-                    alt={currentWord.en}
-                    className="w-full max-h-[50%] object-contain rounded-2xl"
-                  />
+                   <div className="flex gap-4 items-center justify-center w-full max-h-[50%] flex-wrap">
+                    {currentWord.image.split(',').map((imgSrc, idx) => (
+                      <img
+                        key={idx}
+                        src={imgSrc.trim()}
+                        alt={currentWord.en}
+                        className="max-h-32 md:max-h-40 object-contain rounded-2xl shadow-sm"
+                      />
+                    ))}
+                   </div>
                   <div className="text-center space-y-4">
                     <h2 className="text-5xl font-black tracking-tighter text-foreground uppercase">
                       {currentWord.en}

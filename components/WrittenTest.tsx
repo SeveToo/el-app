@@ -150,11 +150,16 @@ export default function WrittenTest({ words, onComplete }: Props) {
 
               {/* Obrazek */}
               <div className="relative">
-                <img
-                  src={currentWord.image}
-                  alt={currentWord.pl}
-                  className="w-36 h-36 object-contain rounded-2xl"
-                />
+                <div className="flex gap-4 items-center justify-center flex-wrap h-36">
+                  {currentWord.image.split(',').map((imgSrc, idx, arr) => (
+                    <img
+                      key={idx}
+                      src={imgSrc.trim()}
+                      alt={currentWord.pl}
+                      className={`object-contain rounded-2xl ${arr.length > 1 ? 'w-24 h-24' : 'w-36 h-36'}`}
+                    />
+                  ))}
+                </div>
                 {status !== 'idle' && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0 }}

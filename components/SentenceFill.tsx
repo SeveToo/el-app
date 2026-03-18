@@ -11,6 +11,16 @@ import { audioService } from '@/lib/audio'
 
 const removeDiacritics = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ł/g, "l").replace(/Ł/g, "L")
 
+const getSentenceParts = (word: { en_example: string; en: string }) => {
+  let example = word.en_example || ''
+  if (!example.includes('[')) {
+    const regex = new RegExp(`(${word.en})`, 'gi')
+    example = example.replace(regex, '[$1]')
+  }
+  return example.split(/\[(.*?)\]/g)
+}
+
+
 
 interface Word {
   id: string
@@ -28,7 +38,9 @@ interface Props {
 
 export default function SentenceFill({ words, onComplete }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [inputs, setInputs] = useState<string[]>(new Array(words.length).fill(''))
+  const [inputs, setInputs] = useState<string[][]>(() => 
+    words.map(w => new Array(Math.floor(getSentenceParts(w).length / 2)).fill(''))
+  )
   const [statuses, setStatuses] = useState<('idle' | 'success' | 'wrong')[]>(new Array(words.length).fill('idle'))
   const [errorIds, setErrorIds] = useState<string[]>([])
   
@@ -37,8 +49,9 @@ export default function SentenceFill({ words, onComplete }: Props) {
   const [hintOptions, setHintOptions] = useState<Word[]>([])
   const [wrongCount, setWrongCount] = useState<Record<number, number>>({})
   
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([])
-
+  const inputRefs = useRef<(HTMLInputElement | null)[][]>(
+    words.map(() => [])
+  )
 
   const [isPlRevealed, setIsPlRevealed] = useState(false)
 
@@ -48,9 +61,10 @@ export default function SentenceFill({ words, onComplete }: Props) {
   useEffect(() => {
     setIsPlRevealed(false)
     if (!showHint) {
-      inputRefs.current[activeIndex]?.focus()
+      inputRefs.current[activeIndex]?.[0]?.focus()
     }
   }, [activeIndex, showHint])
+
 
   const triggerHint = (index: number) => {
     const correctWord = words[index]
@@ -71,10 +85,18 @@ export default function SentenceFill({ words, onComplete }: Props) {
 
   const handleSubmit = (index: number) => {
     const word = words[index]
-    const userInput = inputs[index].trim().toLowerCase()
-    const target = word.en.trim().toLowerCase()
+    const parts = getSentenceParts(word)
+    const targets: string[] = []
+    
+    for (let i = 1; i < parts.length; i += 2) {
+      targets.push(parts[i].trim().toLowerCase())
+    }
 
-    if (userInput === target) {
+    const userInputs = inputs[index].map(val => val.trim().toLowerCase())
+    const isAllCorrect = userInputs.length === targets.length && 
+                         userInputs.every((val, i) => val === targets[i])
+
+    if (isAllCorrect) {
       if (statuses[index] !== 'success') {
         const newStatuses = [...statuses]
         newStatuses[index] = 'success'
@@ -123,10 +145,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+  const handleKeyDown = (e: React.KeyboardEvent, index: number, gapIdx: number, gapsCount: number) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      handleSubmit(index)
+      if (gapIdx < gapsCount - 1) {
+        inputRefs.current[index]?.[gapIdx + 1]?.focus()
+      } else {
+        handleSubmit(index)
+      }
     } else if (e.key === 'ArrowDown') {
       e.preventDefault()
       if (index < words.length - 1) setActiveIndex(index + 1)
@@ -191,13 +217,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
   }
 
   const renderSentence = (word: Word, index: number) => {
-
-    const parts = word.en_example.split(new RegExp(`(${word.en})`, 'gi'))
+    const parts = getSentenceParts(word)
+    const gapsCount = Math.floor(parts.length / 2)
     
     return (
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-3 py-1">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-3 py-1 text-xl font-medium text-default-600 leading-relaxed">
         {parts.map((part, i) => {
-          if (part.toLowerCase() === word.en.toLowerCase()) {
+          if (i % 2 !== 0) {
+            const gapIdx = Math.floor(i / 2)
             if (statuses[index] === 'success') {
               return (
                 <motion.span 
@@ -211,16 +238,21 @@ export default function SentenceFill({ words, onComplete }: Props) {
               )
             }
             return (
-              <div key={i} className="inline-block min-w-[120px]">
+              <div key={i} className="inline-block min-w-[80px]">
                 <Input
-                  ref={(el: any) => { inputRefs.current[index] = el as any; }}
-                  value={inputs[index]}
+                  ref={(el: any) => {
+                    if (!inputRefs.current[index]) inputRefs.current[index] = [];
+                    inputRefs.current[index][gapIdx] = el as HTMLInputElement;
+                  }}
+                  value={inputs[index]?.[gapIdx] || ''}
                   onChange={(e) => {
                     const newInputs = [...inputs]
-                    newInputs[index] = e.target.value
+                    const sentenceInputs = [...(newInputs[index] || [])]
+                    sentenceInputs[gapIdx] = e.target.value
+                    newInputs[index] = sentenceInputs
                     setInputs(newInputs)
                   }}
-                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index, gapIdx, gapsCount)}
                   onFocus={() => setActiveIndex(index)}
                   size="sm"
                   variant="underlined"
@@ -240,11 +272,12 @@ export default function SentenceFill({ words, onComplete }: Props) {
               </div>
             )
           }
-          return <span key={i} className="text-xl font-medium text-default-600 leading-relaxed">{part}</span>
+          return <span key={i}>{part}</span>
         })}
       </div>
     )
   }
+
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto pb-20">
@@ -265,11 +298,16 @@ export default function SentenceFill({ words, onComplete }: Props) {
               exit={{ opacity: 0, y: 10 }}
               className="flex flex-col items-center gap-3 w-full"
             >
-              <img 
-                src={currentWord.image} 
-                alt={currentWord.pl}
-                className="h-32 w-32 object-contain rounded-2xl bg-white p-2 shadow-sm"
-              />
+              <div className="flex gap-4 items-center justify-center flex-wrap">
+                {currentWord.image.split(',').map((imgSrc, idx) => (
+                  <img 
+                    key={idx}
+                    src={imgSrc.trim()} 
+                    alt={currentWord.pl}
+                    className="h-32 w-32 object-contain rounded-2xl bg-white p-2 shadow-sm"
+                  />
+                ))}
+              </div>
               <div className="text-center w-full max-w-sm mx-auto">
                 <div 
                   className="relative cursor-pointer group flex justify-center items-center py-2 min-h-[60px]"
@@ -362,7 +400,11 @@ export default function SentenceFill({ words, onComplete }: Props) {
 
                   >
                     <CardBody className="flex flex-col items-center justify-center gap-4">
-                      <img src={opt.image} className="h-24 w-24 object-contain" alt={opt.en} />
+                      <div className="flex gap-2 items-center justify-center flex-wrap">
+                        {opt.image.split(',').map((imgSrc, idx) => (
+                           <img key={idx} src={imgSrc.trim()} className="h-20 w-20 object-contain" alt={opt.en} />
+                        ))}
+                      </div>
                       <p className="text-xl font-black uppercase tracking-widest text-foreground">{opt.en}</p>
                     </CardBody>
                   </Card>

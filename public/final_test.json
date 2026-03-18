@@ -1,0 +1,182 @@
+[
+  {
+    "id": "cook_frying_pan",
+    "en": "Cook / Frying Pan",
+    "pl": "Gotować / Patelnia",
+    "en_example": "The chef can [cook] eggs in the [frying pan].",
+    "pl_example": "Szef kuchni potrafi ugotować jajka na patelni.",
+    "image": "/action_verbs/Cook.jpg, /kitchen_tools/frying_pan.jpg",
+    "status": 0
+  },
+  {
+    "id": "doctor_drive",
+    "en": "Doctor / Drive",
+    "pl": "Lekarz / Prowadzić auto",
+    "en_example": "The [doctor] can [drive] a fast car.",
+    "pl_example": "Lekarz potrafi prowadzić samochód.",
+    "image": "/jobs/Doctor.jpg, /action_verbs/Drive.jpg",
+    "status": 0
+  },
+  {
+    "id": "on_plate",
+    "en": "On / Plate",
+    "pl": "Na / Talerz",
+    "en_example": "Put the sandwich [on] the [plate].",
+    "pl_example": "Połóż kanapkę na talerzu.",
+    "image": "/prepositions/On.jpg, /kitchen_tools/plate.jpg",
+    "status": 0
+  },
+  {
+    "id": "under_plate",
+    "en": "Under / Plate",
+    "pl": "Pod / Talerz",
+    "en_example": "The spoon is [under] the [plate].",
+    "pl_example": "Łyżka jest pod talerzem.",
+    "image": "/prepositions/Under.jpg, /kitchen_tools/plate.jpg",
+    "status": 0
+  },
+  {
+    "id": "pilot_fly",
+    "en": "Pilot / Fly",
+    "pl": "Pilot / Latać",
+    "en_example": "The [pilot] can [fly] above the clouds.",
+    "pl_example": "Pilot potrafi latać nad chmurami.",
+    "image": "/jobs/Pilot.jpg, /action_verbs/Fly.jpg",
+    "status": 0
+  },
+  {
+    "id": "teacher_in_front_of",
+    "en": "Teacher / In front of",
+    "pl": "Nauczyciel / Przed",
+    "en_example": "The [teacher] stands [in front of] the board.",
+    "pl_example": "Nauczyciel stoi przed tablicą.",
+    "image": "/jobs/Teacher.jpg, /prepositions/In_front_of.jpg",
+    "status": 0
+  },
+  {
+    "id": "knife",
+    "en": "Knife",
+    "pl": "Nóż",
+    "en_example": "The chef cuts with a [knife].",
+    "pl_example": "Szef kuchni kroi nożem.",
+    "image": "/kitchen_tools/knife.jpg",
+    "status": 0
+  },
+  {
+    "id": "police_behind",
+    "en": "Police Officer / Behind",
+    "pl": "Policjant / Za",
+    "en_example": "The [police officer] hides [behind] the car.",
+    "pl_example": "Policjant chowa się za samochodem.",
+    "image": "/jobs/Police_Officer.jpg, /prepositions/Behind.jpg",
+    "status": 0
+  },
+  {
+    "id": "drink_cup",
+    "en": "Drink / Cup",
+    "pl": "Pić / Filiżanka",
+    "en_example": "I [drink] tea from the [cup].",
+    "pl_example": "Piję herbatę z filiżanki.",
+    "image": "/action_verbs/Drink.jpg, /kitchen_tools/cup.jpg",
+    "status": 0
+  },
+  {
+    "id": "farmer_next_to",
+    "en": "Farmer / Next to",
+    "pl": "Rolnik / Obok",
+    "en_example": "The [farmer] works [next to] the tractor.",
+    "pl_example": "Rolnik pracuje obok traktora.",
+    "image": "/jobs/Farmer.jpg, /prepositions/Next_to.jpg",
+    "status": 0
+  },
+  {
+    "id": "in_bowl",
+    "en": "In / Bowl",
+    "pl": "W / Miska",
+    "en_example": "Put the soup [in] the [bowl].",
+    "pl_example": "Wlej zupę do miski.",
+    "image": "/prepositions/In.jpg, /kitchen_tools/bowl.jpg",
+    "status": 0
+  },
+  {
+    "id": "between",
+    "en": "Between",
+    "pl": "Pomiędzy",
+    "en_example": "The singer stands [between] two dancers.",
+    "pl_example": "Piosenkarz stoi pomiędzy dwoma tancerzami.",
+    "image": "/prepositions/Between.jpg",
+    "status": 0
+  },
+  {
+    "id": "builder_build_near",
+    "en": "Builder / Build / Near",
+    "pl": "Budowniczy / Budować / Blisko",
+    "en_example": "The [builder] will [build] a house [near] the river.",
+    "pl_example": "Budowniczy zbuduje dom blisko rzeki.",
+    "image": "/jobs/Builder.jpg, /action_verbs/Build.jpg, /prepositions/Near.jpg",
+    "status": 0
+  },
+  {
+    "id": "scientist",
+    "en": "Scientist",
+    "pl": "Naukowiec",
+    "en_example": "The [scientist] does experiments.",
+    "pl_example": "Naukowiec przeprowadza eksperymenty.",
+    "image": "/jobs/Scientist.jpg",
+    "status": 0
+  },
+  {
+    "id": "mechanic_under",
+    "en": "Mechanic / Under",
+    "pl": "Mechanik / Pod",
+    "en_example": "The [mechanic] works [under] the car.",
+    "pl_example": "Mechanik pracuje pod samochodem.",
+    "image": "/jobs/Mechanic.jpg, /prepositions/Under.jpg",
+    "status": 0
+  },
+  {
+    "id": "artist_dance",
+    "en": "Artist / Dance",
+    "pl": "Artysta / Tańczyć",
+    "en_example": "The [artist] likes to [dance].",
+    "pl_example": "Artysta lubi tańczyć.",
+    "image": "/jobs/Artist.jpg, /action_verbs/Dance.jpg",
+    "status": 0
+  },
+  {
+    "id": "spoon_bowl",
+    "en": "Spoon / Bowl",
+    "pl": "Łyżka / Miska",
+    "en_example": "Eat the soup from the [bowl] with a [spoon].",
+    "pl_example": "Zjedz zupę z miski łyżką.",
+    "image": "/kitchen_tools/bowl.jpg, /kitchen_tools/spoon.jpg",
+    "status": 0
+  },
+  {
+    "id": "near_plate",
+    "en": "Near / Plate",
+    "pl": "Blisko / Talerz",
+    "en_example": "The cup is [near] the [plate].",
+    "pl_example": "Filiżanka stoi blisko talerza.",
+    "image": "/prepositions/Near.jpg, /kitchen_tools/plate.jpg",
+    "status": 0
+  },
+  {
+    "id": "above",
+    "en": "Above",
+    "pl": "Nad",
+    "en_example": "The bird flies [above] the house.",
+    "pl_example": "Ptak leci nad domem.",
+    "image": "/prepositions/Above.jpg",
+    "status": 0
+  },
+  {
+    "id": "hug",
+    "en": "Hug",
+    "pl": "Przytulać",
+    "en_example": "Give me a [hug].",
+    "pl_example": "Przytul mnie.",
+    "image": "/action_verbs/Hug.jpg",
+    "status": 0
+  }
+]

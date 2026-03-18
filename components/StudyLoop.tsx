@@ -205,6 +205,18 @@ export default function StudyLoop({
     (Math.min(usedCount + currentRoundProgress, allWords.length) / allWords.length) * 100
   )
 
+  React.useEffect(() => {
+    if (stage === 'completed') {
+      audioService.playSuccess()
+      confetti({
+        particleCount: 300,
+        spread: 100,
+        origin: { y: 0.5 },
+        colors: ['#22c55e', '#3b82f6', '#f59e0b', '#ffffff']
+      })
+    }
+  }, [stage])
+
 
   if (isInitializing && hasSavedProgress) {
     return (
@@ -239,26 +251,16 @@ export default function StudyLoop({
 
 
   if (stage === 'completed') {
-    // Odpal konfetti i dźwięk po wejściu na ekran ukończenia
-    React.useEffect(() => {
-      audioService.playSuccess()
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#22c55e', '#ffffff', '#16a34a']
-      })
-    }, [])
-
     return (
-
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center px-4">
-        <h1 className="text-5xl font-black text-success uppercase tracking-tighter">
-          🏆 Gratulacje!
+        <h1 className="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-success to-primary uppercase tracking-tighter mb-2 animate-bounce">
+          SUPER! 🚀
         </h1>
-        <p className="text-xl font-medium text-default-500 max-w-sm">
-          Ukończyłeś całą pętlę nauki dla tej sekcji.
+        <h2 className="text-3xl font-bold text-default-700">🏆 Gratulacje!</h2>
+        <p className="text-xl font-medium text-default-500 max-w-md mt-2">
+          Rozwaliłeś ten układ! Wszystkie luki wypełnione prawidłowo. Oby tak dalej! 💎
         </p>
+
         <Link href="/">
           <Button
             size="lg"

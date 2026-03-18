@@ -130,12 +130,17 @@ export default function MatchingGame({ words, onComplete }: Props) {
               className={`h-[6.5rem] sm:h-[8rem] cursor-pointer rounded-2xl border-2 overflow-hidden shadow-sm transition-all duration-200 bg-white ${getImageStyle(word.id)}`}
               onClick={() => !matchedIds.includes(word.id) && setSelectedImage(word.id)}
             >
-              <img
-                src={word.image}
-                alt="match"
-                className="w-full h-full object-contain p-1.5"
-                draggable={false}
-              />
+              <div className="flex gap-2 items-center justify-center w-full h-full p-1.5 flex-wrap">
+                {word.image.split(',').map((imgSrc, idx, arr) => (
+                  <img
+                    key={idx}
+                    src={imgSrc.trim()}
+                    alt="match"
+                    className={`object-contain ${arr.length > 1 ? 'max-w-[45%] max-h-[90%]' : 'w-full h-full'}`}
+                    draggable={false}
+                  />
+                ))}
+              </div>
             </motion.button>
           ))}
         </div>

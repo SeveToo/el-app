@@ -38,6 +38,18 @@ const CHAPTERS = [
     subtitle: 'Pogoda',
   },
   {
+    id: 'articles',
+    title: 'A, An, The & At',
+    subject: 'english',
+    subtitle: 'Przedimki w praktyce',
+  },
+  {
+    id: 'final_test',
+    title: 'Final Test 🏆',
+    subject: 'english',
+    subtitle: 'Sprawdź swoje umiejętności',
+  },
+  {
     id: '1',
     title: 'Podstawy: Present Simple',
     subject: 'english',

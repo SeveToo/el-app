@@ -83,11 +83,16 @@ export default function FastReview({ words, onComplete }: Props) {
           className="w-full">
           <Card className="w-full p-4 border border-warning/20 bg-card shadow-lg">
             <CardBody className="flex flex-col items-center gap-6">
-              <img
-                src={currentWord.image}
-                alt={currentWord.en}
-                className="w-full h-40 object-contain rounded-md"
-              />
+              <div className="flex gap-4 items-center justify-center flex-wrap w-full h-40">
+                {currentWord.image.split(',').map((imgSrc, idx, arr) => (
+                  <img
+                    key={idx}
+                    src={imgSrc.trim()}
+                    alt={currentWord.en}
+                    className={`object-contain rounded-md ${arr.length > 1 ? 'max-h-32' : 'w-full h-full'}`}
+                  />
+                ))}
+              </div>
               <div className="text-center space-y-3">
                 <div className="space-y-1">
                   <p className="text-3xl font-black text-primary uppercase">
