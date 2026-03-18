@@ -5,6 +5,8 @@ import Flashcards from '@/components/Flashcards'
 import FastReview from '@/components/FastReview'
 import MatchingGame from '@/components/MatchingGame'
 import WrittenTest from '@/components/WrittenTest'
+import SentenceFill from '@/components/SentenceFill'
+
 import { Progress } from '@heroui/progress'
 import { Button } from '@heroui/button'
 import Link from 'next/link'
@@ -20,9 +22,10 @@ interface Word {
   status: number
 }
 
-type Stage = 'flashcards' | 'fast_review' | 'matching' | 'written' | 'completed'
+type Stage = 'flashcards' | 'fast_review' | 'matching' | 'written' | 'sentence_fill' | 'completed'
 
-const STAGES: Stage[] = ['flashcards', 'fast_review', 'matching', 'written']
+const STAGES: Stage[] = ['flashcards', 'fast_review', 'matching', 'written', 'sentence_fill']
+
 const WORDS_PER_LOOP = 10
 
 export default function StudyLoop({
@@ -176,7 +179,9 @@ export default function StudyLoop({
           <span>Powtórka</span>
           <span>Dopasowanie</span>
           <span>Pisanie</span>
+          <span>Zdania</span>
         </div>
+
       </div>
 
       {/* Błędy do powtórki (info) */}
@@ -200,7 +205,11 @@ export default function StudyLoop({
         {stage === 'written' && (
           <WrittenTest words={currentGroup} onComplete={handleStageComplete} />
         )}
+        {stage === 'sentence_fill' && (
+          <SentenceFill words={currentGroup} onComplete={handleStageComplete} />
+        )}
       </div>
+
     </div>
   )
 }
