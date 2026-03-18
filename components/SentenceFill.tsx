@@ -2,10 +2,15 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { Card, CardBody } from '@heroui/card'
+import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
 import { Input } from '@heroui/input'
 import { motion, AnimatePresence } from 'framer-motion'
+
 import { audioService } from '@/lib/audio'
+
+const removeDiacritics = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ł/g, "l").replace(/Ł/g, "L")
+
 
 interface Word {
   id: string
@@ -27,19 +32,39 @@ export default function SentenceFill({ words, onComplete }: Props) {
   const [statuses, setStatuses] = useState<('idle' | 'success' | 'wrong')[]>(new Array(words.length).fill('idle'))
   const [errorIds, setErrorIds] = useState<string[]>([])
   
+  // Hint system
+  const [showHint, setShowHint] = useState(false)
+  const [hintOptions, setHintOptions] = useState<Word[]>([])
+  const [wrongCount, setWrongCount] = useState<Record<number, number>>({})
+  
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+
 
   const currentWord = words[activeIndex]
 
   // Focus current input when activeIndex changes
   useEffect(() => {
-    inputRefs.current[activeIndex]?.focus()
-    if (currentWord) {
-      // Speech on selection? User didn't request it, but it's consistent.
-      // Actually, let's speak the PL help if needed? 
-      // The user said "tłumaczenie i obrazek się zmieniają".
+    if (!showHint) {
+      inputRefs.current[activeIndex]?.focus()
     }
-  }, [activeIndex])
+  }, [activeIndex, showHint])
+
+  const triggerHint = (index: number) => {
+    const correctWord = words[index]
+    const others = words.filter(w => w.id !== correctWord.id)
+    const shuffledOthers = [...others].sort(() => Math.random() - 0.5)
+    
+    // Ensure we have at least some distractors if total words < 3
+    const options = [correctWord, ...shuffledOthers.slice(0, 2)].sort(() => Math.random() - 0.5)
+    
+    // Użycie podpowiedzi oznacza niezablokowanie wiedzy z tego słowa, więc dodajemy do błędów (powtórka)
+    setErrorIds(prev => prev.includes(correctWord.id) ? prev : [...prev, correctWord.id])
+
+    setHintOptions(options)
+    setShowHint(true)
+  }
+
+
 
   const handleSubmit = (index: number) => {
     const word = words[index]
@@ -71,11 +96,20 @@ export default function SentenceFill({ words, onComplete }: Props) {
       setStatuses(newStatuses)
       audioService.playError()
       
+      const newWrongCount = { ...wrongCount, [index]: (wrongCount[index] || 0) + 1 }
+      setWrongCount(newWrongCount)
+
       if (!errorIds.includes(word.id)) {
         setErrorIds(prev => [...prev, word.id])
       }
 
+      // Auto-trigger hint after 2 fails
+      if (newWrongCount[index] >= 2) {
+        setTimeout(() => triggerHint(index), 500)
+      }
+
       // Briefly show error then reset
+
       setTimeout(() => {
         setStatuses(prev => {
           const s = [...prev]
@@ -99,20 +133,84 @@ export default function SentenceFill({ words, onComplete }: Props) {
     }
   }
 
+  const renderPlExample = (word: Word) => {
+    const sentence = word.pl_example || word.pl
+    const baseWord = word.pl
+
+    if (!sentence || !baseWord || sentence.toLowerCase() === baseWord.toLowerCase()) return sentence
+
+    const baseWords = baseWord.toLowerCase().split(/\s+/)
+    const sentenceParts = sentence.split(/(\s+|[.,;!?]+)/)
+
+    let highlighted = false
+
+    const rendered = sentenceParts.map((part, i) => {
+      if (!part.trim() || part.match(/^[.,;!?]+$/)) return <React.Fragment key={i}>{part}</React.Fragment>
+      
+      const partLower = removeDiacritics(part.toLowerCase())
+      
+      const isMatch = baseWords.some(bw => {
+        const bwClean = removeDiacritics(bw)
+        if (bwClean.length <= 3) {
+          return partLower === bwClean || (partLower.startsWith(bwClean) && partLower.length - bwClean.length <= 2)
+        }
+        
+        let root = bwClean
+        if (root.match(/(owac|awac|iwac|ywac)$/)) root = root.slice(0, -4)
+        else if (root.match(/(ac|ec|ic|yc)$/)) root = root.slice(0, -2)
+        
+        const prefixLen = Math.min(root.length, 5)
+        const prefix = root.substring(0, prefixLen)
+        
+        return (partLower.startsWith(prefix) || partLower.includes(root)) && Math.abs(partLower.length - bwClean.length) <= 5
+      })
+
+      if (isMatch && !highlighted) {
+        highlighted = true
+        return (
+          <span key={i} className="text-warning-500 bg-warning-50/20 px-1 py-0.5 rounded-md underline decoration-warning/50 decoration-4 underline-offset-4">
+            {part}
+          </span>
+        )
+      }
+      
+      return <React.Fragment key={i}>{part}</React.Fragment>
+    })
+
+    return (
+      <span className="inline-flex items-center flex-wrap justify-center gap-x-1">
+        {rendered}
+        {!highlighted && (
+           <span className="text-warning-500 opacity-90 ml-2 bg-warning-50/20 px-1.5 py-0.5 rounded-lg text-lg border-2 border-warning/20">({word.pl})</span>
+        )}
+      </span>
+    )
+  }
+
   const renderSentence = (word: Word, index: number) => {
+
     const parts = word.en_example.split(new RegExp(`(${word.en})`, 'gi'))
     
     return (
       <div className="flex flex-wrap items-center gap-x-2 gap-y-3 py-1">
         {parts.map((part, i) => {
           if (part.toLowerCase() === word.en.toLowerCase()) {
+            if (statuses[index] === 'success') {
+              return (
+                <motion.span 
+                  key={i}
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="inline-block px-2 py-0.5 rounded-lg bg-success/20 text-success font-black text-xl uppercase tracking-wider"
+                >
+                  {part}
+                </motion.span>
+              )
+            }
             return (
               <div key={i} className="inline-block min-w-[120px]">
                 <Input
                   ref={(el: any) => { inputRefs.current[index] = el as any; }}
-
-
-
                   value={inputs[index]}
                   onChange={(e) => {
                     const newInputs = [...inputs]
@@ -124,13 +222,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
                   size="sm"
                   variant="underlined"
                   color={
-                    statuses[index] === 'success' ? 'success' :
                     statuses[index] === 'wrong' ? 'danger' :
-                    activeIndex === index ? 'primary' : 'default'
+                    activeIndex === index ? 'warning' : 'default'
                   }
                   placeholder="..."
                   classNames={{
-                    input: "text-lg font-black uppercase text-center tracking-widest",
+                    input: `text-lg font-black uppercase text-center tracking-widest ${
+                      activeIndex === index ? 'text-warning' : 'text-default-400'
+                    }`,
                     inputWrapper: "border-b-2"
                   }}
                   autoComplete="off"
@@ -169,13 +268,26 @@ export default function SentenceFill({ words, onComplete }: Props) {
                 className="h-32 w-32 object-contain rounded-2xl bg-white p-2 shadow-sm"
               />
               <div className="text-center">
-                <h2 className="text-2xl font-black text-primary uppercase tracking-tight">
-                  {currentWord.pl_example || currentWord.pl}
+                <h2 className="text-2xl font-black text-primary uppercase tracking-tight flex items-center justify-center text-center">
+                  {renderPlExample(currentWord)}
                 </h2>
-                <p className="text-xs font-bold text-default-400 uppercase tracking-widest mt-1">
-                  Wpisz brakujące słowo:
-                </p>
+
+                <div className="flex items-center justify-center gap-2 mt-1">
+                  <p className="text-xs font-bold text-default-400 uppercase tracking-widest">
+                    Wpisz brakujące słowo:
+                  </p>
+                  <Button 
+                    isIconOnly 
+                    size="sm" 
+                    variant="light" 
+                    className="text-warning min-w-unit-6 h-6 w-6"
+                    onClick={() => triggerHint(activeIndex)}
+                  >
+                    💡
+                  </Button>
+                </div>
               </div>
+
             </motion.div>
           </AnimatePresence>
         </div>
@@ -200,6 +312,60 @@ export default function SentenceFill({ words, onComplete }: Props) {
         ))}
       </div>
 
+      {/* Hint Overlay */}
+      <AnimatePresence>
+        {showHint && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-background/90 backdrop-blur-xl flex items-center justify-center p-4"
+          >
+            <div className="max-w-4xl w-full flex flex-col items-center gap-8">
+              <div className="text-center space-y-2">
+                <h3 className="text-3xl font-black uppercase tracking-tighter text-primary">Znajdź właściwe słowo</h3>
+                <p className="text-default-500 font-bold uppercase tracking-widest text-sm">Zatwierdź, aby wrócić do wpisywania</p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
+                {hintOptions.map((opt) => (
+                  <Card 
+                    key={opt.id}
+                    isPressable
+                    className="aspect-square border-4 border-transparent hover:border-primary transition-all p-4 bg-content1"
+                    onClick={() => {
+                      if (opt.id === currentWord.id) {
+                        setShowHint(false)
+                        audioService.playSuccess()
+                        audioService.speak(opt.en) // Speak on correct select
+                      } else {
+                        audioService.playError()
+                      }
+                    }}
+
+                  >
+                    <CardBody className="flex flex-col items-center justify-center gap-4">
+                      <img src={opt.image} className="h-24 w-24 object-contain" alt={opt.en} />
+                      <p className="text-xl font-black uppercase tracking-widest text-foreground">{opt.en}</p>
+                    </CardBody>
+                  </Card>
+                ))}
+              </div>
+
+              <Button 
+                variant="flat" 
+                color="danger" 
+                className="font-bold uppercase tracking-widest"
+                onClick={() => setShowHint(false)}
+              >
+                Zamknij podpowiedź
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
+
   )
 }

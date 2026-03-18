@@ -10,7 +10,12 @@ import SentenceFill from '@/components/SentenceFill'
 import { Progress } from '@heroui/progress'
 import { Button } from '@heroui/button'
 import Link from 'next/link'
-import { saveProgress } from '@/lib/progress'
+import { saveProgress, getProgress, ChapterProgress } from '@/lib/progress'
+
+import { audioService } from '@/lib/audio'
+import confetti from 'canvas-confetti'
+
+
 
 interface Word {
   id: string
@@ -19,8 +24,9 @@ interface Word {
   en_example: string
   pl_example: string
   image: string
-  status: number
+  status?: number
 }
+
 
 type Stage = 'flashcards' | 'fast_review' | 'matching' | 'written' | 'sentence_fill' | 'completed'
 
@@ -32,9 +38,10 @@ export default function StudyLoop({
   words,
   chapterId,
 }: {
-  words: Word[]
+  words: any[]
   chapterId: string
-}) {
+}): React.JSX.Element | null {
+
   const [allWords] = useState<Word[]>(words)
 
   // Indeks bieżącej "rundy" (grupy 10 słówek)
@@ -42,30 +49,70 @@ export default function StudyLoop({
 
   // Etap w ramach rundy
   const [stage, setStage] = useState<Stage>('flashcards')
-
-  // Słowa z błędami zebrane przez wszystkie rundy
   const [globalErrorIds, setGlobalErrorIds] = useState<string[]>([])
-
-  // Słowa w bieżącej rundzie
-  const [currentGroup, setCurrentGroup] = useState<Word[]>(() =>
-    allWords.slice(0, WORDS_PER_LOOP)
-  )
-
-  // Ile słówek zostało "użytych" (poza bieżącą grupą)
-  const [usedCount, setUsedCount] = useState(WORDS_PER_LOOP)
+  const [currentGroup, setCurrentGroup] = useState<Word[]>(allWords.slice(0, WORDS_PER_LOOP))
+  const [usedCount, setUsedCount] = useState(0)
+  const [isInitializing, setIsInitializing] = useState(true)
+  const [hasSavedProgress, setHasSavedProgress] = useState(false)
 
   const stageIndex = STAGES.indexOf(stage)
 
   // ---------------------------------------------------------------------------
+  // Inicjalizacja / Wznawianie
+  // ---------------------------------------------------------------------------
+  React.useEffect(() => {
+    const saved = getProgress(chapterId)
+    if (saved && !saved.completedAt && saved.usedCount !== undefined) {
+      setHasSavedProgress(true)
+    } else {
+      setIsInitializing(false)
+    }
+  }, [chapterId])
+
+  const handleResume = () => {
+    const saved = getProgress(chapterId)
+    if (saved) {
+      if (saved.roundIndex !== undefined) setRoundIndex(saved.roundIndex)
+      if (saved.stage !== undefined) setStage(saved.stage as Stage)
+      if (saved.usedCount !== undefined) setUsedCount(saved.usedCount)
+      if (saved.globalErrorIds !== undefined) setGlobalErrorIds(saved.globalErrorIds)
+      
+      if (saved.currentGroupIndices !== undefined) {
+        const group = saved.currentGroupIndices.map(idx => allWords[idx]).filter(Boolean)
+        setCurrentGroup(group)
+      } else if (saved.usedCount !== undefined) {
+        // Fallback dla starych zapisów
+        setCurrentGroup(allWords.slice(saved.usedCount, saved.usedCount + WORDS_PER_LOOP))
+      }
+    }
+    setIsInitializing(false)
+  }
+
+  const handleRestart = () => {
+    saveProgress(chapterId, { learnedCount: 0, totalWords: words.length })
+    setIsInitializing(false)
+  }
+
+
+  // ---------------------------------------------------------------------------
   // Zapis postępu
   // ---------------------------------------------------------------------------
-  const persistProgress = (learned: number, completed = false) => {
+  const persistProgress = (learned: number, stageOverride?: Stage, completed = false) => {
+    const currentGroupIndices = currentGroup.map(w => allWords.findIndex(aw => aw.id === w.id))
+    
     saveProgress(chapterId, {
       learnedCount: learned,
       totalWords: words.length,
       completedAt: completed ? new Date().toISOString() : undefined,
+      roundIndex,
+      stage: stageOverride || stage,
+      usedCount: learned,
+      globalErrorIds,
+      currentGroupIndices
     })
   }
+
+
 
   // ---------------------------------------------------------------------------
   // Zebranie błędów z etapu + przejście do następnego
@@ -80,20 +127,23 @@ export default function StudyLoop({
 
     if (nextStageIndex < STAGES.length) {
       // Kolejny etap w ramach tej samej rundy
-      setStage(STAGES[nextStageIndex])
+      const nextStage = STAGES[nextStageIndex]
+      setStage(nextStage)
+      // Zapisujemy stan (z tym samym usedCount, ale nowym etapem)
+      persistProgress(usedCount, nextStage)
     } else {
       // Koniec wszystkich etapów dla tej rundy
-      const remaining = allWords.slice(usedCount) // jeszcze nie użyte słowa
-      const hasMoreNew = remaining.length > 0
+      const remaining = allWords.slice(usedCount + currentGroup.length) // słowa jeszcze nigdy nie użyte
+      const newLearnedInThisRound = currentGroup.filter(w => !updatedErrors.includes(w.id)).length
+      const totalLearnedSoFar = usedCount + newLearnedInThisRound
 
-      if (hasMoreNew) {
-        // Weź do WORDS_PER_LOOP nowych słów + błędy z tej rundy
+      if (remaining.length > 0) {
+        // Są jeszcze nowe słówka
         const newWords = remaining.slice(0, WORDS_PER_LOOP)
         const errorWords = updatedErrors
           .map((id) => allWords.find((w) => w.id === id)!)
           .filter(Boolean)
 
-        // Ile nowych możemy wziąć (w grupie jest miejsce na max WORDS_PER_LOOP)
         const slotsForNew = Math.min(newWords.length, WORDS_PER_LOOP)
         const slotsForErrors = Math.max(0, WORDS_PER_LOOP - slotsForNew)
 
@@ -102,37 +152,106 @@ export default function StudyLoop({
           ...newWords.slice(0, slotsForNew),
         ]
 
-        const newUsed = usedCount + newWords.slice(0, slotsForNew).length
-        persistProgress(newUsed)
         setCurrentGroup(shuffled(nextGroup))
-        setUsedCount(newUsed)
+        setUsedCount(totalLearnedSoFar)
         setRoundIndex(roundIndex + 1)
         setStage('flashcards')
+        setGlobalErrorIds(updatedErrors) // Te błędy przechodzą do następnej rundy
+        
+        // Zapisujemy nowy stan
+        const currentGroupIndices = nextGroup.map(w => allWords.findIndex(aw => aw.id === w.id))
+        saveProgress(chapterId, {
+          learnedCount: totalLearnedSoFar,
+          totalWords: words.length,
+          roundIndex: roundIndex + 1,
+          stage: 'flashcards',
+          usedCount: totalLearnedSoFar,
+          globalErrorIds: updatedErrors,
+          currentGroupIndices
+        })
       } else if (updatedErrors.length > 0) {
-        // Brak nowych słów, ale są błędy — runda tylko z błędów
+        // Brak nowych słów, ale są błędy
         const errorWords = updatedErrors
           .map((id) => allWords.find((w) => w.id === id)!)
           .filter(Boolean)
-        persistProgress(allWords.length) // dotarliśmy do końca
+        
         setCurrentGroup(shuffled(errorWords))
-        setGlobalErrorIds([]) // reset błędów — ta runda je wyczyści
+        setGlobalErrorIds([]) // Resetujemy - te błędy są "teraz obsługiwane"
         setRoundIndex(roundIndex + 1)
         setStage('flashcards')
+        setUsedCount(totalLearnedSoFar)
+        
+        persistProgress(totalLearnedSoFar, 'flashcards')
       } else {
-        // Wszystko ukończone bez błędów
-        persistProgress(allWords.length, true)
+        // Wszystko ukończone!
+        persistProgress(allWords.length, undefined, true)
         setStage('completed')
       }
     }
   }
 
+
+
+  const goToStage = (targetStage: Stage) => {
+    setStage(targetStage)
+    persistProgress(usedCount, targetStage)
+  }
+
+
   const totalRounds = Math.ceil(allWords.length / WORDS_PER_LOOP)
+
+  const currentRoundProgress = (stageIndex / STAGES.length) * currentGroup.length
   const globalProgress = Math.round(
-    (Math.min(usedCount, allWords.length) / allWords.length) * 100
+    (Math.min(usedCount + currentRoundProgress, allWords.length) / allWords.length) * 100
   )
 
-  if (stage === 'completed') {
+
+  if (isInitializing && hasSavedProgress) {
     return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-8 text-center px-4 max-w-md mx-auto">
+        <div className="space-y-2">
+          <h2 className="text-4xl font-black text-primary uppercase tracking-tighter">Witaj ponownie! 👋</h2>
+          <p className="text-default-500 font-medium">Masz niedokończoną lekcję w tej sekcji. Co chcesz zrobić?</p>
+        </div>
+        <div className="flex flex-col gap-3 w-full">
+          <Button 
+            size="lg" 
+            color="primary" 
+            className="w-full h-16 text-xl font-black uppercase tracking-widest rounded-2xl shadow-xl"
+            onClick={handleResume}
+          >
+            Kontynuuj 🚀 {globalProgress}%
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="lg" 
+            className="w-full h-14 font-bold uppercase tracking-widest rounded-2xl"
+            onClick={handleRestart}
+          >
+            Zacznij od nowa 🔄
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  if (isInitializing) return null
+
+
+  if (stage === 'completed') {
+    // Odpal konfetti i dźwięk po wejściu na ekran ukończenia
+    React.useEffect(() => {
+      audioService.playSuccess()
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#22c55e', '#ffffff', '#16a34a']
+      })
+    }, [])
+
+    return (
+
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center px-4">
         <h1 className="text-5xl font-black text-success uppercase tracking-tighter">
           🏆 Gratulacje!
@@ -158,29 +277,37 @@ export default function StudyLoop({
       {/* Nagłówek z postępem */}
       <div className="mb-6 space-y-3">
         <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest text-default-400">
-          <span>Runda {roundIndex + 1}</span>
+          <span>Runda {roundIndex + 1} / {totalRounds}</span>
           <span>Postęp: {globalProgress}%</span>
         </div>
+
+
         <Progress value={globalProgress} color="primary" size="sm" />
 
-        {/* Pasek etapów */}
-        <div className="flex gap-2 w-full">
-          {STAGES.map((s, idx) => (
-            <div
-              key={s}
-              className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${
-                stageIndex >= idx ? 'bg-primary' : 'bg-default-200'
-              }`}
-            />
-          ))}
+        {/* Pasek etapów (wybór etapu) */}
+        <div className="flex gap-1.5 w-full mt-2">
+          {STAGES.map((s, idx) => {
+            const stageNames = ['Fiszki', 'Oceń', 'Gra', 'Pisanie', 'Zdania']
+            const isActive = stage === s
+            const isCompleted = stageIndex > idx
+
+            return (
+              <Button
+                key={s}
+                size="sm"
+                variant={isActive ? 'solid' : (isCompleted ? 'flat' : 'light')}
+                color={isActive ? 'primary' : (isCompleted ? 'success' : 'default')}
+                className={`flex-1 min-w-0 h-10 px-0.5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${
+                  isActive ? 'shadow-md scale-105 z-10 bg-primary text-primary-foreground' : 'bg-default-100 hover:bg-default-200'
+                }`}
+                onClick={() => goToStage(s)}
+              >
+                {stageNames[idx]}
+              </Button>
+            )
+          })}
         </div>
-        <div className="flex justify-between text-[10px] uppercase tracking-widest text-default-300 font-semibold px-0.5">
-          <span>Fiszki</span>
-          <span>Powtórka</span>
-          <span>Dopasowanie</span>
-          <span>Pisanie</span>
-          <span>Zdania</span>
-        </div>
+
 
       </div>
 

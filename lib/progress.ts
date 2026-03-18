@@ -1,8 +1,15 @@
 export type ChapterProgress = {
   learnedCount: number
   totalWords: number
-  completedAt?: string // ISO string, jeśli ukończono
+  completedAt?: string
+  // State for resuming
+  roundIndex?: number
+  stage?: string
+  usedCount?: number
+  globalErrorIds?: string[]
+  currentGroupIndices?: number[]
 }
+
 
 const STORAGE_KEY = 'el_progress'
 

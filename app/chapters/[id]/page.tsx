@@ -13,8 +13,9 @@ const JSON_LESSONS = [
   'weather',
 ]
 
-export default async function ChapterPage(props: any) {
-  const { id } = props?.params || {}
+export default async function ChapterPage(props: { params: Promise<{ id: string }> }) {
+  const { id } = await props.params
+
 
   let words: any[] = []
 
