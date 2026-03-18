@@ -5,6 +5,8 @@ import { Button } from '@heroui/button'
 import { Card, CardBody } from '@heroui/card'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
+import { audioService } from '@/lib/audio'
+
 
 interface Word {
   id: string
@@ -26,9 +28,23 @@ export default function FastReview({ words, onComplete }: Props) {
 
   const currentWord = words[currentIndex]
 
+  // Pronounce English word when it appears
+  useEffect(() => {
+    if (currentWord) {
+      audioService.speak(currentWord.en)
+    }
+  }, [currentIndex, currentWord])
+
   const handleAction = (isOk: boolean) => {
     const newErrorIds = !isOk ? [...errorIds, currentWord.id] : errorIds
-    if (!isOk) setErrorIds(newErrorIds)
+    
+    if (!isOk) {
+      setErrorIds(newErrorIds)
+      audioService.playError()
+    } else {
+      audioService.playSuccess()
+    }
+
 
     if (currentIndex < words.length - 1) {
       setCurrentIndex(currentIndex + 1)

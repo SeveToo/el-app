@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
+import { audioService } from '@/lib/audio'
+
 
 interface Word {
   id: string
@@ -36,7 +38,14 @@ export default function MatchingGame({ words, onComplete }: Props) {
       if (selectedWord === selectedImage) {
         // Poprawne dopasowanie
         setFlashId({ id: selectedWord, ok: true })
+        audioService.playSuccess()
+        
+        // Find the word object to pronounce it
+        const wordObj = words.find(w => w.id === selectedWord)
+        if (wordObj) audioService.speak(wordObj.en)
+
         setTimeout(() => {
+
           setMatchedIds((prev) => {
             const next = [...prev, selectedWord!]
             if (next.length === words.length) {
@@ -49,7 +58,9 @@ export default function MatchingGame({ words, onComplete }: Props) {
       } else {
         // Błąd
         setFlashId({ id: selectedWord, ok: false })
+        audioService.playError()
         if (!errorIds.includes(selectedWord)) {
+
           setErrorIds((prev) => [...prev, selectedWord!])
         }
         setTimeout(() => setFlashId(null), 600)

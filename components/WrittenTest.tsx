@@ -6,6 +6,8 @@ import { Card, CardBody } from '@heroui/card'
 import { Progress } from '@heroui/progress'
 import { Input } from '@heroui/input'
 import { motion, AnimatePresence } from 'framer-motion'
+import { audioService } from '@/lib/audio'
+
 
 interface Word {
   id: string
@@ -44,9 +46,13 @@ export default function WrittenTest({ words, onComplete }: Props) {
 
     if (cleanInput === cleanWord) {
       setStatus('success')
+      audioService.playSuccess()
+      audioService.speak(currentWord.en)
       setTimeout(() => moveNext(true), 700)
     } else {
       setStatus('wrong')
+      audioService.playError()
+
       // Dodaj do błędów
       if (!errorIds.includes(currentWord.id)) {
         setErrorIds((prev) => [...prev, currentWord.id])
@@ -72,7 +78,9 @@ export default function WrittenTest({ words, onComplete }: Props) {
     if (cleanInput === cleanWord) {
       const left = repeatLeft - 1
       setRepeatStatus('ok')
+      audioService.playSuccess()
       setTimeout(() => {
+
         setRepeatInput('')
         setRepeatStatus('idle')
         if (left <= 0) {
@@ -85,7 +93,9 @@ export default function WrittenTest({ words, onComplete }: Props) {
       }, 400)
     } else {
       setRepeatStatus('bad')
+      audioService.playError()
       setTimeout(() => {
+
         setRepeatInput('')
         setRepeatStatus('idle')
         // Reset licznika przy złym wpisie
@@ -206,7 +216,17 @@ export default function WrittenTest({ words, onComplete }: Props) {
                     <p className="text-2xl font-black text-danger uppercase tracking-widest">
                       {currentWord.en}
                     </p>
+                    <Button 
+                      size="sm" 
+                      variant="light" 
+                      isIconOnly 
+                      className="absolute top-2 right-2 text-danger"
+                      onClick={() => audioService.speak(currentWord.en)}
+                    >
+                      🔊
+                    </Button>
                   </div>
+
 
                   {/* Licznik powtórzeń */}
                   <div className="flex gap-1.5 justify-center">

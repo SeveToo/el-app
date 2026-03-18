@@ -5,6 +5,8 @@ import { Card, CardBody } from '@heroui/card'
 import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
+import { audioService } from '@/lib/audio'
+
 
 interface Word {
   id: string
@@ -28,11 +30,26 @@ export default function Flashcards({ words, onComplete }: Props) {
 
   const currentWord = words[currentIndex]
 
+  // Pronounce English word when flipped to English side
+  React.useEffect(() => {
+    if (isFlipped && currentWord) {
+      audioService.speak(currentWord.en)
+    }
+  }, [isFlipped, currentWord])
+
+
   const handleNext = (isKnown: boolean) => {
     const newErrorIds = !isKnown
       ? [...errorIds, currentWord.id]
       : errorIds
-    if (!isKnown) setErrorIds(newErrorIds)
+    
+    if (!isKnown) {
+      setErrorIds(newErrorIds)
+      audioService.playError()
+    } else {
+      audioService.playSuccess()
+    }
+
 
     // Ustawiamy kierunek animacji (1 dla prawo, -1 dla lewo)
     setDirection(isKnown ? 1 : -1)
