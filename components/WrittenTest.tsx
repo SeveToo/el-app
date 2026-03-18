@@ -16,7 +16,7 @@ interface Word {
 
 interface Props {
   words: Word[]
-  onComplete: (successIds: string[]) => void
+  onComplete: (errorIds: string[]) => void
 }
 
 export default function WrittenTest({ words, onComplete }: Props) {
@@ -25,7 +25,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
   const [status, setStatus] = useState<
     'idle' | 'success' | 'warning'
   >('idle')
-  const [successIds, setSuccessIds] = useState<string[]>([])
+  const [errorIds, setErrorIds] = useState<string[]>([])
 
   const currentWord = words[currentIndex]
 
@@ -36,12 +36,14 @@ export default function WrittenTest({ words, onComplete }: Props) {
 
     if (cleanInput === cleanWord) {
       setStatus('success')
-      setSuccessIds([...successIds, currentWord.id])
       setTimeout(() => {
         handleNext(true)
       }, 700)
     } else {
       setStatus('warning')
+      if (!errorIds.includes(currentWord.id)) {
+        setErrorIds((prev) => [...prev, currentWord.id])
+      }
       setTimeout(() => {
         setStatus('idle')
         handleNext(false)
@@ -55,7 +57,10 @@ export default function WrittenTest({ words, onComplete }: Props) {
     if (currentIndex < words.length - 1) {
       setCurrentIndex(currentIndex + 1)
     } else {
-      onComplete(ok ? [...successIds, currentWord.id] : successIds)
+      const finalErrors = ok
+        ? errorIds.filter((id) => id !== currentWord.id)
+        : Array.from(new Set([...errorIds, currentWord.id]))
+      onComplete(finalErrors)
     }
   }
 

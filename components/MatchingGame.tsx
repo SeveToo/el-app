@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { Button } from '@heroui/button'
-import { Card, CardBody } from '@heroui/card'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -15,20 +14,17 @@ interface Word {
 
 interface Props {
   words: Word[]
-  onComplete: (successCount: number) => void
+  onComplete: (errorIds: string[]) => void
 }
 
 export default function MatchingGame({ words, onComplete }: Props) {
-  const [selectedWord, setSelectedWord] = useState<string | null>(
-    null
-  )
-  const [selectedImage, setSelectedImage] = useState<string | null>(
-    null
-  )
+  const [selectedWord, setSelectedWord] = useState<string | null>(null)
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [matchedIds, setMatchedIds] = useState<string[]>([])
+  const [errorIds, setErrorIds] = useState<string[]>([])
   const [shuffleWords, setShuffleWords] = useState<Word[]>([])
   const [shuffleImages, setShuffleImages] = useState<Word[]>([])
-  const [isError, setIsError] = useState(false)
+  const [flashId, setFlashId] = useState<{ id: string; ok: boolean } | null>(null)
 
   useEffect(() => {
     setShuffleWords([...words].sort(() => Math.random() - 0.5))
@@ -38,97 +34,112 @@ export default function MatchingGame({ words, onComplete }: Props) {
   useEffect(() => {
     if (selectedWord && selectedImage) {
       if (selectedWord === selectedImage) {
-        setMatchedIds([...matchedIds, selectedWord])
-        if (matchedIds.length + 1 === words.length) {
-          setTimeout(() => onComplete(words.length), 800)
-        }
+        // Poprawne dopasowanie
+        setFlashId({ id: selectedWord, ok: true })
+        setTimeout(() => {
+          setMatchedIds((prev) => {
+            const next = [...prev, selectedWord!]
+            if (next.length === words.length) {
+              setTimeout(() => onComplete(errorIds), 600)
+            }
+            return next
+          })
+          setFlashId(null)
+        }, 500)
       } else {
-        setIsError(true)
-        setTimeout(() => setIsError(false), 800)
+        // Błąd
+        setFlashId({ id: selectedWord, ok: false })
+        if (!errorIds.includes(selectedWord)) {
+          setErrorIds((prev) => [...prev, selectedWord!])
+        }
+        setTimeout(() => setFlashId(null), 600)
       }
       setSelectedWord(null)
       setSelectedImage(null)
     }
   }, [selectedWord, selectedImage])
 
+  const getWordStyle = (id: string) => {
+    if (matchedIds.includes(id)) return 'opacity-0 pointer-events-none scale-90'
+    if (flashId?.id === id)
+      return flashId.ok
+        ? 'border-success bg-success/10 text-success scale-105'
+        : 'border-danger bg-danger/10 text-danger shake'
+    if (selectedWord === id) return 'border-primary bg-primary/10 text-primary scale-105'
+    return 'border-default-200 hover:border-primary/40 hover:bg-primary/5'
+  }
+
+  const getImageStyle = (id: string) => {
+    if (matchedIds.includes(id)) return 'opacity-0 pointer-events-none scale-90'
+    if (selectedImage === id) return 'border-primary ring-2 ring-primary scale-105'
+    return 'border-default-200 hover:border-primary/40'
+  }
+
   return (
-    <div className="flex flex-col items-center gap-8 w-full max-w-4xl mx-auto py-10">
-      <div className="w-full flex flex-col gap-2 px-4 max-w-md">
-        <div className="flex justify-between text-sm text-cyan-500 font-bold uppercase tracking-widest">
-          <span>Etap 2: Dopasowanie</span>
-          <span>
-            {matchedIds.length} / {words.length}
-          </span>
+    <div className="flex flex-col items-center gap-6 w-full max-w-2xl mx-auto py-6">
+      {/* Header */}
+      <div className="w-full flex flex-col gap-2 px-2">
+        <div className="flex justify-between text-xs font-black uppercase tracking-widest text-secondary">
+          <span>Etap 3: Dopasowanie</span>
+          <span>{matchedIds.length} / {words.length}</span>
         </div>
-        <Progress
-          value={(matchedIds.length / words.length) * 100}
-          color="secondary"
-        />
+        <Progress value={(matchedIds.length / words.length) * 100} color="secondary" />
       </div>
 
-      <div className="grid grid-cols-2 gap-x-12 gap-y-6 w-full px-6">
-        {/* Kolumna Słów */}
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold text-default-500 mb-2 uppercase text-center border-b pb-2">
-            Słowa 📖
-          </h3>
+      {/* Legenda */}
+      <div className="flex gap-4 text-xs text-default-400 font-semibold uppercase tracking-widest w-full px-2">
+        <span className="flex-1 text-center border-b-2 border-default-200 pb-1">📖 Słowa</span>
+        <span className="flex-1 text-center border-b-2 border-default-200 pb-1">🖼️ Obrazki</span>
+      </div>
+
+      {/* Grid dopasowywania */}
+      <div className="grid grid-cols-2 gap-3 w-full px-2">
+        {/* Kolumna słów */}
+        <div className="flex flex-col gap-3">
           {shuffleWords.map((word) => (
-            <motion.div
+            <motion.button
               key={word.id}
-              animate={
-                matchedIds.includes(word.id)
-                  ? { scale: 0, opacity: 0 }
-                  : { scale: 1, opacity: 1 }
-              }
-              className={`relative h-14 cursor-pointer rounded-xl border-2 flex items-center justify-center font-bold text-lg uppercase tracking-tight shadow-md transition-colors ${
-                selectedWord === word.id
-                  ? 'border-primary bg-primary/10 text-primary'
-                  : isError && selectedWord === word.id
-                    ? 'border-danger bg-danger/10 text-danger'
-                    : 'border-default-200 hover:border-primary/50'
-              }`}
-              onClick={() =>
-                !matchedIds.includes(word.id) &&
-                setSelectedWord(word.id)
-              }>
+              layout
+              transition={{ duration: 0.3 }}
+              className={`h-14 sm:h-16 cursor-pointer rounded-2xl border-2 flex items-center justify-center font-black text-sm sm:text-base uppercase tracking-wider shadow-sm transition-all duration-200 ${getWordStyle(word.id)}`}
+              onClick={() => !matchedIds.includes(word.id) && setSelectedWord(word.id)}
+            >
               {word.en}
-            </motion.div>
+            </motion.button>
           ))}
         </div>
 
-        {/* Kolumna Obrazków */}
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold text-default-500 mb-2 uppercase text-center border-b pb-2">
-            Obrazki 🖼️
-          </h3>
+        {/* Kolumna obrazków */}
+        <div className="flex flex-col gap-3">
           {shuffleImages.map((word) => (
-            <motion.div
+            <motion.button
               key={word.id}
-              animate={
-                matchedIds.includes(word.id)
-                  ? { scale: 0, opacity: 0 }
-                  : { scale: 1, opacity: 1 }
-              }
-              className={`relative aspect-video cursor-pointer rounded-xl border-2 flex items-center justify-center overflow-hidden shadow-md transition-all ${
-                selectedImage === word.id
-                  ? 'border-primary scale-105'
-                  : isError && selectedImage === word.id
-                    ? 'border-danger bg-danger/10'
-                    : 'border-default-200 hover:border-primary/50'
-              }`}
-              onClick={() =>
-                !matchedIds.includes(word.id) &&
-                setSelectedImage(word.id)
-              }>
+              layout
+              transition={{ duration: 0.3 }}
+              className={`h-14 sm:h-16 cursor-pointer rounded-2xl border-2 overflow-hidden shadow-sm transition-all duration-200 bg-white ${getImageStyle(word.id)}`}
+              onClick={() => !matchedIds.includes(word.id) && setSelectedImage(word.id)}
+            >
               <img
                 src={word.image}
-                alt="verb"
-                className="w-full h-full object-cover"
+                alt="match"
+                className="w-full h-full object-contain p-1"
+                draggable={false}
               />
-            </motion.div>
+            </motion.button>
           ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-6px); }
+          40% { transform: translateX(6px); }
+          60% { transform: translateX(-4px); }
+          80% { transform: translateX(4px); }
+        }
+        .shake { animation: shake 0.4s ease; }
+      `}</style>
     </div>
   )
 }

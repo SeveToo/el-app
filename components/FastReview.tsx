@@ -17,24 +17,23 @@ interface Word {
 
 interface Props {
   words: Word[]
-  onComplete: (successIds: string[]) => void
+  onComplete: (errorIds: string[]) => void
 }
 
 export default function FastReview({ words, onComplete }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [successIds, setSuccessIds] = useState<string[]>([])
+  const [errorIds, setErrorIds] = useState<string[]>([])
 
   const currentWord = words[currentIndex]
 
   const handleAction = (isOk: boolean) => {
-    if (isOk) {
-      setSuccessIds([...successIds, currentWord.id])
-    }
+    const newErrorIds = !isOk ? [...errorIds, currentWord.id] : errorIds
+    if (!isOk) setErrorIds(newErrorIds)
 
     if (currentIndex < words.length - 1) {
       setCurrentIndex(currentIndex + 1)
     } else {
-      onComplete(isOk ? [...successIds, currentWord.id] : successIds)
+      onComplete(newErrorIds)
     }
   }
 

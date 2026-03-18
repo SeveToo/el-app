@@ -17,22 +17,23 @@ interface Word {
 
 interface Props {
   words: Word[]
-  onComplete: (knownIds: string[]) => void
+  onComplete: (errorIds: string[]) => void
 }
 
 export default function Flashcards({ words, onComplete }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
-  const [knownIds, setKnownIds] = useState<string[]>([])
+  const [errorIds, setErrorIds] = useState<string[]>([])
   const [direction, setDirection] = useState<number>(0)
 
   const currentWord = words[currentIndex]
 
   const handleNext = (isKnown: boolean) => {
-    if (isKnown) {
-      setKnownIds([...knownIds, currentWord.id])
-    }
-    
+    const newErrorIds = !isKnown
+      ? [...errorIds, currentWord.id]
+      : errorIds
+    if (!isKnown) setErrorIds(newErrorIds)
+
     // Ustawiamy kierunek animacji (1 dla prawo, -1 dla lewo)
     setDirection(isKnown ? 1 : -1)
 
@@ -43,7 +44,7 @@ export default function Flashcards({ words, onComplete }: Props) {
         setIsFlipped(false)
         setDirection(0)
       } else {
-        onComplete(isKnown ? [...knownIds, currentWord.id] : knownIds)
+        onComplete(newErrorIds)
       }
     }, 400)
   }
