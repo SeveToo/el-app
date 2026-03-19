@@ -14,7 +14,7 @@ export const AdBanner = () => {
 
   return (
     <div className="w-full flex justify-center px-4 font-sans">
-      <Card className="w-full max-w-xl bg-default-100/50 dark:bg-default-50/10 backdrop-blur-md overflow-hidden shadow-sm border-2 border-transparent hover:border-primary hover:shadow-xl transition-all duration-300 group cursor-pointer active:scale-95 my-8">
+      <Card className="w-full max-w-xl bg-white/50 dark:bg-white/[0.05] backdrop-blur-md overflow-hidden shadow-sm border border-default-200 dark:border-white/10 hover:border-primary hover:shadow-xl transition-all duration-300 group cursor-pointer active:scale-95 my-8">
         <Link 
           href="https://hypekorepetycje.pl" 
           target="_blank"

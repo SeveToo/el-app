@@ -51,7 +51,7 @@ export const Navbar = () => {
             className="flex justify-start items-center gap-1"
             href="/">
             <AppLogo />
-            <p className="font-bold text-inherit">EL APP</p>
+            <p  className="pl-2 font-bold text-inherit"> APP</p>
           </NextLink>
         </NavbarBrand>
       </NavbarContent>
