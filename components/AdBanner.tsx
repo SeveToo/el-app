@@ -18,11 +18,10 @@ export const AdBanner = () => {
             <style dangerouslySetInnerHTML={{ __html: `
               @keyframes hueRotate {
                 0% { filter: hue-rotate(0deg); }
-                50% { filter: hue-rotate(30deg); }
-                100% { filter: hue-rotate(0deg); }
+                100% { filter: hue-rotate(360deg); }
               }
               .animate-banner-hue {
-                animation: hueRotate 12s infinite ease-in-out;
+                animation: hueRotate 12s infinite linear;
               }
             `}} />
             <img 
