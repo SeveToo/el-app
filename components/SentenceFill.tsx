@@ -55,23 +55,35 @@ export default function SentenceFill({ words, onComplete }: Props) {
   )
 
   const [isPlRevealed, setIsPlRevealed] = useState(false)
-  // Track if keyboard is open (viewport shrinks)
+  
+  // Visual Viewport tracking for mobile keyboard
+  const [vOffset, setVOffset] = useState(0)
   const [keyboardOpen, setKeyboardOpen] = useState(false)
 
   const currentWord = words[activeIndex]
 
-  // Detect keyboard open/close via visual viewport resize
   useEffect(() => {
     if (typeof window === 'undefined') return
     const vv = (window as any).visualViewport
     if (!vv) return
 
-    const onResize = () => {
+    const handleViewport = () => {
+      // Offset top ensures the fixed header follows the visual top (above keyboard scroll)
+      setVOffset(vv.offsetTop)
+      
+      // Determine if keyboard is likely open
       const ratio = vv.height / window.screen.height
       setKeyboardOpen(ratio < 0.75)
     }
-    vv.addEventListener('resize', onResize)
-    return () => vv.removeEventListener('resize', onResize)
+
+    vv.addEventListener('resize', handleViewport)
+    vv.addEventListener('scroll', handleViewport)
+    handleViewport()
+
+    return () => {
+      vv.removeEventListener('resize', handleViewport)
+      vv.removeEventListener('scroll', handleViewport)
+    }
   }, [])
 
   // Focus current input when activeIndex changes
@@ -309,10 +321,13 @@ export default function SentenceFill({ words, onComplete }: Props) {
       {/* Spacer – Rezerwacja miejsca pod fixed header */}
       <div className="h-[145px] sm:h-[165px] invisible pointer-events-none"></div>
 
-      {/* Fixed Header – Zawsze widoczny na górze (z-100) */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-background pt-3 pb-3 border-divider border-b px-3 shadow-md">
+      {/* Fixed Header – Dynamicznie pozycjonowany na górze widocznego obszaru (Visual Viewport) */}
+      <div 
+        className="fixed left-0 right-0 z-[100] bg-background pt-3 pb-3 border-divider border-b px-3 shadow-md transition-all duration-75"
+        style={{ top: `${vOffset}px` }}
+      >
         <div className="max-w-2xl mx-auto flex flex-col gap-2">
-          {/* TOP BAR: Progres + Żarówy (mała!) */}
+          {/* TOP BAR: Progres + Żarówy */}
           <div className="w-full flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-default-400">
             <div className="flex items-center gap-2">
               <span className="text-primary/70">ETAP 5</span>
@@ -362,7 +377,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
               </motion.div>
             </AnimatePresence>
 
-            {/* PL Hint Box (Blur box - user liked it) */}
+            {/* PL Hint Box */}
             <div className="flex-grow min-w-0">
                <div 
                 className="relative cursor-pointer group flex items-center justify-center min-h-[50px] px-1 sm:px-4 bg-primary/5 rounded-2xl border-2 border-primary/20 hover:bg-primary/10 transition-all overflow-hidden"
@@ -385,7 +400,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
         </div>
       </div>
 
-      {/* List of Sentences (Full Visibility) */}
+      {/* List of Sentences */}
       <div className="flex flex-col gap-2.5 px-2 pt-2">
         {words.map((word, index) => (
           <Card 
@@ -404,7 +419,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
         ))}
       </div>
 
-      {/* Hint Overlay (Grid but full screen) */}
+      {/* Hint Overlay */}
       <AnimatePresence>
         {showHint && (
           <motion.div 
