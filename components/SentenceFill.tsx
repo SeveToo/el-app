@@ -79,6 +79,13 @@ export default function SentenceFill({ words, onComplete }: Props) {
     setIsPlRevealed(false)
     if (!showHint) {
       inputRefs.current[activeIndex]?.[0]?.focus()
+      // Auto-scroll to active card
+      const el = inputRefs.current[activeIndex]?.[0]
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }, 100)
+      }
     }
   }, [activeIndex, showHint])
 
@@ -299,76 +306,71 @@ export default function SentenceFill({ words, onComplete }: Props) {
   return (
     <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto pb-40">
       
-      {/* Sticky Top Header – kompaktowy gdy klawiatura otwarta */}
-      <div className="sticky top-0 z-20 bg-background/90 backdrop-blur-md pt-3 pb-3 border-b border-divider">
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-full flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em] text-default-400 px-2">
-            <span>ETAP 5: UZUPEŁNIANIE</span>
+      {/* Sticky Top Header – Zawsze widoczny pomocnik */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-md pt-2 pb-2 border-b border-divider shadow-sm px-2 -mx-2 sm:mx-auto">
+        <div className="flex flex-col items-center gap-1">
+          {/* Progres – mini bar */}
+          <div className="w-full flex justify-between items-center text-[9px] font-black uppercase tracking-[0.2em] text-default-400 px-1">
+            <span>UZUPEŁNIANIE</span>
             <span>{statuses.filter(s => s === 'success').length} / {words.length}</span>
           </div>
           <Progress
             value={(statuses.filter(s => s === 'success').length / words.length) * 100}
             color="warning"
             size="sm"
-            className="w-full px-2"
+            className="w-full h-1"
           />
 
           <AnimatePresence mode="wait">
             <motion.div 
               key={currentWord.id}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="flex flex-col items-center gap-2 w-full"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex items-center gap-3 w-full py-1"
             >
-              {/* Obrazek – schowany gdy klawiatura otwarta */}
-              {!keyboardOpen && (
-                <div className="flex gap-3 items-center justify-center flex-wrap">
-                  {currentWord.image.split(',').map((imgSrc, idx) => (
-                    <img 
-                      key={idx}
-                      src={prefixPath(imgSrc.trim())} 
-                      alt={currentWord.pl}
-                      className="h-20 w-20 object-contain rounded-xl bg-white p-1 shadow-sm"
-                    />
-                  ))}
-                </div>
-              )}
+              {/* Obrazek – mniejszy ale ZAWSZE widoczny na mobile obok tekstu */}
+              <div className="shrink-0 flex items-center justify-center">
+                {currentWord.image.split(',').slice(0, 1).map((imgSrc, idx) => (
+                  <img 
+                    key={idx}
+                    src={prefixPath(imgSrc.trim())} 
+                    alt={currentWord.pl}
+                    className="h-10 w-10 sm:h-14 sm:w-14 object-contain rounded-lg bg-white p-0.5 shadow-sm border border-default-100"
+                  />
+                ))}
+              </div>
 
-              <div className="text-center w-full max-w-sm mx-auto">
+              {/* Tekst podpowiedzi PL */}
+              <div className="flex-grow min-w-0">
                 <div 
-                  className="relative cursor-pointer group flex justify-center items-center py-1 min-h-[40px]"
+                  className="relative cursor-pointer group flex items-center min-h-[40px] px-2 bg-default-50 rounded-xl border border-default-200"
                   onClick={() => setIsPlRevealed(true)}
                 >
-                  <h2 className={`text-base sm:text-lg font-black text-primary uppercase tracking-tight flex items-center justify-center text-center transition-all duration-300 w-full ${!isPlRevealed ? 'blur-md opacity-30 select-none' : 'blur-0 opacity-100'}`}>
+                  <div className={`text-xs sm:text-sm font-black text-primary uppercase tracking-tight transition-all duration-300 w-full ${!isPlRevealed ? 'blur-sm opacity-30 select-none' : 'blur-0 opacity-100'}`}>
                     {renderPlExample(currentWord)}
-                  </h2>
+                  </div>
                   
                   {!isPlRevealed && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <span className="bg-background shadow-xl px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-primary border-2 border-primary/20 transform group-hover:scale-105 group-active:scale-95 transition-all">
-                        👁️ Pokaż tłumaczenie
+                      <span className="text-[9px] font-black uppercase tracking-[0.1em] text-primary/80">
+                        👁️ Pokaż pomysł
                       </span>
                     </div>
                   )}
                 </div>
-
-                <div className="flex items-center justify-center gap-2 mt-1">
-                  <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">
-                    Wpisz brakujące słowo:
-                  </p>
-                  <Button 
-                    isIconOnly 
-                    size="sm" 
-                    variant="light" 
-                    className="text-warning min-w-unit-6 h-6 w-6"
-                    onClick={() => triggerHint(activeIndex)}
-                  >
-                    💡
-                  </Button>
-                </div>
               </div>
 
+              {/* Przycisk podpowiedzi 💡 */}
+              <Button 
+                isIconOnly 
+                size="sm" 
+                variant="flat" 
+                color="warning"
+                className="shrink-0 font-bold"
+                onClick={() => triggerHint(activeIndex)}
+              >
+                💡
+              </Button>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -393,46 +395,27 @@ export default function SentenceFill({ words, onComplete }: Props) {
         ))}
       </div>
 
-      {/* Pływający przycisk "Sprawdź" – widoczny zawsze, szczególnie gdy klawiatura jest otwarta */}
-      <AnimatePresence>
-        {statuses[activeIndex] !== 'success' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-0 left-0 right-0 z-30 flex flex-col gap-2 px-4 pb-4 pt-2 bg-background/90 backdrop-blur-md border-t border-divider"
-          >
-            <Button
-              className="w-full h-12 font-black text-base bg-warning text-warning-foreground uppercase tracking-widest rounded-2xl shadow-lg"
-              onPress={() => handleSubmit(activeIndex)}
-            >
-              Sprawdź ✅
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Hint Overlay */}
+      {/* Hint Overlay – Usprawniony pod Mobile */}
       <AnimatePresence>
         {showHint && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-background/90 backdrop-blur-xl flex items-center justify-center p-4"
+            className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl flex items-center justify-center p-2 sm:p-4"
           >
-            <div className="max-w-4xl w-full flex flex-col items-center gap-8">
-              <div className="text-center space-y-2">
-                <h3 className="text-3xl font-black uppercase tracking-tighter text-primary">Znajdź właściwe słowo</h3>
-                <p className="text-default-500 font-bold uppercase tracking-widest text-sm">Zatwierdź, aby wrócić do wpisywania</p>
+            <div className="max-w-4xl w-full flex flex-col items-center gap-4 sm:gap-8 max-h-screen overflow-y-auto py-8 px-4">
+              <div className="text-center space-y-1">
+                <h3 className="text-xl sm:text-3xl font-black uppercase tracking-tighter text-primary">Wybierz słowo</h3>
+                <p className="text-default-500 font-bold uppercase tracking-widest text-[10px] sm:text-sm">Kliknij poprawny obrazek</p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6 w-full max-w-2xl mx-auto">
                 {hintOptions.map((opt) => (
                   <Card 
                     key={opt.id}
                     isPressable
-                    className="aspect-square border-4 border-transparent hover:border-primary transition-all p-4 bg-content1"
+                    className="aspect-square border-2 sm:border-4 border-transparent hover:border-primary transition-all p-2 sm:p-4 bg-content1 shadow-xl"
                     onClick={() => {
                       if (opt.id === currentWord.id) {
                         setShowHint(false)
@@ -442,15 +425,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
                         audioService.playError()
                       }
                     }}
-
                   >
-                    <CardBody className="flex flex-col items-center justify-center gap-4">
-                      <div className="flex gap-2 items-center justify-center flex-wrap">
-                        {opt.image.split(',').map((imgSrc, idx) => (
-                           <img key={idx} src={prefixPath(imgSrc.trim())} className="h-20 w-20 object-contain" alt={opt.en} />
+                    <CardBody className="flex flex-col items-center justify-center gap-2 sm:gap-4 p-1 sm:p-4">
+                      <div className="flex gap-1 items-center justify-center flex-wrap">
+                        {opt.image.split(',').slice(0,1).map((imgSrc, idx) => (
+                           <img key={idx} src={prefixPath(imgSrc.trim())} className="h-16 w-16 sm:h-24 sm:w-24 object-contain" alt={opt.en} />
                         ))}
                       </div>
-                      <p className="text-xl font-black uppercase tracking-widest text-foreground">{opt.en}</p>
+                      <p className="text-xs sm:text-xl font-black uppercase tracking-widest text-foreground text-center line-clamp-1">{opt.en}</p>
                     </CardBody>
                   </Card>
                 ))}
@@ -459,10 +441,11 @@ export default function SentenceFill({ words, onComplete }: Props) {
               <Button 
                 variant="flat" 
                 color="danger" 
-                className="font-bold uppercase tracking-widest"
+                size="lg"
+                className="font-bold uppercase tracking-widest w-full sm:w-auto rounded-2xl"
                 onClick={() => setShowHint(false)}
               >
-                Zamknij podpowiedź
+                Zamknij ❌
               </Button>
             </div>
           </motion.div>
