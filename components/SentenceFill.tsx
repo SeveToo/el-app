@@ -387,11 +387,11 @@ export default function SentenceFill({ words, onComplete }: Props) {
         {words.map((word, index) => (
           <Card 
             key={word.id}
-            className={`transition-all duration-300 border ${
+            className={`transition-all duration-300 border-2 ${
               activeIndex === index 
-                ? 'border-primary ring-2 ring-primary/20 bg-primary/[0.03] scale-[1.01] shadow-lg z-10' 
-                : 'border-transparent bg-content1/40 opacity-40 grayscale-[0.5]'
-            } ${statuses[index] === 'success' ? 'opacity-20 grayscale scale-95 pointer-events-none' : ''}`}
+                ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-md z-10' 
+                : 'border-transparent bg-content1'
+            } ${statuses[index] === 'success' ? 'opacity-80 pointer-events-none' : ''}`}
             onClick={() => setActiveIndex(index)}
           >
             <CardBody className="p-4 sm:p-5">
