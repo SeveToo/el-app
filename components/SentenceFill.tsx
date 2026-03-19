@@ -244,7 +244,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
     const gapsCount = Math.floor(parts.length / 2)
     
     return (
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-3 py-1 text-xl font-medium text-default-600 leading-relaxed">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-3 py-1 text-base sm:text-xl font-medium text-default-600 leading-relaxed">
         {parts.map((part, i) => {
           if (i % 2 !== 0) {
             const gapIdx = Math.floor(i / 2)
@@ -254,14 +254,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
                   key={i}
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="inline-block px-2 py-0.5 rounded-lg bg-success/20 text-success font-black text-xl uppercase tracking-wider"
+                  className="inline-block px-1.5 py-0 rounded-lg bg-success/10 text-success font-black text-base sm:text-xl uppercase tracking-wider"
                 >
                   {part}
                 </motion.span>
               )
             }
             return (
-              <div key={i} className="inline-block min-w-[80px]">
+              <div key={i} className="inline-block min-w-[70px]">
                 <Input
                   ref={(el: any) => {
                     if (!inputRefs.current[index]) inputRefs.current[index] = [];
@@ -285,7 +285,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
                   }
                   placeholder="..."
                   classNames={{
-                    input: `text-lg font-black uppercase text-center tracking-widest ${
+                    input: `text-base sm:text-lg font-black uppercase text-center tracking-widest ${
                       activeIndex === index ? 'text-warning' : 'text-default-400'
                     }`,
                     inputWrapper: "border-b-2"
@@ -304,19 +304,48 @@ export default function SentenceFill({ words, onComplete }: Props) {
 
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-2xl mx-auto pb-40">
+    <div className="flex flex-col gap-3 w-full max-w-2xl mx-auto pb-40">
       
-      {/* Dynamic Header – Przykrywamy Navbar jeśli nam przeszkadza (z-50) */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-md pt-3 pb-3 border-b-2 border-primary/20 shadow-sm px-4 -mx-4 sm:mx-0 sm:rounded-b-[2rem]">
-        <div className="flex flex-col gap-3">
-          {/* Nowy Układ: Duży obrazek po lewej, tekst i przycisk po prawej */}
-          <div className="flex items-center gap-4">
-            {/* DUŻY OBRAZEK */}
+      {/* Dynamic Compact Header – Maksymalnie oszczędny a użyteczny */}
+      <div className="sticky top-0 z-50 bg-background/98 backdrop-blur-md pt-2 pb-2 border-b-2 border-primary/10 shadow-md px-3 -mx-3 sm:mx-0 sm:rounded-b-2xl">
+        <div className="flex flex-col gap-1.5">
+          {/* TOP BAR: Progres + Żarówy (mała!) */}
+          <div className="w-full flex justify-between items-center text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] text-default-400">
+            <div className="flex items-center gap-2">
+              <span className="text-primary/70">ETAP 5</span>
+              <span>{activeIndex + 1} / {words.length}</span>
+            </div>
+            
+            <div className="flex items-center gap-3">
+               <span>POSTĘP: {Math.round((statuses.filter(s => s === 'success').length / words.length) * 100)}%</span>
+               <Button 
+                  isIconOnly 
+                  size="sm" 
+                  variant="flat" 
+                  color="warning"
+                  className="w-6 h-6 min-w-0 font-bold rounded-lg ml-2"
+                  onClick={() => triggerHint(activeIndex)}
+                >
+                  💡
+              </Button>
+            </div>
+          </div>
+
+          <Progress
+            value={(statuses.filter(s => s === 'success').length / words.length) * 100}
+            color="primary"
+            size="sm"
+            className="h-1"
+          />
+
+          {/* MAIN BAR: Duży obrazek + Dużo miejsca na tekst */}
+          <div className="flex items-center gap-2.5 mt-0.5">
+            {/* Obrazek (nadal duży ale zwarty) */}
             <AnimatePresence mode="wait">
               <motion.div 
                 key={currentWord.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
                 className="shrink-0"
               >
                 {currentWord.image.split(',').slice(0, 1).map((imgSrc, idx) => (
@@ -324,78 +353,55 @@ export default function SentenceFill({ words, onComplete }: Props) {
                     key={idx}
                     src={prefixPath(imgSrc.trim())} 
                     alt={currentWord.pl}
-                    className="h-24 w-24 sm:h-32 sm:w-32 object-contain rounded-2xl bg-white p-2 border-2 border-default-200"
+                    className="h-20 w-20 sm:h-24 sm:w-24 object-contain rounded-xl bg-white p-1 border border-default-200"
                   />
                 ))}
               </motion.div>
             </AnimatePresence>
 
-            {/* PRAWA STRONA: Progres + Hint */}
-            <div className="flex flex-col gap-2 flex-grow min-w-0">
-               <div className="w-full flex justify-between items-center text-[10px] sm:text-xs font-black uppercase tracking-widest text-default-400">
-                <span>RUNDA {activeIndex + 1}</span>
-                <span>{statuses.filter(s => s === 'success').length} / {words.length}</span>
-              </div>
-              <Progress
-                value={(statuses.filter(s => s === 'success').length / words.length) * 100}
-                color="primary"
-                size="sm"
-                className="h-1.5"
-              />
-
+            {/* PL Hint – Maksymalna przestrzeń */}
+            <div className="flex-grow min-w-0">
               <div 
-                className="relative cursor-pointer group flex items-center min-h-[56px] px-4 bg-primary/5 rounded-2xl border-2 border-primary/20 hover:bg-primary/10 transition-all active:scale-98 mt-1"
+                className="relative cursor-pointer group flex items-center min-h-[44px] px-3 bg-primary/5 rounded-xl border border-primary/10 hover:bg-primary/10 transition-colors"
                 onClick={() => setIsPlRevealed(true)}
               >
-                <div className={`text-sm sm:text-lg font-black text-primary uppercase leading-tight w-full ${!isPlRevealed ? 'blur-md opacity-20 select-none' : 'blur-0 opacity-100'}`}>
+                <div className={`text-sm sm:text-base font-black text-primary uppercase leading-tight w-full ${!isPlRevealed ? 'blur-md opacity-20 select-none' : 'blur-0 opacity-100'}`}>
                   {renderPlExample(currentWord)}
                 </div>
                 
                 {!isPlRevealed && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="bg-primary text-white px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">
-                      👁️ POKAŻ POMYSŁ
+                    <span className="text-[9px] font-black uppercase tracking-widest text-primary/70">
+                      👁️ DOTKNIJ BY ZOBACZYĆ POWIEDZENIE
                     </span>
                   </div>
                 )}
               </div>
             </div>
-
-            {/* PRZYCISK 💡 */}
-            <Button 
-                isIconOnly 
-                size="lg" 
-                variant="solid" 
-                color="warning"
-                className="shrink-0 font-bold rounded-2xl shadow-xl hover:scale-110"
-                onClick={() => triggerHint(activeIndex)}
-              >
-                💡
-            </Button>
           </div>
         </div>
       </div>
 
       {/* List of Sentences */}
-      <div className="flex flex-col gap-2 px-2 pt-4">
+      <div className="flex flex-col gap-2.5 px-2 pt-2">
         {words.map((word, index) => (
           <Card 
             key={word.id}
-            className={`transition-all duration-300 border-2 ${
+            className={`transition-all duration-300 border ${
               activeIndex === index 
-                ? 'border-primary ring-4 ring-primary/10 bg-primary/[0.02] shadow-xl z-10' 
-                : 'border-transparent bg-content1/50 opacity-40 grayscale-[0.5]'
-            } ${statuses[index] === 'success' ? 'opacity-30 grayscale' : ''}`}
+                ? 'border-primary ring-2 ring-primary/20 bg-primary/[0.03] scale-[1.01] shadow-lg z-10' 
+                : 'border-transparent bg-content1/40 opacity-40 grayscale-[0.5]'
+            } ${statuses[index] === 'success' ? 'opacity-20 grayscale scale-95 pointer-events-none' : ''}`}
             onClick={() => setActiveIndex(index)}
           >
-            <CardBody className="p-5">
+            <CardBody className="p-4 sm:p-5">
               {renderSentence(word, index)}
             </CardBody>
           </Card>
         ))}
       </div>
 
-      {/* Hint Overlay – UKŁAD LISTY (Obrazek po lewej, Duży tekst po prawej) */}
+      {/* Hint Overlay – UKŁAD LISTY (Ujednolicony) */}
       <AnimatePresence>
         {showHint && (
           <motion.div 
@@ -404,18 +410,18 @@ export default function SentenceFill({ words, onComplete }: Props) {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] bg-background/98 backdrop-blur-2xl flex items-center justify-center p-4"
           >
-            <div className="max-w-xl w-full flex flex-col items-center gap-8 max-h-screen overflow-y-auto py-10 px-4">
-              <div className="text-center space-y-2">
-                <h3 className="text-3xl font-black uppercase tracking-tighter text-primary">Znajdź pasujące słowo</h3>
-                <p className="text-default-500 font-bold uppercase tracking-widest text-xs">Kliknij poprawną odpowiedź z listy</p>
+            <div className="max-w-xl w-full flex flex-col items-center gap-6 max-h-screen overflow-y-auto py-10 px-4">
+              <div className="text-center space-y-1">
+                <h3 className="text-2xl font-black uppercase tracking-tighter text-primary">Znajdź pasujące słowo</h3>
+                <p className="text-default-500 font-bold uppercase tracking-widest text-[9px]">Wybierz poprawną odpowiedź</p>
               </div>
 
-              <div className="flex flex-col gap-4 w-full">
+              <div className="flex flex-col gap-3 w-full">
                 {hintOptions.map((opt) => (
                   <Card 
                     key={opt.id}
                     isPressable
-                    className="w-full border-3 border-transparent hover:border-primary transition-all bg-content1 shadow-xl hover:scale-[1.02] active:scale-95"
+                    className="w-full border border-default-200 hover:border-primary transition-all bg-content1 shadow-md hover:scale-[1.01] active:scale-95"
                     onClick={() => {
                       if (opt.id === currentWord.id) {
                         setShowHint(false)
@@ -426,15 +432,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
                       }
                     }}
                   >
-                    <CardBody className="flex flex-row items-center gap-6 p-5">
-                      <div className="shrink-0 bg-white p-2 rounded-2xl border-2 border-default-100 shadow-sm">
+                    <CardBody className="flex flex-row items-center gap-4 p-4">
+                      <div className="shrink-0 bg-white p-1 rounded-xl border border-default-100 shadow-sm">
                         {opt.image.split(',').slice(0, 1).map((imgSrc, idx) => (
-                           <img key={idx} src={prefixPath(imgSrc.trim())} className="h-20 w-20 sm:h-24 sm:w-24 object-contain" alt={opt.en} />
+                           <img key={idx} src={prefixPath(imgSrc.trim())} className="h-14 w-14 sm:h-16 sm:w-16 object-contain" alt={opt.en} />
                         ))}
                       </div>
                       <div className="flex-grow text-left">
-                        <p className="text-2xl sm:text-3xl font-black uppercase tracking-widest text-foreground">{opt.en}</p>
-                        <p className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mt-1">Wybierz to słowo</p>
+                        <p className="text-lg sm:text-2xl font-black uppercase tracking-widest text-foreground">{opt.en}</p>
                       </div>
                     </CardBody>
                   </Card>
@@ -445,10 +450,10 @@ export default function SentenceFill({ words, onComplete }: Props) {
                 variant="flat" 
                 color="danger" 
                 size="lg"
-                className="font-black uppercase tracking-[0.2em] w-full rounded-2xl h-14"
+                className="font-black uppercase tracking-[0.2em] w-full rounded-2xl h-12"
                 onClick={() => setShowHint(false)}
               >
-                Anuluj ❌
+                Zamknij ❌
               </Button>
             </div>
           </motion.div>
