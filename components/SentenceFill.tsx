@@ -220,7 +220,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
       if (isMatch && !highlighted) {
         highlighted = true
         return (
-          <span key={i} className="text-warning-500 bg-warning-50/20 px-1 py-0.5 rounded-md underline decoration-warning/50 decoration-4 underline-offset-4">
+          <span key={i} className="text-warning-500 font-black">
             {part}
           </span>
         )
@@ -230,10 +230,10 @@ export default function SentenceFill({ words, onComplete }: Props) {
     })
 
     return (
-      <span className="inline-flex items-center flex-wrap justify-center gap-x-1">
+      <span className="inline-flex items-center flex-wrap justify-center gap-x-1.5">
         {rendered}
         {!highlighted && (
-           <span className="text-warning-500 opacity-90 ml-2 bg-warning-50/20 px-1.5 py-0.5 rounded-lg text-lg border-2 border-warning/20">({word.pl})</span>
+           <span className="text-warning font-black">({word.pl})</span>
         )}
       </span>
     )
@@ -244,7 +244,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
     const gapsCount = Math.floor(parts.length / 2)
     
     return (
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-3 py-1 text-base sm:text-xl font-medium text-default-600 leading-relaxed">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-3 py-1 text-base sm:text-lg font-medium text-default-600 leading-relaxed">
         {parts.map((part, i) => {
           if (i % 2 !== 0) {
             const gapIdx = Math.floor(i / 2)
@@ -254,7 +254,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
                   key={i}
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="inline-block px-1.5 py-0 rounded-lg bg-success/10 text-success font-black text-base sm:text-xl uppercase tracking-wider"
+                  className="inline-block px-1.5 py-0 rounded-lg bg-success/10 text-success font-black text-base sm:text-lg uppercase tracking-wider"
                 >
                   {part}
                 </motion.span>
@@ -304,13 +304,16 @@ export default function SentenceFill({ words, onComplete }: Props) {
 
 
   return (
-    <div className="flex flex-col gap-3 w-full max-w-2xl mx-auto pb-40">
+    <div className="flex flex-col gap-2 w-full max-w-2xl mx-auto pb-40">
       
-      {/* Dynamic Compact Header – Maksymalnie oszczędny a użyteczny */}
-      <div className="sticky top-0 z-50 bg-background/98 backdrop-blur-md pt-2 pb-2 border-b-2 border-primary/10 shadow-md px-3 -mx-3 sm:mx-0 sm:rounded-b-2xl">
-        <div className="flex flex-col gap-1.5">
+      {/* Spacer – Rezerwacja miejsca pod fixed header */}
+      <div className="h-[145px] sm:h-[165px] invisible pointer-events-none"></div>
+
+      {/* Fixed Header – Zawsze widoczny na górze (z-100) */}
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-background pt-3 pb-3 border-divider border-b px-3 shadow-md">
+        <div className="max-w-2xl mx-auto flex flex-col gap-2">
           {/* TOP BAR: Progres + Żarówy (mała!) */}
-          <div className="w-full flex justify-between items-center text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] text-default-400">
+          <div className="w-full flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-default-400">
             <div className="flex items-center gap-2">
               <span className="text-primary/70">ETAP 5</span>
               <span>{activeIndex + 1} / {words.length}</span>
@@ -339,7 +342,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
           />
 
           {/* MAIN BAR: Duży obrazek + Dużo miejsca na tekst */}
-          <div className="flex items-center gap-2.5 mt-0.5">
+          <div className="flex items-center gap-3 mt-1">
             {/* Obrazek (nadal duży ale zwarty) */}
             <AnimatePresence mode="wait">
               <motion.div 
@@ -359,21 +362,21 @@ export default function SentenceFill({ words, onComplete }: Props) {
               </motion.div>
             </AnimatePresence>
 
-            {/* PL Hint – Maksymalna przestrzeń */}
+            {/* PL Hint Box (Blur box - user liked it) */}
             <div className="flex-grow min-w-0">
-              <div 
-                className="relative cursor-pointer group flex items-center min-h-[44px] px-3 bg-primary/5 rounded-xl border border-primary/10 hover:bg-primary/10 transition-colors"
+               <div 
+                className="relative cursor-pointer group flex items-center justify-center min-h-[50px] px-1 sm:px-4 bg-primary/5 rounded-2xl border-2 border-primary/20 hover:bg-primary/10 transition-all overflow-hidden"
                 onClick={() => setIsPlRevealed(true)}
               >
-                <div className={`text-sm sm:text-base font-black text-primary uppercase leading-tight w-full ${!isPlRevealed ? 'blur-md opacity-20 select-none' : 'blur-0 opacity-100'}`}>
+                <div className={`text-sm sm:text-base font-black text-primary uppercase leading-tight text-center w-full transition-all duration-500 ${!isPlRevealed ? 'blur-xl opacity-10 select-none scale-110' : 'blur-0 opacity-100 scale-100'}`}>
                   {renderPlExample(currentWord)}
                 </div>
                 
                 {!isPlRevealed && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-primary/70">
-                      👁️ DOTKNIJ BY ZOBACZYĆ POWIEDZENIE
-                    </span>
+                    <div className="bg-primary/90 text-white px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-xl border border-white/20">
+                      👁️ POKAŻ PODPOWIEDŹ
+                    </div>
                   </div>
                 )}
               </div>
@@ -382,7 +385,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
         </div>
       </div>
 
-      {/* List of Sentences */}
+      {/* List of Sentences (Full Visibility) */}
       <div className="flex flex-col gap-2.5 px-2 pt-2">
         {words.map((word, index) => (
           <Card 
@@ -401,14 +404,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
         ))}
       </div>
 
-      {/* Hint Overlay – UKŁAD LISTY (Ujednolicony) */}
+      {/* Hint Overlay (Grid but full screen) */}
       <AnimatePresence>
         {showHint && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-background/98 backdrop-blur-2xl flex items-center justify-center p-4"
+            className="fixed inset-0 z-[101] bg-background/98 backdrop-blur-2xl flex items-center justify-center p-4"
           >
             <div className="max-w-xl w-full flex flex-col items-center gap-6 max-h-screen overflow-y-auto py-10 px-4">
               <div className="text-center space-y-1">
