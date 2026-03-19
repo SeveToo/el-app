@@ -12,7 +12,7 @@ import * as React from 'react'
 import NextLink from 'next/link'
 
 import { ThemeSwitch } from '@/components/theme-switch'
-import { Logo } from '@/components/icons'
+import { AppLogo } from '@/components/AppLogo'
 
 const NavbarContentWrapper = () => {
   const router = useRouter()
@@ -50,7 +50,7 @@ export const Navbar = () => {
           <NextLink
             className="flex justify-start items-center gap-1"
             href="/">
-            <Logo />
+            <AppLogo />
             <p className="font-bold text-inherit">EL APP</p>
           </NextLink>
         </NavbarBrand>

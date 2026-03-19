@@ -5,7 +5,7 @@
     "pl": "Gotować / Patelnia",
     "en_example": "The chef can [cook] eggs in the [frying pan].",
     "pl_example": "Szef kuchni potrafi ugotować jajka na patelni.",
-    "image": "/el-app/action_verbs/Cook.webp, /kitchen_tools/frying_pan.webp",
+    "image": "/action_verbs/Cook.webp, /kitchen_tools/frying_pan.webp",
     "status": 0
   },
   {
@@ -14,7 +14,7 @@
     "pl": "Lekarz / Prowadzić auto",
     "en_example": "The [doctor] can [drive] a fast car.",
     "pl_example": "Lekarz potrafi prowadzić samochód.",
-    "image": "/el-app/jobs/Doctor.webp, /action_verbs/Drive.webp",
+    "image": "/jobs/Doctor.webp, /action_verbs/Drive.webp",
     "status": 0
   },
   {
@@ -23,7 +23,7 @@
     "pl": "Na / Talerz",
     "en_example": "Put the sandwich [on] the [plate].",
     "pl_example": "Połóż kanapkę na talerzu.",
-    "image": "/el-app/prepositions/On.webp, /kitchen_tools/plate.webp",
+    "image": "/prepositions/On.webp, /kitchen_tools/plate.webp",
     "status": 0
   },
   {
@@ -32,7 +32,7 @@
     "pl": "Pod / Talerz",
     "en_example": "The spoon is [under] the [plate].",
     "pl_example": "Łyżka jest pod talerzem.",
-    "image": "/el-app/prepositions/Under.webp, /kitchen_tools/plate.webp",
+    "image": "/prepositions/Under.webp, /kitchen_tools/plate.webp",
     "status": 0
   },
   {
@@ -41,7 +41,7 @@
     "pl": "Pilot / Latać",
     "en_example": "The [pilot] can [fly] above the clouds.",
     "pl_example": "Pilot potrafi latać nad chmurami.",
-    "image": "/el-app/jobs/Pilot.webp, /action_verbs/Fly.webp",
+    "image": "/jobs/Pilot.webp, /action_verbs/Fly.webp",
     "status": 0
   },
   {
@@ -50,7 +50,7 @@
     "pl": "Nauczyciel / Przed",
     "en_example": "The [teacher] stands [in front of] the board.",
     "pl_example": "Nauczyciel stoi przed tablicą.",
-    "image": "/el-app/jobs/Teacher.webp, /prepositions/In_front_of.webp",
+    "image": "/jobs/Teacher.webp, /prepositions/In_front_of.webp",
     "status": 0
   },
   {
@@ -59,7 +59,7 @@
     "pl": "Nóż",
     "en_example": "The chef cuts with a [knife].",
     "pl_example": "Szef kuchni kroi nożem.",
-    "image": "/el-app/kitchen_tools/knife.webp",
+    "image": "/kitchen_tools/knife.webp",
     "status": 0
   },
   {
@@ -68,7 +68,7 @@
     "pl": "Policjant / Za",
     "en_example": "The [police officer] hides [behind] the car.",
     "pl_example": "Policjant chowa się za samochodem.",
-    "image": "/el-app/jobs/Police_Officer.webp, /prepositions/Behind.webp",
+    "image": "/jobs/Police_Officer.webp, /prepositions/Behind.webp",
     "status": 0
   },
   {
@@ -77,7 +77,7 @@
     "pl": "Pić / Filiżanka",
     "en_example": "I [drink] tea from the [cup].",
     "pl_example": "Piję herbatę z filiżanki.",
-    "image": "/el-app/action_verbs/Drink.webp, /kitchen_tools/cup.webp",
+    "image": "/action_verbs/Drink.webp, /kitchen_tools/cup.webp",
     "status": 0
   },
   {
@@ -86,7 +86,7 @@
     "pl": "Rolnik / Obok",
     "en_example": "The [farmer] works [next to] the tractor.",
     "pl_example": "Rolnik pracuje obok traktora.",
-    "image": "/el-app/jobs/Farmer.webp, /prepositions/Next_to.webp",
+    "image": "/jobs/Farmer.webp, /prepositions/Next_to.webp",
     "status": 0
   },
   {
@@ -95,7 +95,7 @@
     "pl": "W / Miska",
     "en_example": "Put the soup [in] the [bowl].",
     "pl_example": "Wlej zupę do miski.",
-    "image": "/el-app/prepositions/In.webp, /kitchen_tools/bowl.webp",
+    "image": "/prepositions/In.webp, /kitchen_tools/bowl.webp",
     "status": 0
   },
   {
@@ -104,7 +104,7 @@
     "pl": "Pomiędzy",
     "en_example": "The singer stands [between] two dancers.",
     "pl_example": "Piosenkarz stoi pomiędzy dwoma tancerzami.",
-    "image": "/el-app/prepositions/Between.webp",
+    "image": "/prepositions/Between.webp",
     "status": 0
   },
   {
@@ -113,7 +113,7 @@
     "pl": "Budowniczy / Budować / Blisko",
     "en_example": "The [builder] will [build] a house [near] the river.",
     "pl_example": "Budowniczy zbuduje dom blisko rzeki.",
-    "image": "/el-app/jobs/Builder.webp, /action_verbs/Build.webp, /prepositions/Near.webp",
+    "image": "/jobs/Builder.webp, /action_verbs/Build.webp, /prepositions/Near.webp",
     "status": 0
   },
   {
@@ -122,7 +122,7 @@
     "pl": "Naukowiec",
     "en_example": "The [scientist] does experiments.",
     "pl_example": "Naukowiec przeprowadza eksperymenty.",
-    "image": "/el-app/jobs/Scientist.webp",
+    "image": "/jobs/Scientist.webp",
     "status": 0
   },
   {
@@ -131,7 +131,7 @@
     "pl": "Mechanik / Pod",
     "en_example": "The [mechanic] works [under] the car.",
     "pl_example": "Mechanik pracuje pod samochodem.",
-    "image": "/el-app/jobs/Mechanic.webp, /prepositions/Under.webp",
+    "image": "/jobs/Mechanic.webp, /prepositions/Under.webp",
     "status": 0
   },
   {
@@ -140,7 +140,7 @@
     "pl": "Artysta / Tańczyć",
     "en_example": "The [artist] likes to [dance].",
     "pl_example": "Artysta lubi tańczyć.",
-    "image": "/el-app/jobs/Artist.webp, /action_verbs/Dance.webp",
+    "image": "/jobs/Artist.webp, /action_verbs/Dance.webp",
     "status": 0
   },
   {
@@ -149,7 +149,7 @@
     "pl": "Łyżka / Miska",
     "en_example": "Eat the soup from the [bowl] with a [spoon].",
     "pl_example": "Zjedz zupę z miski łyżką.",
-    "image": "/el-app/kitchen_tools/bowl.webp, /kitchen_tools/spoon.webp",
+    "image": "/kitchen_tools/bowl.webp, /kitchen_tools/spoon.webp",
     "status": 0
   },
   {
@@ -158,7 +158,7 @@
     "pl": "Blisko / Talerz",
     "en_example": "The cup is [near] the [plate].",
     "pl_example": "Filiżanka stoi blisko talerza.",
-    "image": "/el-app/prepositions/Near.webp, /kitchen_tools/plate.webp",
+    "image": "/prepositions/Near.webp, /kitchen_tools/plate.webp",
     "status": 0
   },
   {
@@ -167,7 +167,7 @@
     "pl": "Nad",
     "en_example": "The bird flies [above] the house.",
     "pl_example": "Ptak leci nad domem.",
-    "image": "/el-app/prepositions/Above.webp",
+    "image": "/prepositions/Above.webp",
     "status": 0
   },
   {
@@ -176,7 +176,7 @@
     "pl": "Przytulać",
     "en_example": "Give me a [hug].",
     "pl_example": "Przytul mnie.",
-    "image": "/el-app/action_verbs/Hug.webp",
+    "image": "/action_verbs/Hug.webp",
     "status": 0
   }
 ]

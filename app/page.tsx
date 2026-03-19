@@ -100,17 +100,14 @@ function HomeContent() {
         {/* Banner na górze */}
         <AdBanner />
 
-        {/* Swicz zamianst napisu */}
-        <div className="flex justify-center -mb-2">
+        {/* Swicz widoczny tylko na mobile, zastępuje h1 */}
+        <div className="flex justify-center -mb-2 sm:hidden">
           <Tabs 
             aria-label="Wybierz przedmiot" 
             color="primary" 
-            variant="bordered"
             radius="full"
-            size="lg"
             selectedKey={subjectParam}
             onSelectionChange={handleSelectionChange}
-            className="font-bold uppercase tracking-wider"
           >
             <Tab key="english" title="Angielski" />
             <Tab key="math" title="Matematyka" />

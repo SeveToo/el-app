@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   icons: {
-    icon: '/el-app/logo.png',
-    shortcut: '/el-app/logo.png',
+    icon: '/el-app/favicon.ico',
+    shortcut: '/el-app/favicon.ico',
     apple: '/el-app/logo.png',
   },
   manifest: '/el-app/site.webmanifest',

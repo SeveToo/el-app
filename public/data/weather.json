@@ -5,7 +5,7 @@
     "pl": "Pochmurno",
     "en_example": "It is cloudy today, bring a jacket.",
     "pl_example": "Dzisiaj jest pochmurno, weź kurtkę.",
-    "image": "/el-app/weather/Cloudy.webp",
+    "image": "/weather/Cloudy.webp",
     "status": 0
   },
   {
@@ -14,7 +14,7 @@
     "pl": "Mgliście",
     "en_example": "It is foggy in the morning.",
     "pl_example": "Rano jest mgliście.",
-    "image": "/el-app/weather/Foggy.webp",
+    "image": "/weather/Foggy.webp",
     "status": 0
   },
   {
@@ -23,7 +23,7 @@
     "pl": "Deszczowo",
     "en_example": "It is rainy outside, take an umbrella.",
     "pl_example": "Na zewnątrz jest deszczowo, weź parasol.",
-    "image": "/el-app/weather/Rainy.webp",
+    "image": "/weather/Rainy.webp",
     "status": 0
   },
   {
@@ -32,7 +32,7 @@
     "pl": "Śnieżnie",
     "en_example": "It is snowy and cold today.",
     "pl_example": "Dzisiaj jest śnieżnie i zimno.",
-    "image": "/el-app/weather/Snowy.webp",
+    "image": "/weather/Snowy.webp",
     "status": 0
   },
   {
@@ -41,7 +41,7 @@
     "pl": "Burzowo",
     "en_example": "Stay inside, it is stormy outside.",
     "pl_example": "Zostań w środku, na zewnątrz jest burzowo.",
-    "image": "/el-app/weather/Stormy.webp",
+    "image": "/weather/Stormy.webp",
     "status": 0
   },
   {
@@ -50,7 +50,7 @@
     "pl": "Słonecznie",
     "en_example": "It is sunny, let's go to the park.",
     "pl_example": "Jest słonecznie, chodźmy do parku.",
-    "image": "/el-app/weather/Sunny.webp",
+    "image": "/weather/Sunny.webp",
     "status": 0
   },
   {
@@ -59,7 +59,7 @@
     "pl": "Wietrznie",
     "en_example": "It is very windy today.",
     "pl_example": "Dzisiaj jest bardzo wietrznie.",
-    "image": "/el-app/weather/Windy.webp",
+    "image": "/weather/Windy.webp",
     "status": 0
   }
 ]
