@@ -7,6 +7,7 @@ import { Progress } from '@heroui/progress'
 import { Input } from '@heroui/input'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
+import { prefixPath } from '@/lib/utils'
 
 
 interface Word {
@@ -154,7 +155,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
                   {currentWord.image.split(',').map((imgSrc, idx, arr) => (
                     <img
                       key={idx}
-                      src={imgSrc.trim()}
+                      src={prefixPath(imgSrc.trim())}
                       alt={currentWord.pl}
                       className={`object-contain rounded-2xl ${arr.length > 1 ? 'w-24 h-24' : 'w-36 h-36'}`}
                     />

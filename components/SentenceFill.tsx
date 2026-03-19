@@ -8,6 +8,7 @@ import { Input } from '@heroui/input'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { audioService } from '@/lib/audio'
+import { prefixPath } from '@/lib/utils'
 
 const removeDiacritics = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ł/g, "l").replace(/Ł/g, "L")
 
@@ -302,7 +303,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
                 {currentWord.image.split(',').map((imgSrc, idx) => (
                   <img 
                     key={idx}
-                    src={imgSrc.trim()} 
+                    src={prefixPath(imgSrc.trim())} 
                     alt={currentWord.pl}
                     className="h-32 w-32 object-contain rounded-2xl bg-white p-2 shadow-sm"
                   />
@@ -402,7 +403,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
                     <CardBody className="flex flex-col items-center justify-center gap-4">
                       <div className="flex gap-2 items-center justify-center flex-wrap">
                         {opt.image.split(',').map((imgSrc, idx) => (
-                           <img key={idx} src={imgSrc.trim()} className="h-20 w-20 object-contain" alt={opt.en} />
+                           <img key={idx} src={prefixPath(imgSrc.trim())} className="h-20 w-20 object-contain" alt={opt.en} />
                         ))}
                       </div>
                       <p className="text-xl font-black uppercase tracking-widest text-foreground">{opt.en}</p>

@@ -7,6 +7,7 @@ import { Progress } from '@heroui/progress'
 import { Tooltip } from '@heroui/tooltip'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
+import { prefixPath } from '@/lib/utils'
 
 
 interface Word {
@@ -134,7 +135,7 @@ export default function Flashcards({ words, onComplete }: Props) {
                   {currentWord.image.split(',').map((imgSrc, idx) => (
                     <img
                       key={idx}
-                      src={imgSrc.trim()}
+                      src={prefixPath(imgSrc.trim())}
                       alt={currentWord.pl}
                       className="max-h-32 md:max-h-40 object-contain rounded-2xl shadow-sm"
                     />
@@ -158,7 +159,7 @@ export default function Flashcards({ words, onComplete }: Props) {
                   {currentWord.image.split(',').map((imgSrc, idx) => (
                     <img
                       key={idx}
-                      src={imgSrc.trim()}
+                      src={prefixPath(imgSrc.trim())}
                       alt={currentWord.en}
                       className="max-h-32 md:max-h-40 object-contain rounded-2xl"
                     />
@@ -169,7 +170,7 @@ export default function Flashcards({ words, onComplete }: Props) {
                     {currentWord.image.split(',').map((imgSrc, idx) => (
                       <img
                         key={idx}
-                        src={imgSrc.trim()}
+                        src={prefixPath(imgSrc.trim())}
                         alt={currentWord.en}
                         className="max-h-32 md:max-h-40 object-contain rounded-2xl shadow-sm"
                       />

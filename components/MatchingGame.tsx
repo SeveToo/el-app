@@ -5,6 +5,7 @@ import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
+import { prefixPath } from '@/lib/utils'
 
 
 interface Word {
@@ -134,7 +135,7 @@ export default function MatchingGame({ words, onComplete }: Props) {
                 {word.image.split(',').map((imgSrc, idx, arr) => (
                   <img
                     key={idx}
-                    src={imgSrc.trim()}
+                    src={prefixPath(imgSrc.trim())}
                     alt="match"
                     className={`object-contain ${arr.length > 1 ? 'max-w-[45%] max-h-[90%]' : 'w-full h-full'}`}
                     draggable={false}

@@ -6,6 +6,7 @@ import { Card, CardBody } from '@heroui/card'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
+import { prefixPath } from '@/lib/utils'
 
 
 interface Word {
@@ -87,7 +88,7 @@ export default function FastReview({ words, onComplete }: Props) {
                 {currentWord.image.split(',').map((imgSrc, idx, arr) => (
                   <img
                     key={idx}
-                    src={imgSrc.trim()}
+                    src={prefixPath(imgSrc.trim())}
                     alt={currentWord.en}
                     className={`object-contain rounded-md ${arr.length > 1 ? 'max-h-32' : 'w-full h-full'}`}
                   />
