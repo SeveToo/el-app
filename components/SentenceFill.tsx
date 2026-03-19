@@ -55,8 +55,24 @@ export default function SentenceFill({ words, onComplete }: Props) {
   )
 
   const [isPlRevealed, setIsPlRevealed] = useState(false)
+  // Track if keyboard is open (viewport shrinks)
+  const [keyboardOpen, setKeyboardOpen] = useState(false)
 
   const currentWord = words[activeIndex]
+
+  // Detect keyboard open/close via visual viewport resize
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const vv = (window as any).visualViewport
+    if (!vv) return
+
+    const onResize = () => {
+      const ratio = vv.height / window.screen.height
+      setKeyboardOpen(ratio < 0.75)
+    }
+    vv.addEventListener('resize', onResize)
+    return () => vv.removeEventListener('resize', onResize)
+  }, [])
 
   // Focus current input when activeIndex changes
   useEffect(() => {
@@ -135,7 +151,6 @@ export default function SentenceFill({ words, onComplete }: Props) {
       }
 
       // Briefly show error then reset
-
       setTimeout(() => {
         setStatuses(prev => {
           const s = [...prev]
@@ -269,6 +284,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
                     inputWrapper: "border-b-2"
                   }}
                   autoComplete="off"
+                  enterKeyHint="done"
                 />
               </div>
             )
@@ -281,15 +297,21 @@ export default function SentenceFill({ words, onComplete }: Props) {
 
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto pb-20">
+    <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto pb-40">
       
-      {/* Sticky Top Header */}
-      <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-md pt-4 pb-6 border-b border-divider mb-4">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-full flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em] text-default-400 px-2 mb-2">
+      {/* Sticky Top Header – kompaktowy gdy klawiatura otwarta */}
+      <div className="sticky top-0 z-20 bg-background/90 backdrop-blur-md pt-3 pb-3 border-b border-divider">
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-full flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em] text-default-400 px-2">
             <span>ETAP 5: UZUPEŁNIANIE</span>
             <span>{statuses.filter(s => s === 'success').length} / {words.length}</span>
           </div>
+          <Progress
+            value={(statuses.filter(s => s === 'success').length / words.length) * 100}
+            color="warning"
+            size="sm"
+            className="w-full px-2"
+          />
 
           <AnimatePresence mode="wait">
             <motion.div 
@@ -297,39 +319,42 @@ export default function SentenceFill({ words, onComplete }: Props) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="flex flex-col items-center gap-3 w-full"
+              className="flex flex-col items-center gap-2 w-full"
             >
-              <div className="flex gap-4 items-center justify-center flex-wrap">
-                {currentWord.image.split(',').map((imgSrc, idx) => (
-                  <img 
-                    key={idx}
-                    src={prefixPath(imgSrc.trim())} 
-                    alt={currentWord.pl}
-                    className="h-32 w-32 object-contain rounded-2xl bg-white p-2 shadow-sm"
-                  />
-                ))}
-              </div>
+              {/* Obrazek – schowany gdy klawiatura otwarta */}
+              {!keyboardOpen && (
+                <div className="flex gap-3 items-center justify-center flex-wrap">
+                  {currentWord.image.split(',').map((imgSrc, idx) => (
+                    <img 
+                      key={idx}
+                      src={prefixPath(imgSrc.trim())} 
+                      alt={currentWord.pl}
+                      className="h-20 w-20 object-contain rounded-xl bg-white p-1 shadow-sm"
+                    />
+                  ))}
+                </div>
+              )}
+
               <div className="text-center w-full max-w-sm mx-auto">
                 <div 
-                  className="relative cursor-pointer group flex justify-center items-center py-2 min-h-[60px]"
+                  className="relative cursor-pointer group flex justify-center items-center py-1 min-h-[40px]"
                   onClick={() => setIsPlRevealed(true)}
                 >
-                  <h2 className={`text-xl sm:text-2xl font-black text-primary uppercase tracking-tight flex items-center justify-center text-center transition-all duration-300 w-full ${!isPlRevealed ? 'blur-md opacity-30 select-none' : 'blur-0 opacity-100'}`}>
+                  <h2 className={`text-base sm:text-lg font-black text-primary uppercase tracking-tight flex items-center justify-center text-center transition-all duration-300 w-full ${!isPlRevealed ? 'blur-md opacity-30 select-none' : 'blur-0 opacity-100'}`}>
                     {renderPlExample(currentWord)}
                   </h2>
                   
                   {!isPlRevealed && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <span className="bg-background shadow-xl px-4 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest text-primary border-2 border-primary/20 transform group-hover:scale-105 group-active:scale-95 transition-all">
+                      <span className="bg-background shadow-xl px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-primary border-2 border-primary/20 transform group-hover:scale-105 group-active:scale-95 transition-all">
                         👁️ Pokaż tłumaczenie
                       </span>
                     </div>
                   )}
                 </div>
 
-                <div className="flex items-center justify-center gap-2 mt-2">
-
-                  <p className="text-xs font-bold text-default-400 uppercase tracking-widest">
+                <div className="flex items-center justify-center gap-2 mt-1">
+                  <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">
                     Wpisz brakujące słowo:
                   </p>
                   <Button 
@@ -361,12 +386,31 @@ export default function SentenceFill({ words, onComplete }: Props) {
             } ${statuses[index] === 'success' ? 'opacity-60' : ''}`}
             onClick={() => setActiveIndex(index)}
           >
-            <CardBody className="p-6">
+            <CardBody className="p-4">
               {renderSentence(word, index)}
             </CardBody>
           </Card>
         ))}
       </div>
+
+      {/* Pływający przycisk "Sprawdź" – widoczny zawsze, szczególnie gdy klawiatura jest otwarta */}
+      <AnimatePresence>
+        {statuses[activeIndex] !== 'success' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-0 left-0 right-0 z-30 flex flex-col gap-2 px-4 pb-4 pt-2 bg-background/90 backdrop-blur-md border-t border-divider"
+          >
+            <Button
+              className="w-full h-12 font-black text-base bg-warning text-warning-foreground uppercase tracking-widest rounded-2xl shadow-lg"
+              onPress={() => handleSubmit(activeIndex)}
+            >
+              Sprawdź ✅
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hint Overlay */}
       <AnimatePresence>
@@ -393,7 +437,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
                       if (opt.id === currentWord.id) {
                         setShowHint(false)
                         audioService.playSuccess()
-                        audioService.speak(opt.en) // Speak on correct select
+                        audioService.speak(opt.en)
                       } else {
                         audioService.playError()
                       }

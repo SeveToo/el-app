@@ -76,7 +76,7 @@ export default function Flashcards({ words, onComplete }: Props) {
   if (!currentWord) return <div>Brak słówek...</div>
 
   return (
-    <div className="flex flex-col items-center gap-10 w-full max-w-2xl mx-auto py-10 relative overflow-hidden min-h-[700px]">
+    <div className="flex flex-col items-center gap-6 w-full max-w-2xl mx-auto py-6 relative overflow-hidden">
       <div className="w-full flex flex-col gap-2 max-w-md">
         <div className="flex justify-between text-xs font-black uppercase tracking-[0.2em] text-default-400">
           <span>ETAP 1: FISZKI</span>
@@ -129,23 +129,23 @@ export default function Flashcards({ words, onComplete }: Props) {
             }}>
             
             {/* Przód karty (PL - najpierw po polsku) */}
-            <Card className="absolute inset-0 backface-hidden flex items-center justify-center p-8 border-none bg-content1 shadow-2xl rounded-[2.5rem]">
-              <CardBody className="flex flex-col items-center justify-center gap-6">
-                <div className="flex gap-4 items-center justify-center w-full max-h-[50%] flex-wrap">
+            <Card className="absolute inset-0 backface-hidden flex items-center justify-center p-4 border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden">
+              <CardBody className="flex flex-col items-center justify-center gap-3 overflow-hidden w-full">
+                <div className="flex gap-2 items-center justify-center w-full flex-wrap shrink-0">
                   {currentWord.image.split(',').map((imgSrc, idx) => (
                     <img
                       key={idx}
                       src={prefixPath(imgSrc.trim())}
                       alt={currentWord.pl}
-                      className="max-h-32 md:max-h-40 object-contain rounded-2xl shadow-sm"
+                      className="max-h-36 md:max-h-44 object-contain rounded-2xl shadow-sm"
                     />
                   ))}
                 </div>
-                <div className="text-center space-y-4">
-                  <h2 className="text-5xl font-black tracking-tighter text-primary uppercase">
+                <div className="text-center space-y-2 w-full px-2">
+                  <h2 className="text-3xl font-black tracking-tight text-primary uppercase leading-tight">
                     {currentWord.pl}
                   </h2>
-                  <p className="text-sm font-bold text-default-400 uppercase tracking-widest italic">
+                  <p className="text-xs font-bold text-default-400 uppercase tracking-wider italic leading-snug">
                     {currentWord.pl_example}
                   </p>
                 </div>
@@ -153,49 +153,37 @@ export default function Flashcards({ words, onComplete }: Props) {
             </Card>
 
             {/* Tył karty (ANG - po kliknięciu) */}
-            <Card className="absolute inset-0 backface-hidden rotate-y-180 flex items-center justify-center p-8 border-none bg-content1 shadow-2xl rounded-[2.5rem]">
-              <CardBody className="flex flex-col items-center justify-center gap-6">
-                 <div className="flex gap-4 items-center justify-center w-full max-h-[50%] invisible flex-wrap">
+            <Card className="absolute inset-0 backface-hidden rotate-y-180 flex items-center justify-center p-4 border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden">
+              <CardBody className="flex flex-col items-center justify-center gap-3 overflow-hidden w-full">
+                <div className="flex gap-2 items-center justify-center w-full flex-wrap shrink-0">
                   {currentWord.image.split(',').map((imgSrc, idx) => (
                     <img
                       key={idx}
                       src={prefixPath(imgSrc.trim())}
                       alt={currentWord.en}
-                      className="max-h-32 md:max-h-40 object-contain rounded-2xl"
+                      className="max-h-36 md:max-h-44 object-contain rounded-2xl shadow-sm"
                     />
                   ))}
-                 </div>
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 gap-6">
-                   <div className="flex gap-4 items-center justify-center w-full max-h-[50%] flex-wrap">
-                    {currentWord.image.split(',').map((imgSrc, idx) => (
-                      <img
-                        key={idx}
-                        src={prefixPath(imgSrc.trim())}
-                        alt={currentWord.en}
-                        className="max-h-32 md:max-h-40 object-contain rounded-2xl shadow-sm"
-                      />
-                    ))}
-                   </div>
-                  <div className="text-center space-y-4">
-                    <h2 className="text-5xl font-black tracking-tighter text-foreground uppercase">
-                      {currentWord.en}
-                    </h2>
-                    <Tooltip 
-                      content={
-                        <div className="px-2 py-1 text-center">
-                          <p className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60">Tłumaczenie:</p>
-                          <p className="text-lg font-black uppercase tracking-tight">{currentWord.pl_example}</p>
-                        </div>
-                      }
-                      placement="bottom"
-                      color="primary"
-                      showArrow
-                    >
-                      <p className="text-xl font-bold text-primary italic underline underline-offset-8 decoration-2 cursor-help hover:scale-105 transition-transform active:scale-95">
-                         "{currentWord.en_example}"
-                      </p>
-                    </Tooltip>
-                  </div>
+                </div>
+                <div className="text-center space-y-2 w-full px-2">
+                  <h2 className="text-3xl font-black tracking-tight text-foreground uppercase leading-tight">
+                    {currentWord.en}
+                  </h2>
+                  <Tooltip 
+                    content={
+                      <div className="px-2 py-1 text-center">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60">Tłumaczenie:</p>
+                        <p className="text-base font-black uppercase tracking-tight">{currentWord.pl_example}</p>
+                      </div>
+                    }
+                    placement="bottom"
+                    color="primary"
+                    showArrow
+                  >
+                    <p className="text-sm font-bold text-primary italic underline underline-offset-4 decoration-2 cursor-help hover:scale-105 transition-transform active:scale-95 break-words leading-snug">
+                       "{currentWord.en_example}"
+                    </p>
+                  </Tooltip>
                 </div>
               </CardBody>
             </Card>

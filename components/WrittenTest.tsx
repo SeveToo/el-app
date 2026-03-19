@@ -127,7 +127,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
   if (!currentWord) return null
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto py-8">
+    <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto py-4">
       {/* Nagłówek */}
       <div className="w-full flex flex-col gap-2">
         <div className="flex justify-between text-sm text-success font-black uppercase tracking-widest">
@@ -147,17 +147,17 @@ export default function WrittenTest({ words, onComplete }: Props) {
           <Card className={`w-full border shadow-xl overflow-hidden transition-colors duration-300 ${
             repeatMode ? 'border-danger/40 bg-danger/5' : 'border-success/30'
           }`}>
-            <CardBody className="flex flex-col items-center gap-6 text-center pt-6 px-6 pb-6">
+            <CardBody className="flex flex-col items-center gap-4 text-center pt-4 px-4 pb-4">
 
               {/* Obrazek */}
               <div className="relative">
-                <div className="flex gap-4 items-center justify-center flex-wrap h-36">
+                <div className="flex gap-3 items-center justify-center flex-wrap">
                   {currentWord.image.split(',').map((imgSrc, idx, arr) => (
                     <img
                       key={idx}
                       src={prefixPath(imgSrc.trim())}
                       alt={currentWord.pl}
-                      className={`object-contain rounded-2xl ${arr.length > 1 ? 'w-24 h-24' : 'w-36 h-36'}`}
+                      className={`object-contain rounded-2xl ${arr.length > 1 ? 'w-16 h-16' : 'w-24 h-24'}`}
                     />
                   ))}
                 </div>
@@ -199,10 +199,11 @@ export default function WrittenTest({ words, onComplete }: Props) {
                     }
                     placeholder="Typing..."
                     classNames={{ input: 'text-center placeholder:opacity-30 tracking-widest font-bold text-lg uppercase' }}
+                    enterKeyHint="done"
                   />
                   <Button
                     type="submit"
-                    className="w-full mt-3 h-12 font-bold text-lg bg-success text-success-foreground"
+                    className="w-full mt-3 h-11 font-bold text-base bg-success text-success-foreground"
                   >
                     Sprawdź! 🚀
                   </Button>
@@ -267,10 +268,11 @@ export default function WrittenTest({ words, onComplete }: Props) {
                       classNames={{
                         input: 'text-center placeholder:opacity-20 tracking-widest font-bold text-lg uppercase',
                       }}
+                      enterKeyHint="done"
                     />
                     <Button
                       type="submit"
-                      className="w-full mt-3 h-12 font-bold text-lg bg-danger text-white"
+                      className="w-full mt-3 h-11 font-bold text-base bg-danger text-white"
                     >
                       Przepisz ✍️
                     </Button>
