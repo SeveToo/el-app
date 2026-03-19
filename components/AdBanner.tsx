@@ -25,11 +25,11 @@ export const AdBanner = () => {
               }
             `}} />
             <img 
-              src="/ads/hype_ad.svg" 
+              src="/el-app/ads/hype_ad.svg" 
               alt="HypeKorepetycje"
               className="w-full h-full object-contain animate-banner-hue"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = '/ads/ad.webp';
+                (e.target as HTMLImageElement).src = '/el-app/ads/ad.webp';
               }}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />

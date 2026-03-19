@@ -5,7 +5,7 @@
     "pl": "Miska",
     "en_example": "I put the cereal in a bowl.",
     "pl_example": "Nasypałem płatki do miski.",
-    "image": "/kitchen_tools/bowl.webp",
+    "image": "/el-app/kitchen_tools/bowl.webp",
     "status": 0
   },
   {
@@ -14,7 +14,7 @@
     "pl": "Filiżanka",
     "en_example": "Would you like a cup of tea?",
     "pl_example": "Czy chciałbyś filiżankę herbaty?",
-    "image": "/kitchen_tools/cup.webp",
+    "image": "/el-app/kitchen_tools/cup.webp",
     "status": 0
   },
   {
@@ -23,7 +23,7 @@
     "pl": "Widelec",
     "en_example": "Use a fork to eat your salad.",
     "pl_example": "Użyj widelca do zjedzenia sałatki.",
-    "image": "/kitchen_tools/fork.webp",
+    "image": "/el-app/kitchen_tools/fork.webp",
     "status": 0
   },
   {
@@ -32,7 +32,7 @@
     "pl": "Patelnia",
     "en_example": "Fry the eggs in a frying pan.",
     "pl_example": "Smaż jajka na patelni.",
-    "image": "/kitchen_tools/frying_pan.webp",
+    "image": "/el-app/kitchen_tools/frying_pan.webp",
     "status": 0
   },
   {
@@ -41,7 +41,7 @@
     "pl": "Szklanka",
     "en_example": "He drank a glass of water.",
     "pl_example": "Wypił szklankę wody.",
-    "image": "/kitchen_tools/glass.webp",
+    "image": "/el-app/kitchen_tools/glass.webp",
     "status": 0
   },
   {
@@ -50,7 +50,7 @@
     "pl": "Czajnik",
     "en_example": "The kettle is boiling.",
     "pl_example": "Czajnik gotuje wodę.",
-    "image": "/kitchen_tools/kettle.webp",
+    "image": "/el-app/kitchen_tools/kettle.webp",
     "status": 0
   },
   {
@@ -59,7 +59,7 @@
     "pl": "Nóż",
     "en_example": "Be careful with that sharp knife.",
     "pl_example": "Uważaj na ten ostry nóż.",
-    "image": "/kitchen_tools/knife.webp",
+    "image": "/el-app/kitchen_tools/knife.webp",
     "status": 0
   },
   {
@@ -68,7 +68,7 @@
     "pl": "Chochla",
     "en_example": "Use a ladle to serve the soup.",
     "pl_example": "Użyj chochli do podania zupy.",
-    "image": "/kitchen_tools/ladle.webp",
+    "image": "/el-app/kitchen_tools/ladle.webp",
     "status": 0
   },
   {
@@ -77,7 +77,7 @@
     "pl": "Kubek",
     "en_example": "I prefer a large mug for coffee.",
     "pl_example": "Wolę duży kubek na kawę.",
-    "image": "/kitchen_tools/mug.webp",
+    "image": "/el-app/kitchen_tools/mug.webp",
     "status": 0
   },
   {
@@ -86,7 +86,7 @@
     "pl": "Obieraczka",
     "en_example": "Use the peeler for the potatoes.",
     "pl_example": "Użyj obieraczki do ziemniaków.",
-    "image": "/kitchen_tools/peeler.webp",
+    "image": "/el-app/kitchen_tools/peeler.webp",
     "status": 0
   },
   {
@@ -95,7 +95,7 @@
     "pl": "Talerz",
     "en_example": "Put the sandwich on a plate.",
     "pl_example": "Połóż kanapkę na talerzu.",
-    "image": "/kitchen_tools/plate.webp",
+    "image": "/el-app/kitchen_tools/plate.webp",
     "status": 0
   },
   {
@@ -104,7 +104,7 @@
     "pl": "Garnek",
     "en_example": "The soup is cooking in a large pot.",
     "pl_example": "Zupa gotuje się w dużym garnku.",
-    "image": "/kitchen_tools/pot.webp",
+    "image": "/el-app/kitchen_tools/pot.webp",
     "status": 0
   },
   {
@@ -113,7 +113,7 @@
     "pl": "Rondel",
     "en_example": "Heat the milk in a saucepan.",
     "pl_example": "Podgrzej mleko w rondlu.",
-    "image": "/kitchen_tools/saucepan.webp",
+    "image": "/el-app/kitchen_tools/saucepan.webp",
     "status": 0
   },
   {
@@ -122,7 +122,7 @@
     "pl": "Łopatka",
     "en_example": "Flip the pancakes with a spatula.",
     "pl_example": "Odwróć naleśniki łopatką.",
-    "image": "/kitchen_tools/spatula.webp",
+    "image": "/el-app/kitchen_tools/spatula.webp",
     "status": 0
   },
   {
@@ -131,7 +131,7 @@
     "pl": "Łyżka",
     "en_example": "Eat your soup with a spoon.",
     "pl_example": "Jedz zupę łyżką.",
-    "image": "/kitchen_tools/spoon.webp",
+    "image": "/el-app/kitchen_tools/spoon.webp",
     "status": 0
   },
   {
@@ -140,7 +140,7 @@
     "pl": "Szczypce",
     "en_example": "Use tongs to serve the salad.",
     "pl_example": "Użyj szczypiec do podania sałatki.",
-    "image": "/kitchen_tools/tongs.webp",
+    "image": "/el-app/kitchen_tools/tongs.webp",
     "status": 0
   },
   {
@@ -149,7 +149,7 @@
     "pl": "Taca",
     "en_example": "The waiter carried the drinks on a tray.",
     "pl_example": "Kelner niósł napoje na tacy.",
-    "image": "/kitchen_tools/tray.webp",
+    "image": "/el-app/kitchen_tools/tray.webp",
     "status": 0
   }
 ]

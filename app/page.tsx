@@ -2,7 +2,8 @@
 
 import * as React from 'react'
 import { Suspense, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { Tabs, Tab } from '@heroui/tabs'
+import { useRouter, useSearchParams } from 'next/navigation'
 import ChapterCard from '@/components/ChapterCard'
 import { AdBanner } from '@/components/AdBanner'
 import { getAllProgress, calcPercent } from '@/lib/progress'
@@ -71,6 +72,7 @@ const CHAPTERS = [
 ]
 
 function HomeContent() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const subjectParam = searchParams.get('subject') || 'english'
 
@@ -88,12 +90,32 @@ function HomeContent() {
 
   const filteredChapters = CHAPTERS.filter((c) => c.subject === subjectParam)
 
+  const handleSelectionChange = (key: React.Key) => {
+    router.push(`/?subject=${key}`)
+  }
+
   return (
-    <section className="py-6 md:py-10">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-3xl font-semibold mb-6 text-center uppercase tracking-widest text-primary">
-          {subjectParam === 'math' ? 'Matematyka' : 'Język Angielski'}
-        </h1>
+    <section className="py-4 md:py-8">
+      <div className="container mx-auto px-4 max-w-4xl flex flex-col gap-8">
+        {/* Banner na górze */}
+        <AdBanner />
+
+        {/* Swicz zamianst napisu */}
+        <div className="flex justify-center -mb-2">
+          <Tabs 
+            aria-label="Wybierz przedmiot" 
+            color="primary" 
+            variant="bordered"
+            radius="full"
+            size="lg"
+            selectedKey={subjectParam}
+            onSelectionChange={handleSelectionChange}
+            className="font-bold uppercase tracking-wider"
+          >
+            <Tab key="english" title="Angielski" />
+            <Tab key="math" title="Matematyka" />
+          </Tabs>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredChapters.map((c) => (
@@ -107,8 +129,6 @@ function HomeContent() {
             />
           ))}
         </div>
-
-        <AdBanner />
       </div>
     </section>
   )

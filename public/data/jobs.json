@@ -5,7 +5,7 @@
     "pl": "Artysta",
     "en_example": "The artist is painting a beautiful picture.",
     "pl_example": "Artysta maluje piękny obraz.",
-    "image": "/jobs/Artist.webp",
+    "image": "/el-app/jobs/Artist.webp",
     "status": 0
   },
   {
@@ -14,7 +14,7 @@
     "pl": "Budowniczy",
     "en_example": "The builder is working on a new house.",
     "pl_example": "Budowniczy pracuje nad nowym domem.",
-    "image": "/jobs/Builder.webp",
+    "image": "/el-app/jobs/Builder.webp",
     "status": 0
   },
   {
@@ -23,7 +23,7 @@
     "pl": "Szef kuchni",
     "en_example": "The chef prepares delicious meals.",
     "pl_example": "Szef kuchni przygotowuje pyszne posiłki.",
-    "image": "/jobs/Chef.webp",
+    "image": "/el-app/jobs/Chef.webp",
     "status": 0
   },
   {
@@ -32,7 +32,7 @@
     "pl": "Kucharz",
     "en_example": "The cook is in the kitchen.",
     "pl_example": "Kucharz jest w kuchni.",
-    "image": "/jobs/Cook.webp",
+    "image": "/el-app/jobs/Cook.webp",
     "status": 0
   },
   {
@@ -41,7 +41,7 @@
     "pl": "Lekarz",
     "en_example": "The doctor helps sick people.",
     "pl_example": "Lekarz pomaga chorym ludziom.",
-    "image": "/jobs/Doctor.webp",
+    "image": "/el-app/jobs/Doctor.webp",
     "status": 0
   },
   {
@@ -50,7 +50,7 @@
     "pl": "Rolnik",
     "en_example": "The farmer grows vegetables.",
     "pl_example": "Rolnik uprawia warzywa.",
-    "image": "/jobs/Farmer.webp",
+    "image": "/el-app/jobs/Farmer.webp",
     "status": 0
   },
   {
@@ -59,7 +59,7 @@
     "pl": "Strażak",
     "en_example": "The firefighter puts out fires.",
     "pl_example": "Strażak gasi pożary.",
-    "image": "/jobs/Firefighter.webp",
+    "image": "/el-app/jobs/Firefighter.webp",
     "status": 0
   },
   {
@@ -68,7 +68,7 @@
     "pl": "Mechanik",
     "en_example": "The mechanic is fixing the car.",
     "pl_example": "Mechanik naprawia samochód.",
-    "image": "/jobs/Mechanic.webp",
+    "image": "/el-app/jobs/Mechanic.webp",
     "status": 0
   },
   {
@@ -77,7 +77,7 @@
     "pl": "Pielęgniarka",
     "en_example": "The nurse works in a hospital.",
     "pl_example": "Pielęgniarka pracuje w szpitalu.",
-    "image": "/jobs/Nurse.webp",
+    "image": "/el-app/jobs/Nurse.webp",
     "status": 0
   },
   {
@@ -86,7 +86,7 @@
     "pl": "Pilot",
     "en_example": "The pilot flies the airplane.",
     "pl_example": "Pilot lata samolotem.",
-    "image": "/jobs/Pilot.webp",
+    "image": "/el-app/jobs/Pilot.webp",
     "status": 0
   },
   {
@@ -95,7 +95,7 @@
     "pl": "Policjant",
     "en_example": "The police officer keeps us safe.",
     "pl_example": "Policjant dba o nasze bezpieczeństwo.",
-    "image": "/jobs/Police_Officer.webp",
+    "image": "/el-app/jobs/Police_Officer.webp",
     "status": 0
   },
   {
@@ -104,7 +104,7 @@
     "pl": "Naukowiec",
     "en_example": "The scientist does experiments.",
     "pl_example": "Naukowiec przeprowadza eksperymenty.",
-    "image": "/jobs/Scientist.webp",
+    "image": "/el-app/jobs/Scientist.webp",
     "status": 0
   },
   {
@@ -113,7 +113,7 @@
     "pl": "Nauczyciel",
     "en_example": "The teacher explains the lesson.",
     "pl_example": "Nauczyciel wyjaśnia lekcję.",
-    "image": "/jobs/Teacher.webp",
+    "image": "/el-app/jobs/Teacher.webp",
     "status": 0
   },
   {
@@ -122,7 +122,7 @@
     "pl": "Listonosz",
     "en_example": "The postman delivers letters.",
     "pl_example": "Listonosz dostarcza listy.",
-    "image": "/jobs/postman.webp",
+    "image": "/el-app/jobs/postman.webp",
     "status": 0
   },
   {
@@ -131,7 +131,7 @@
     "pl": "Kelner",
     "en_example": "The waiter serves food.",
     "pl_example": "Kelner serwuje jedzenie.",
-    "image": "/jobs/weater.webp",
+    "image": "/el-app/jobs/weater.webp",
     "status": 0
   }
 ]

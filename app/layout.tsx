@@ -16,11 +16,11 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    icon: '/el-app/logo.png',
+    shortcut: '/el-app/logo.png',
+    apple: '/el-app/logo.png',
   },
-  manifest: '/site.webmanifest',
+  manifest: '/el-app/site.webmanifest',
 }
 
 export const viewport: Viewport = {

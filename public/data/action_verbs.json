@@ -5,7 +5,7 @@
         "pl": "Budować",
         "en_example": "They build new houses.",
         "pl_example": "Oni budują nowe domy.",
-        "image": "/action_verbs/Build.webp",
+        "image": "/el-app/action_verbs/Build.webp",
         "status": 0
     },
     {
@@ -14,7 +14,7 @@
         "pl": "Wspinać się",
         "en_example": "She likes to climb mountains.",
         "pl_example": "Ona lubi wspinać się po górach.",
-        "image": "/action_verbs/Climb.webp",
+        "image": "/el-app/action_verbs/Climb.webp",
         "status": 0
     },
     {
@@ -23,7 +23,7 @@
         "pl": "Gotować",
         "en_example": "I will cook dinner today.",
         "pl_example": "Ugotuję dzisiaj obiad.",
-        "image": "/action_verbs/Cook.webp",
+        "image": "/el-app/action_verbs/Cook.webp",
         "status": 0
     },
     {
@@ -32,7 +32,7 @@
         "pl": "Tworzyć",
         "en_example": "He wants to create a game.",
         "pl_example": "On chce stworzyć grę.",
-        "image": "/action_verbs/Create.webp",
+        "image": "/el-app/action_verbs/Create.webp",
         "status": 0
     },
     {
@@ -41,7 +41,7 @@
         "pl": "Płakać",
         "en_example": "Don't cry over spilt milk.",
         "pl_example": "Nie płacz nad rozlanym mlekiem.",
-        "image": "/action_verbs/Cry.webp",
+        "image": "/el-app/action_verbs/Cry.webp",
         "status": 0
     },
     {
@@ -50,7 +50,7 @@
         "pl": "Tańczyć",
         "en_example": "We like to dance together.",
         "pl_example": "Lubimy razem tańczyć.",
-        "image": "/action_verbs/Dance.webp",
+        "image": "/el-app/action_verbs/Dance.webp",
         "status": 0
     },
     {
@@ -59,7 +59,7 @@
         "pl": "Pić",
         "en_example": "Drink plenty of water.",
         "pl_example": "Pij dużo wody.",
-        "image": "/action_verbs/Drink.webp",
+        "image": "/el-app/action_verbs/Drink.webp",
         "status": 0
     },
     {
@@ -68,7 +68,7 @@
         "pl": "Prowadzić auto",
         "en_example": "Can you drive a car?",
         "pl_example": "Czy potrafisz prowadzić samochód?",
-        "image": "/action_verbs/Drive.webp",
+        "image": "/el-app/action_verbs/Drive.webp",
         "status": 0
     },
     {
@@ -77,7 +77,7 @@
         "pl": "Latać",
         "en_example": "Birds can fly high.",
         "pl_example": "Ptaki potrafią latać wysoko.",
-        "image": "/action_verbs/Fly.webp",
+        "image": "/el-app/action_verbs/Fly.webp",
         "status": 0
     },
     {
@@ -86,7 +86,7 @@
         "pl": "Przytulać",
         "en_example": "Give me a hug.",
         "pl_example": "Przytul mnie.",
-        "image": "/action_verbs/Hug.webp",
+        "image": "/el-app/action_verbs/Hug.webp",
         "status": 0
     }
 ]
