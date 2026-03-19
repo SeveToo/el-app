@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Card, CardBody } from '@heroui/card'
 import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
+import { Tooltip } from '@heroui/tooltip'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
 
@@ -178,9 +179,21 @@ export default function Flashcards({ words, onComplete }: Props) {
                     <h2 className="text-5xl font-black tracking-tighter text-foreground uppercase">
                       {currentWord.en}
                     </h2>
-                    <p className="text-xl font-bold text-primary italic underline underline-offset-8 decoration-2">
-                       "{currentWord.en_example}"
-                    </p>
+                    <Tooltip 
+                      content={
+                        <div className="px-2 py-1 text-center">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-primary opacity-60">Tłumaczenie:</p>
+                          <p className="text-lg font-black uppercase tracking-tight">{currentWord.pl_example}</p>
+                        </div>
+                      }
+                      placement="bottom"
+                      color="primary"
+                      showArrow
+                    >
+                      <p className="text-xl font-bold text-primary italic underline underline-offset-8 decoration-2 cursor-help hover:scale-105 transition-transform active:scale-95">
+                         "{currentWord.en_example}"
+                      </p>
+                    </Tooltip>
                   </div>
                 </div>
               </CardBody>
@@ -201,9 +214,9 @@ export default function Flashcards({ words, onComplete }: Props) {
           ❌ NIE
         </Button>
         <Button
-          className="flex-1 h-20 text-xl font-black uppercase tracking-widest rounded-3xl shadow-xl border-b-8 border-success/30 hover:translate-y-1 active:border-b-0 transition-all"
+          className="flex-1 h-20 text-xl font-black uppercase tracking-widest rounded-3xl shadow-lg border-b-8 border-success/30 hover:translate-y-1 active:border-b-0 transition-all"
           color="success"
-          variant="shadow"
+          variant="flat"
           onClick={(e) => {
             e.stopPropagation()
             handleNext(true)

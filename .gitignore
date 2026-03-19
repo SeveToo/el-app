@@ -12,12 +12,12 @@
 /.next/
 /out/
 
-# datasets/images (avoiding polluting repo with raw bulk assets if they are in public)
-/public/action_verbs/
-/public/prepositions/
-/public/weather/
-/public/kitchen_tools/
-/public/jobs/
+# datasets/images (allow images in public)
+# /public/action_verbs/
+# /public/prepositions/
+# /public/weather/
+# /public/kitchen_tools/
+# /public/jobs/
 
 # production
 /build

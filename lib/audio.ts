@@ -17,10 +17,10 @@ class AudioService {
   /**
    * Pronounces the given text using the Web Speech API.
    */
-  speak(text: string, options: { lang?: string; cancel?: boolean } = {}) {
+  speak(text: string, options: { lang?: string; cancel?: boolean; onEnd?: () => void } = {}) {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
-    const { lang = 'en-US', cancel = true } = options;
+    const { lang = 'en-US', cancel = true, onEnd } = options;
 
     if (cancel) {
       // Cancel any ongoing speech
@@ -32,6 +32,10 @@ class AudioService {
     utterance.lang = lang;
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
+
+    if (onEnd) {
+      utterance.onend = onEnd;
+    }
 
     // Try to find a good English voice
     const voices = window.speechSynthesis.getVoices();
