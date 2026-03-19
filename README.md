@@ -1,78 +1,82 @@
-# 🎓 EL APP - Interaktywne Centrum Nauki
+# 🚀 EL APP - Twój Interaktywny Nauczyciel Angielskiego
 
-[![Deploy Next.js to GitHub Pages](https://github.com/SeveToo/el-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/SeveToo/el-app/actions/workflows/deploy.yml)
+![EL APP Header](https://raw.githubusercontent.com/SeveToo/el-app/main/public/header-placeholder.png) 
+*(MIEJSCE NA SCREENSHOT GŁÓWNEGO MENU)*
 
-EL APP to nowoczesna, responsywna aplikacja do nauki języka angielskiego oraz matematyki, stworzona z myślą o szybkim i skutecznym przyswajaniu wiedzy poprzez interaktywne lekcje i fiszki.
-
----
-
-## 📸 Screenshots
-
-> [!TIP]
-> Aby Twoje repozytorium wyglądało profesjonalnie, stwórz folder `public/screenshots/` i dodaj tam zrzuty ekranu opisane poniżej. Następnie usuń te placeholdery i odkomentuj linki.
-
-### 1. Ekran Główny (Home)
-Opis: Widok listy wszystkich lekcji z podziałem na przedmioty.
-<!-- ![Home Screen](public/screenshots/home.png) -->
-*(Tu wklej zrzut ekranu głównej strony z kafelkami lekcji)*
-
-### 2. Tryb Nauki (Study Loop)
-Opis: Interaktywny interfejs nauki słówek z animacjami swipe.
-<!-- ![Study Mode](public/screenshots/study.png) -->
-*(Tu wklej zrzut ekranu otwartej lekcji w akcji)*
-
-### 3. Wyniki i Postęp
-Opis: Wizualizacja postępów w nauce dla konkretnych działów.
-<!-- ![Progress](public/screenshots/progress.png) -->
-*(Tu wklej przybliżenie na pasek postępu/wynik testu)*
+**EL APP** to nowoczesna aplikacja webowa do nauki języka angielskiego, zaprojektowana z myślą o maksymalnej efektywności i przyjemności z nauki. System oparty na etapach (Stages) pozwala na płynne przejście od poznania słowa do jego swobodnego użycia w kontekście.
 
 ---
 
-## 🚀 Główne Funkcje
+## ✨ Kluczowe Funkcje (Zaimplementowane)
 
-- **Interaktywne Fiszki**: Płynne animacje (Framer Motion) i intuicyjna nawigacja.
-- **Dynamiczne Przedmioty**: Szybkie przełączanie między nauką języka a matematyką.
-- **System Postępów**: Monitorowanie wyników zapisywane lokalnie (Local Storage).
-- **Dark/Light Mode**: Pełne wsparcie dla motywów (Next-Themes).
-- **Responsive Design**: Optymalizacja pod telefony, tablety i komputery.
+Aplikacja prowadzi użytkownika przez 5 inteligentnych etapów nauki:
 
----
+1.  **🗂️ Etap 1: Fiszki (Flashcards)**
+    *   Dynamiczne karty z obrazkami i przykładami.
+    *   Wymowa audio dla każdego słówka i przykładu.
+    *   Intuicyjne sterowanie (Tak/Nie).
 
-## 🛠️ Tech Stack
+2.  **⚖️ Etap 1.5: Szybka Ocena (Fast Review)**
+    *   Błyskawiczna powtórka sprawdzająca, co zapamiętałeś.
+    *   Skoncentrowana na rozpoznawaniu słowa w obu językach.
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router, Static Export)
-- **Styling**: [TailwindCSS](https://tailwindcss.com/)
-- **UI Components**: [HeroUI](https://heroui.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Deployment**: GitHub Pages (via GitHub Actions)
+3.  **🎮 Etap 3: Gra w Dopasowywanie (Matching Game)**
+    *   Dopasuj angielskie słowo do odpowiedniego obrazka.
+    *   Trening skojarzeń wizualnych.
 
----
+4.  **✍️ Etap 4: Test Pisemny (Written Test)**
+    *   Wpisywanie słówek z pamięci.
+    *   **Tryb Karny:** Jeśli popełnisz błąd, musisz przepisać słówko poprawnie 3 razy, aby przejść dalej.
 
-## 🏗️ Rozpoczęcie pracy
+5.  **📝 Etap 5: Uzupełnianie Zdań (Sentences)**
+    *   Użycie słowa w prawdziwym kontekście.
+    *   System podpowiedzi (💡) jeśli utkniesz.
 
-1. Sklonuj repozytorium:
-   ```bash
-   git clone https://github.com/SeveToo/el-app.git
-   ```
-2. Zainstaluj zależności:
-   ```bash
-   npm install
-   ```
-3. Uruchom serwer deweloperski:
-   ```bash
-   npm run dev
-   ```
-4. Otwórz: [http://localhost:3000](http://localhost:3000)
+### 🧠 Inteligentna Pętla Nauki (Study Loop)
+Aplikacja automatycznie zarządza Twoją nauką:
+*   Grupuje słówka po 10.
+*   Zapamiętuje błędy i wrzuca je do kolejnej rundy.
+*   Zapisuje postęp automatycznie (możesz wrócić do nauki w dowolnym momencie).
 
 ---
 
-## 📂 Gdzie umieścić zrzuty ekranu?
+## 📱 Responsywność i UX
 
-Aby było profesjonalnie, sugeruję taką strukturę:
-1. Stwórz folder `public/screenshots/`.
-2. Wrzuć pliki o nazwach: `home.png`, `study.png`, `progress.png`.
-3. Linki w tym pliku README będą wtedy działać poprawnie na GitHubie.
+*   **Mobile-First:** Aplikacja w pełni zoptymalizowana pod ekrany telefonów.
+*   **Adaptacyjny Interfejs:** Specjalne mechanizmy wykrywania klawiatury (ukrywanie obrazków, pływające przyciski), aby nauka na telefonie była wygodna.
+*   **Audio Power:** Pełna obsługa wymowy native speakera dzięki Web Speech API.
 
 ---
 
-*Stworzone z ❤️ dla lepszej nauki.*
+## 📸 Galeria Aplikacji
+
+| Menu Główne | Widok Fiszki | Tryb Zdań |
+| :---: | :---: | :---: |
+| ![Screen 1](https://raw.githubusercontent.com/SeveToo/el-app/main/public/screen1-placeholder.png) | ![Screen 2](https://raw.githubusercontent.com/SeveToo/el-app/main/public/screen2-placeholder.png) | ![Screen 3](https://raw.githubusercontent.com/SeveToo/el-app/main/public/screen3-placeholder.png) |
+
+---
+
+## 🗺️ Plany Rozwoju (Roadmap)
+
+To dopiero początek! W planach mamy:
+
+*   **🎙️ Tryb Dyktowania:** Słuchasz całych zdań i musisz je zapisać bezbłędnie.
+*   **🎧 Rozumienie ze Słuchu:** Zaawansowane ćwiczenia audio z wyborem opcji.
+*   **🏙️ Tryb "Miasto" (Visual Context):**
+    *   Interaktywna mapa miasta.
+    *   Zadanie: *"Someone says where something is, and you have to click it on the map"*.
+    *   Idealne do nauki przyimków miejsca i kierunków.
+*   **☁️ Synchronizacja w Chmurze:** Konta użytkowników i statystyki nauki dostępne na każdym urządzeniu.
+
+---
+
+## 🛠️ Technologia
+
+*   **Framework:** Next.js 14+ / React
+*   **Stylizacja:** Tailwind CSS / HeroUI (wcześniej NextUI)
+*   **Animacje:** Framer Motion
+*   **Dźwięk:** Web Speech API
+
+---
+
+*Stworzone z pasją do nauki języków.* 🇬🇧🇺🇸
