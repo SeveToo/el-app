@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import ChapterCard from '@/components/ChapterCard'
+import { AdBanner } from '@/components/AdBanner'
 import { getAllProgress, calcPercent } from '@/lib/progress'
 
 const CHAPTERS = [
@@ -106,6 +107,8 @@ function HomeContent() {
             />
           ))}
         </div>
+
+        <AdBanner />
       </div>
     </section>
   )

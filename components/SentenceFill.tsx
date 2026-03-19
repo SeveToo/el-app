@@ -330,6 +330,15 @@ export default function SentenceFill({ words, onComplete }: Props) {
           {/* TOP BAR: Progres + Żarówy */}
           <div className="w-full flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-default-400">
             <div className="flex items-center gap-2">
+              <Button 
+                isIconOnly 
+                size="sm" 
+                variant="light" 
+                onClick={() => window.location.href = '/'}
+                className="w-6 h-6 min-w-0 font-bold"
+              >
+                ✕
+              </Button>
               <span className="text-primary/70">ETAP 5</span>
               <span>{activeIndex + 1} / {words.length}</span>
             </div>

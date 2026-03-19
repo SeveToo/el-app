@@ -30,7 +30,7 @@ export default async function ChapterPage(props: { params: Promise<{ id: string 
   // Sprawdź czy jest JSON dla tego id
   if (JSON_LESSONS.includes(id)) {
     try {
-      const filePath = path.join(process.cwd(), 'public', `${id}.json`)
+      const filePath = path.join(process.cwd(), 'public', 'data', `${id}.json`)
       const file = await fs.readFile(filePath, 'utf8')
       words = JSON.parse(file)
     } catch (e) {
