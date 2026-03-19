@@ -38,8 +38,15 @@ Aplikacja prowadzi użytkownika przez 5 inteligentnych etapów nauki:
 ## 📱 Responsywność (Mobile-First)
 
 Aplikacja posiada dedykowane mechanizmy dla smartfonów:
-*   **Adaptacyjny Interfejs:** Wykrywanie klawiatury ekranowej, ukrywanie zbędnych elementów i pływające przyciski zatwierdzania.
+*   **Adaptacyjny Interfejs:** Wykrywanie klawiatury ekranowej, ukrywanie zbędnych elementów i dynamiczne pozycjonowanie.
 *   ![Mobile View](public/app_screens/etap5_mobile.png)
+
+### 💡 Wyzwanie Techniczne: Klawiatura na Mobile
+Standardowe pozycjonowanie `sticky` lub `fixed` często zawodzi na urządzeniach mobilnych, gdy użytkownik otwiera klawiaturę wirtualną — obrazek i kluczowe elementy często znikały "pod palcami" lub uciekały poza widoczny obszar.
+
+**Rozwiązanie:** 
+Zastosowałem **Visual Viewport API** (`window.visualViewport.offsetTop`), które dynamicznie oblicza rzeczywiste położenie górnej krawędzi widocznego okna (nad klawiaturą). Dzięki temu nagłówki w Etapie 5 są zawsze idealnie przyklejone do góry widocznego obszaru, eliminując potrzebę zbędnego przewijania. Rozwiązanie to działa wybitnie płynnie na nowoczesnych smartfonach! 🦾📱
+
 
 ---
 
