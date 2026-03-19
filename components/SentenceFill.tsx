@@ -306,8 +306,8 @@ export default function SentenceFill({ words, onComplete }: Props) {
   return (
     <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto pb-40">
       
-      {/* Sticky Top Header – Zawsze widoczny pomocnik */}
-      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-md pt-2 pb-2 border-b border-divider shadow-sm px-2 -mx-2 sm:mx-auto">
+      {/* Sticky Top Header – Odsunięty od Navbara (top-16) */}
+      <div className="sticky top-16 z-30 bg-background/95 backdrop-blur-md pt-2 pb-2 border-b border-divider shadow-md px-2 -mx-2 sm:mx-auto rounded-b-2xl">
         <div className="flex flex-col items-center gap-1">
           {/* Progres – mini bar */}
           <div className="w-full flex justify-between items-center text-[9px] font-black uppercase tracking-[0.2em] text-default-400 px-1">
@@ -328,14 +328,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
               animate={{ opacity: 1, scale: 1 }}
               className="flex items-center gap-3 w-full py-1"
             >
-              {/* Obrazek – mniejszy ale ZAWSZE widoczny na mobile obok tekstu */}
+              {/* Obrazek – ZWIĘKSZONY i widoczny */}
               <div className="shrink-0 flex items-center justify-center">
                 {currentWord.image.split(',').slice(0, 1).map((imgSrc, idx) => (
                   <img 
                     key={idx}
                     src={prefixPath(imgSrc.trim())} 
                     alt={currentWord.pl}
-                    className="h-10 w-10 sm:h-14 sm:w-14 object-contain rounded-lg bg-white p-0.5 shadow-sm border border-default-100"
+                    className="h-14 w-14 sm:h-16 sm:w-16 object-contain rounded-xl bg-white p-1 shadow-sm border-2 border-warning/20"
                   />
                 ))}
               </div>
@@ -343,17 +343,17 @@ export default function SentenceFill({ words, onComplete }: Props) {
               {/* Tekst podpowiedzi PL */}
               <div className="flex-grow min-w-0">
                 <div 
-                  className="relative cursor-pointer group flex items-center min-h-[40px] px-2 bg-default-50 rounded-xl border border-default-200"
+                  className="relative cursor-pointer group flex items-center min-h-[48px] px-3 bg-default-100/50 rounded-2xl border-2 border-dashed border-default-300 hover:border-primary/50 transition-colors"
                   onClick={() => setIsPlRevealed(true)}
                 >
-                  <div className={`text-xs sm:text-sm font-black text-primary uppercase tracking-tight transition-all duration-300 w-full ${!isPlRevealed ? 'blur-sm opacity-30 select-none' : 'blur-0 opacity-100'}`}>
+                  <div className={`text-xs sm:text-sm font-black text-primary uppercase tracking-tight transition-all duration-300 w-full ${!isPlRevealed ? 'blur-md opacity-30 select-none' : 'blur-0 opacity-100'}`}>
                     {renderPlExample(currentWord)}
                   </div>
                   
                   {!isPlRevealed && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <span className="text-[9px] font-black uppercase tracking-[0.1em] text-primary/80">
-                        👁️ Pokaż pomysł
+                      <span className="bg-background/80 px-2 py-1 rounded-full text-[9px] font-black uppercase tracking-widest text-primary shadow-sm border border-primary/20">
+                        👁️ POKAŻ PODPOWIEDŹ
                       </span>
                     </div>
                   )}
@@ -363,10 +363,10 @@ export default function SentenceFill({ words, onComplete }: Props) {
               {/* Przycisk podpowiedzi 💡 */}
               <Button 
                 isIconOnly 
-                size="sm" 
-                variant="flat" 
+                size="md" 
+                variant="shadow" 
                 color="warning"
-                className="shrink-0 font-bold"
+                className="shrink-0 font-bold rounded-xl"
                 onClick={() => triggerHint(activeIndex)}
               >
                 💡
@@ -395,27 +395,27 @@ export default function SentenceFill({ words, onComplete }: Props) {
         ))}
       </div>
 
-      {/* Hint Overlay – Usprawniony pod Mobile */}
+      {/* Hint Overlay – Układ LISTY (tekst po prawej, obrazek po lewej) */}
       <AnimatePresence>
         {showHint && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl flex items-center justify-center p-2 sm:p-4"
+            className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6"
           >
-            <div className="max-w-4xl w-full flex flex-col items-center gap-4 sm:gap-8 max-h-screen overflow-y-auto py-8 px-4">
+            <div className="max-w-xl w-full flex flex-col items-center gap-6 max-h-screen overflow-y-auto py-8">
               <div className="text-center space-y-1">
-                <h3 className="text-xl sm:text-3xl font-black uppercase tracking-tighter text-primary">Wybierz słowo</h3>
-                <p className="text-default-500 font-bold uppercase tracking-widest text-[10px] sm:text-sm">Kliknij poprawny obrazek</p>
+                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter text-primary">Znajdź pasujące słowo</h3>
+                <p className="text-default-500 font-bold uppercase tracking-widest text-[10px]">Wybierz poprawną odpowiedź z listy</p>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6 w-full max-w-2xl mx-auto">
+              <div className="flex flex-col gap-4 w-full">
                 {hintOptions.map((opt) => (
                   <Card 
                     key={opt.id}
                     isPressable
-                    className="aspect-square border-2 sm:border-4 border-transparent hover:border-primary transition-all p-2 sm:p-4 bg-content1 shadow-xl"
+                    className="w-full border-2 border-transparent hover:border-primary transition-all bg-content1 shadow-lg hover:scale-[1.02] active:scale-98"
                     onClick={() => {
                       if (opt.id === currentWord.id) {
                         setShowHint(false)
@@ -426,13 +426,16 @@ export default function SentenceFill({ words, onComplete }: Props) {
                       }
                     }}
                   >
-                    <CardBody className="flex flex-col items-center justify-center gap-2 sm:gap-4 p-1 sm:p-4">
-                      <div className="flex gap-1 items-center justify-center flex-wrap">
-                        {opt.image.split(',').slice(0,1).map((imgSrc, idx) => (
-                           <img key={idx} src={prefixPath(imgSrc.trim())} className="h-16 w-16 sm:h-24 sm:w-24 object-contain" alt={opt.en} />
+                    <CardBody className="flex flex-row items-center gap-6 p-4">
+                      <div className="shrink-0 bg-white p-2 rounded-2xl shadow-sm border border-default-100">
+                        {opt.image.split(',').slice(0, 1).map((imgSrc, idx) => (
+                           <img key={idx} src={prefixPath(imgSrc.trim())} className="h-16 w-16 sm:h-20 sm:w-20 object-contain" alt={opt.en} />
                         ))}
                       </div>
-                      <p className="text-xs sm:text-xl font-black uppercase tracking-widest text-foreground text-center line-clamp-1">{opt.en}</p>
+                      <div className="flex-grow text-left">
+                        <p className="text-xl sm:text-2xl font-black uppercase tracking-widest text-foreground">{opt.en}</p>
+                        <p className="text-[10px] sm:text-xs font-bold text-default-400 uppercase tracking-[0.2em] mt-1">Kliknij aby wybrać</p>
+                      </div>
                     </CardBody>
                   </Card>
                 ))}
@@ -442,7 +445,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
                 variant="flat" 
                 color="danger" 
                 size="lg"
-                className="font-bold uppercase tracking-widest w-full sm:w-auto rounded-2xl"
+                className="font-bold uppercase tracking-widest w-full rounded-2xl mt-4"
                 onClick={() => setShowHint(false)}
               >
                 Zamknij ❌
