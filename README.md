@@ -1,82 +1,74 @@
 # 🚀 EL APP - Twój Interaktywny Nauczyciel Angielskiego
 
-![EL APP Header](https://raw.githubusercontent.com/SeveToo/el-app/main/public/header-placeholder.png) 
-*(MIEJSCE NA SCREENSHOT GŁÓWNEGO MENU)*
+![EL APP Main Menu](public/app_screens/menu.png)
 
 **EL APP** to nowoczesna aplikacja webowa do nauki języka angielskiego, zaprojektowana z myślą o maksymalnej efektywności i przyjemności z nauki. System oparty na etapach (Stages) pozwala na płynne przejście od poznania słowa do jego swobodnego użycia w kontekście.
 
 ---
 
-## ✨ Kluczowe Funkcje (Zaimplementowane)
+## ✨ Etapy Nauki (Learning Flow)
 
 Aplikacja prowadzi użytkownika przez 5 inteligentnych etapów nauki:
 
 1.  **🗂️ Etap 1: Fiszki (Flashcards)**
     *   Dynamiczne karty z obrazkami i przykładami.
-    *   Wymowa audio dla każdego słówka i przykładu.
-    *   Intuicyjne sterowanie (Tak/Nie).
+    *   Pełna wymowa audio (native speaker).
+    *   ![Fiszki](public/app_screens/etap1.png)
 
 2.  **⚖️ Etap 1.5: Szybka Ocena (Fast Review)**
-    *   Błyskawiczna powtórka sprawdzająca, co zapamiętałeś.
-    *   Skoncentrowana na rozpoznawaniu słowa w obu językach.
+    *   Błyskawiczna weryfikacja znajomości słówek.
+    *   ![Oceń](public/app_screens/etap1.5.png)
 
 3.  **🎮 Etap 3: Gra w Dopasowywanie (Matching Game)**
-    *   Dopasuj angielskie słowo do odpowiedniego obrazka.
-    *   Trening skojarzeń wizualnych.
+    *   Dopasuj angielskie słowo do odpowiedniego obrazka. Trening skojarzeń wizualnych.
+    *   ![Gra](public/app_screens/etap3.png)
 
 4.  **✍️ Etap 4: Test Pisemny (Written Test)**
-    *   Wpisywanie słówek z pamięci.
-    *   **Tryb Karny:** Jeśli popełnisz błąd, musisz przepisać słówko poprawnie 3 razy, aby przejść dalej.
+    *   Wpisywanie słówek z pamięci z **Trybem Karnym** za błędy.
+    *   ![Pisanie](public/app_screens/etap4.png)
+    *   *Tryb karny przy błędzie:*
+    *   ![Błąd](public/app_screens/etap4_wrong_answer.png)
 
 5.  **📝 Etap 5: Uzupełnianie Zdań (Sentences)**
-    *   Użycie słowa w prawdziwym kontekście.
-    *   System podpowiedzi (💡) jeśli utkniesz.
-
-### 🧠 Inteligentna Pętla Nauki (Study Loop)
-Aplikacja automatycznie zarządza Twoją nauką:
-*   Grupuje słówka po 10.
-*   Zapamiętuje błędy i wrzuca je do kolejnej rundy.
-*   Zapisuje postęp automatycznie (możesz wrócić do nauki w dowolnym momencie).
+    *   Użycie słowa w prawdziwym kontekście z systemem inteligentnych podpowiedzi (💡).
+    *   ![Zdania](public/app_screens/etap5.png)
 
 ---
 
-## 📱 Responsywność i UX
+## 📱 Responsywność (Mobile-First)
 
-*   **Mobile-First:** Aplikacja w pełni zoptymalizowana pod ekrany telefonów.
-*   **Adaptacyjny Interfejs:** Specjalne mechanizmy wykrywania klawiatury (ukrywanie obrazków, pływające przyciski), aby nauka na telefonie była wygodna.
-*   **Audio Power:** Pełna obsługa wymowy native speakera dzięki Web Speech API.
+Aplikacja posiada dedykowane mechanizmy dla smartfonów:
+*   **Adaptacyjny Interfejs:** Wykrywanie klawiatury ekranowej, ukrywanie zbędnych elementów i pływające przyciski zatwierdzania.
+*   ![Mobile View](public/app_screens/etap5_mobile.png)
 
 ---
 
-## 📸 Galeria Aplikacji
+## 🧠 Inteligentna Pętla Nauki (Study Loop)
 
-| Menu Główne | Widok Fiszki | Tryb Zdań |
-| :---: | :---: | :---: |
-| ![Screen 1](https://raw.githubusercontent.com/SeveToo/el-app/main/public/screen1-placeholder.png) | ![Screen 2](https://raw.githubusercontent.com/SeveToo/el-app/main/public/screen2-placeholder.png) | ![Screen 3](https://raw.githubusercontent.com/SeveToo/el-app/main/public/screen3-placeholder.png) |
+*   **Grupy po 10 słówek:** Nauka podzielona na strawne partie.
+*   **System Błędów:** Słówka sprawiające trudność automatycznie trafiają do powtórek w kolejnej rundzie.
+*   **Lokalny Zapis (Local Storage):** Twój postęp jest bezpieczny nawet po odświeżeniu strony.
+
+---
+
+## 🛠️ Stack Technologiczny
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router, App Context)
+- **Styling**: [TailwindCSS](https://tailwindcss.com/)
+- **UI Components**: [HeroUI](https://heroui.com/) (Modern, Accessible components)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Audio**: Web Speech API (Native TTS)
+- **Deployment**: GitHub Pages (via GitHub Actions)
 
 ---
 
 ## 🗺️ Plany Rozwoju (Roadmap)
 
-To dopiero początek! W planach mamy:
-
 *   **🎙️ Tryb Dyktowania:** Słuchasz całych zdań i musisz je zapisać bezbłędnie.
 *   **🎧 Rozumienie ze Słuchu:** Zaawansowane ćwiczenia audio z wyborem opcji.
-*   **🏙️ Tryb "Miasto" (Visual Context):**
-    *   Interaktywna mapa miasta.
-    *   Zadanie: *"Someone says where something is, and you have to click it on the map"*.
-    *   Idealne do nauki przyimków miejsca i kierunków.
-*   **☁️ Synchronizacja w Chmurze:** Konta użytkowników i statystyki nauki dostępne na każdym urządzeniu.
+*   **🏙️ Tryb "Miasto" (Visual Context):** Interaktywna mapa miasta do nauki przyimków miejsca i kierunków.
+*   **☁️ Cloud Sync:** Konta użytkowników i synchronizacja statystyk.
 
 ---
 
-## 🛠️ Technologia
-
-*   **Framework:** Next.js 14+ / React
-*   **Stylizacja:** Tailwind CSS / HeroUI (wcześniej NextUI)
-*   **Animacje:** Framer Motion
-*   **Dźwięk:** Web Speech API
-
----
-
-*Stworzone z pasją do nauki języków.* 🇬🇧🇺🇸
+*Stworzone z pasją do nauki języków. by [SeveToo](https://github.com/SeveToo)*
