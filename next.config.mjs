@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
-  output: 'export', // To jest kluczowe dla GitHub Pages
-  basePath: '/el-app', // Tu wpisujesz nazwę swojego repozytorium
+  output: 'export',
+  // Dodajemy basePath TYLKO jeśli budujemy projekt na produkcję (GitHub Pages)
+  basePath: isProd ? '/el-app' : '',
   images: {
-    unoptimized: true, // GitHub Pages to serwer statyczny, Next.js Image Optimization tu nie zadziała
+    unoptimized: true,
   },
 };
 

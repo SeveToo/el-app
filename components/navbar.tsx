@@ -14,7 +14,7 @@ import NextLink from 'next/link'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { Logo } from '@/components/icons'
 
-export const Navbar = () => {
+const NavbarContentWrapper = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const subject = searchParams.get('subject') || 'english'
@@ -23,6 +23,24 @@ export const Navbar = () => {
     router.push(`/?subject=${key}`)
   }
 
+  return (
+    <NavbarContent className="hidden sm:flex" justify="center">
+      <NavbarItem>
+        <Tabs
+          aria-label="Wybierz przedmiot"
+          color="primary"
+          radius="full"
+          selectedKey={subject}
+          onSelectionChange={handleSelectionChange}>
+          <Tab key="english" title="Angielski" />
+          <Tab key="math" title="Matematyka" />
+        </Tabs>
+      </NavbarItem>
+    </NavbarContent>
+  )
+}
+
+export const Navbar = () => {
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
       <NavbarContent
@@ -38,19 +56,9 @@ export const Navbar = () => {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex" justify="center">
-        <NavbarItem>
-          <Tabs
-            aria-label="Wybierz przedmiot"
-            color="primary"
-            radius="full"
-            selectedKey={subject}
-            onSelectionChange={handleSelectionChange}>
-            <Tab key="english" title="Angielski" />
-            <Tab key="math" title="Matematyka" />
-          </Tabs>
-        </NavbarItem>
-      </NavbarContent>
+      <React.Suspense fallback={<div className="hidden sm:flex w-40" />}>
+        <NavbarContentWrapper />
+      </React.Suspense>
 
       <NavbarContent
         className="basis-1/5 sm:basis-full"

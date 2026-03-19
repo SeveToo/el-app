@@ -15,6 +15,12 @@ const JSON_LESSONS = [
   'final_test',
 ]
 
+export async function generateStaticParams() {
+  return JSON_LESSONS.map((id) => ({
+    id: id,
+  }))
+}
+
 export default async function ChapterPage(props: { params: Promise<{ id: string }> }) {
   const { id } = await props.params
 
