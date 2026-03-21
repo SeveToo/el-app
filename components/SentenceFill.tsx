@@ -380,7 +380,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
                     key={idx}
                     src={prefixPath(imgSrc.trim())} 
                     alt={currentWord.pl}
-                    className="h-20 w-20 sm:h-24 sm:w-24 object-contain rounded-xl bg-white p-1 border border-default-200"
+                    className="h-20 w-20 sm:h-24 sm:w-24 object-cover object-center rounded-xl bg-white p-0.5 border-2 border-primary/20 shadow-sm scale-110 transition-transform duration-500"
                   />
                 ))}
               </motion.div>
