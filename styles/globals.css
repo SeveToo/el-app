@@ -22,7 +22,7 @@
 }
 
 @utility btn-premium {
-    @apply h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg border-b-4 transition-all active:scale-95;
+    @apply h-20 sm:h-28 text-lg sm:text-2xl font-black uppercase tracking-widest rounded-[2rem] shadow-2xl border-b-8 transition-all active:translate-y-1 active:border-b-0;
 }
 
 @utility glass-effect {
