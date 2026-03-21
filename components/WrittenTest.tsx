@@ -7,22 +7,15 @@ import { Progress } from '@heroui/progress'
 import { Input } from '@heroui/input'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
-import { prefixPath } from '@/lib/utils'
-
-
-interface Word {
-  id: string
-  en: string
-  pl: string
-  image: string
-}
+import { Word } from '@/types'
+import { WordImage } from '@/components/WordImage'
+import { StudyHeader } from '@/components/StudyHeader'
 
 interface Props {
   words: Word[]
   onComplete: (errorIds: string[]) => void
 }
 
-// Ile razy trzeba przepisać słówko po błędzie
 const REPEAT_COUNT = 3
 
 export default function WrittenTest({ words, onComplete }: Props) {
@@ -31,7 +24,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
   const [status, setStatus] = useState<'idle' | 'success' | 'wrong'>('idle')
   const [errorIds, setErrorIds] = useState<string[]>([])
 
-  // Tryb karny: ile razy pozostało do przepisania
+  // Punishment Mode State
   const [repeatMode, setRepeatMode] = useState(false)
   const [repeatLeft, setRepeatLeft] = useState(0)
   const [repeatInput, setRepeatInput] = useState('')
@@ -39,7 +32,6 @@ export default function WrittenTest({ words, onComplete }: Props) {
 
   const currentWord = words[currentIndex]
 
-  // ── główne sprawdzenie ──────────────────────────────────────────────────────
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const cleanInput = inputValue.trim().toLowerCase()
@@ -54,11 +46,10 @@ export default function WrittenTest({ words, onComplete }: Props) {
       setStatus('wrong')
       audioService.playError()
 
-      // Dodaj do błędów
       if (!errorIds.includes(currentWord.id)) {
         setErrorIds((prev) => [...prev, currentWord.id])
       }
-      // Po chwili wejdź w tryb karny
+      
       setTimeout(() => {
         setStatus('idle')
         setInputValue('')
@@ -70,7 +61,6 @@ export default function WrittenTest({ words, onComplete }: Props) {
     }
   }
 
-  // ── sprawdzenie przepisywania ───────────────────────────────────────────────
   const handleRepeatSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const cleanInput = repeatInput.trim().toLowerCase()
@@ -80,16 +70,14 @@ export default function WrittenTest({ words, onComplete }: Props) {
       const left = repeatLeft - 1
       setRepeatStatus('ok')
       audioService.playSuccess()
-      audioService.speak(currentWord.en) // Pronounce on every successful repeat
+      audioService.speak(currentWord.en)
+      
       setTimeout(() => {
-
-
         setRepeatInput('')
         setRepeatStatus('idle')
         if (left <= 0) {
-          // Skończyło – przejdź dalej
           setRepeatMode(false)
-          moveNext(false) // słówko i tak liczy się jako błąd
+          moveNext(false)
         } else {
           setRepeatLeft(left)
         }
@@ -98,16 +86,13 @@ export default function WrittenTest({ words, onComplete }: Props) {
       setRepeatStatus('bad')
       audioService.playError()
       setTimeout(() => {
-
         setRepeatInput('')
         setRepeatStatus('idle')
-        // Reset licznika przy złym wpisie
         setRepeatLeft(REPEAT_COUNT)
       }, 600)
     }
   }
 
-  // ── przejście do kolejnego słówka ───────────────────────────────────────────
   const moveNext = (wasCorrect: boolean) => {
     setInputValue('')
     setStatus('idle')
@@ -117,6 +102,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
     if (currentIndex < words.length - 1) {
       setCurrentIndex(currentIndex + 1)
     } else {
+      // Deduplicate and filter based on final result
       const finalErrors = wasCorrect
         ? errorIds.filter((id) => id !== currentWord.id)
         : Array.from(new Set([...errorIds, currentWord.id]))
@@ -127,45 +113,41 @@ export default function WrittenTest({ words, onComplete }: Props) {
   if (!currentWord) return null
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto py-4">
-      {/* Nagłówek */}
-      <div className="w-full flex flex-col gap-2">
-        <div className="flex justify-between text-sm text-success font-black uppercase tracking-widest">
-          <span>Etap 4: Test Pisemny</span>
-          <span>{currentIndex + 1} / {words.length}</span>
-        </div>
-        <Progress value={((currentIndex + 1) / words.length) * 100} color="success" />
-      </div>
+    <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto py-6 sm:py-10">
+      <StudyHeader 
+        title="Etap 4: Pisanie" 
+        current={currentIndex + 1} 
+        total={words.length} 
+        color="success"
+      />
 
       <AnimatePresence mode="wait">
         <motion.div
           key={currentWord.id}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="w-full"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="w-full px-2"
         >
-          <Card className={`w-full border shadow-xl overflow-hidden transition-colors duration-300 ${
-            repeatMode ? 'border-danger/40 bg-danger/5' : 'border-success/30'
+          <Card className={`w-full border-none shadow-2xl rounded-[2.5rem] overflow-hidden transition-colors duration-500 ${
+            repeatMode ? 'bg-danger/5 ring-4 ring-danger/20' : 'bg-content1'
           }`}>
-            <CardBody className="flex flex-col items-center gap-4 text-center pt-4 px-4 pb-4">
-
-              {/* Obrazek */}
-              <div className="relative">
-                <div className="flex gap-3 items-center justify-center flex-wrap">
-                  {currentWord.image.split(',').map((imgSrc, idx, arr) => (
-                    <img
-                      key={idx}
-                      src={prefixPath(imgSrc.trim())}
-                      alt={currentWord.pl}
-                      className={`object-contain rounded-2xl ${arr.length > 1 ? 'w-204 ' : 'w-204 '}`}
-                    />
-                  ))}
-                </div>
+            <CardBody className="p-6 flex flex-col items-center gap-6">
+              
+              <div className="w-28 h-28 sm:w-36 sm:h-36 relative">
+                <WordImage 
+                   image={currentWord.image} 
+                   alt={currentWord.pl}
+                   containerClassName="rounded-3xl border-2 border-default-100 shadow-sm"
+                   fit="contain"
+                   className="p-1"
+                />
+                
                 {status !== 'idle' && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className={`absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-white text-xl shadow-lg ${
+                    className={`absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-white text-xl shadow-lg z-20 ${
                       status === 'success' ? 'bg-success' : 'bg-danger'
                     }`}
                   >
@@ -174,61 +156,55 @@ export default function WrittenTest({ words, onComplete }: Props) {
                 )}
               </div>
 
-              {/* Słowo PL */}
-              <div className="space-y-1">
-                <h2 className="text-3xl font-bold uppercase tracking-tight text-success">
+              <div className="text-center space-y-1">
+                <h2 className="text-3xl sm:text-4xl font-black text-success uppercase tracking-tighter leading-none">
                   {currentWord.pl}
                 </h2>
-                <p className="text-default-400 text-sm font-medium italic">
-                  Wpisz po angielsku:
+                <p className="text-default-400 text-xs font-bold uppercase tracking-widest">
+                  {repeatMode ? 'PRZEPISZ POPRAWNIE:' : 'WPISZ PO ANGIELSKU:'}
                 </p>
               </div>
 
-              {/* ── Tryb normalny ── */}
-              {!repeatMode && (
-                <form onSubmit={handleSubmit} className="w-full">
+              {!repeatMode ? (
+                <form onSubmit={handleSubmit} className="w-full space-y-4">
                   <Input
                     autoFocus
-                    size="lg"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    color={
-                      status === 'success' ? 'success'
-                        : status === 'wrong' ? 'danger'
-                        : 'default'
-                    }
-                    placeholder="Typing..."
-                    classNames={{ input: 'text-center placeholder:opacity-30 tracking-widest font-bold text-lg uppercase' }}
-                    enterKeyHint="done"
+                    color={status === 'success' ? 'success' : status === 'wrong' ? 'danger' : 'default'}
+                    placeholder="Wpisz słówko..."
+                    size="lg"
+                    radius="lg"
+                    classNames={{
+                      input: "text-center text-xl font-black uppercase tracking-widest",
+                      inputWrapper: "h-16 border-2"
+                    }}
+                    autoComplete="off"
+                    isDisabled={status === 'success'}
                   />
                   <Button
                     type="submit"
-                    className="w-full mt-3 h-11 font-bold text-base bg-success text-success-foreground"
+                    color="success"
+                    size="lg"
+                    className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg border-b-4 border-success-600 active:border-b-0 active:translate-y-1 transition-all"
+                    isDisabled={status === 'success'}
                   >
-                    Sprawdź! 🚀
+                    SPRAWDŹ! 🚀
                   </Button>
                 </form>
-              )}
-
-              {/* ── Tryb karny: przepisywanie ── */}
-              {repeatMode && (
+              ) : (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="w-full flex flex-col gap-3"
+                  className="w-full space-y-4"
                 >
-                  {/* Poprawna odpowiedź */}
-                  <div className="bg-danger/10 border border-danger/20 rounded-2xl py-3 px-4">
-                    <p className="text-xs text-danger font-bold uppercase tracking-widest mb-1">
-                      ❌ Błąd! Poprawna odpowiedź:
-                    </p>
-                    <p className="text-2xl font-black text-danger uppercase tracking-widest">
-                      {currentWord.en}
-                    </p>
+                  <div className="bg-danger/10 border-2 border-danger/20 rounded-[2rem] p-4 text-center relative">
+                    <p className="text-[10px] text-danger font-black uppercase tracking-[0.2em] mb-1">Poprawna odpowiedź:</p>
+                    <p className="text-3xl font-black text-danger uppercase tracking-widest">{currentWord.en}</p>
                     <Button 
+                      isIconOnly 
                       size="sm" 
                       variant="light" 
-                      isIconOnly 
                       className="absolute top-2 right-2 text-danger"
                       onClick={() => audioService.speak(currentWord.en)}
                     >
@@ -236,50 +212,43 @@ export default function WrittenTest({ words, onComplete }: Props) {
                     </Button>
                   </div>
 
-
-                  {/* Licznik powtórzeń */}
                   <div className="flex gap-1.5 justify-center">
                     {Array.from({ length: REPEAT_COUNT }).map((_, i) => (
                       <div
                         key={i}
                         className={`h-2 w-8 rounded-full transition-all duration-300 ${
-                          i < REPEAT_COUNT - repeatLeft ? 'bg-success' : 'bg-default-200'
+                          i < REPEAT_COUNT - repeatLeft ? 'bg-success shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-default-200'
                         }`}
                       />
                     ))}
                   </div>
-                  <p className="text-xs text-default-400 font-semibold uppercase tracking-widest">
-                    Przepisz poprawnie jeszcze {repeatLeft}×
-                  </p>
 
-                  {/* Input przepisywania */}
-                  <form onSubmit={handleRepeatSubmit} className="w-full">
+                  <form onSubmit={handleRepeatSubmit} className="space-y-4">
                     <Input
                       autoFocus
-                      size="lg"
                       value={repeatInput}
                       onChange={(e) => setRepeatInput(e.target.value)}
-                      color={
-                        repeatStatus === 'ok' ? 'success'
-                          : repeatStatus === 'bad' ? 'danger'
-                          : 'default'
-                      }
+                      color={repeatStatus === 'ok' ? 'success' : repeatStatus === 'bad' ? 'danger' : 'default'}
                       placeholder={currentWord.en}
+                      size="lg"
+                      radius="lg"
                       classNames={{
-                        input: 'text-center placeholder:opacity-20 tracking-widest font-bold text-lg uppercase',
+                        input: "text-center text-xl font-black uppercase tracking-widest placeholder:opacity-20",
+                        inputWrapper: "h-16 border-2"
                       }}
-                      enterKeyHint="done"
+                      autoComplete="off"
                     />
                     <Button
                       type="submit"
-                      className="w-full mt-3 h-11 font-bold text-base bg-danger text-white"
+                      color="danger"
+                      size="lg"
+                      className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-xl border-b-4 border-danger-600 active:border-b-0 active:translate-y-1 transition-all"
                     >
-                      Przepisz ✍️
+                      PRZEPISZ ({repeatLeft}×) ✍️
                     </Button>
                   </form>
                 </motion.div>
               )}
-
             </CardBody>
           </Card>
         </motion.div>

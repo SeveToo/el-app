@@ -1,19 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { audioService } from '@/lib/audio'
-import { prefixPath } from '@/lib/utils'
-
-
-interface Word {
-  id: string
-  en: string
-  pl: string
-  image: string
-}
+import { Word } from '@/types'
+import { WordImage } from '@/components/WordImage'
+import { StudyHeader } from '@/components/StudyHeader'
 
 interface Props {
   words: Word[]
@@ -37,16 +30,13 @@ export default function MatchingGame({ words, onComplete }: Props) {
   useEffect(() => {
     if (selectedWord && selectedImage) {
       if (selectedWord === selectedImage) {
-        // Poprawne dopasowanie
         setFlashId({ id: selectedWord, ok: true })
         audioService.playSuccess()
         
-        // Find the word object to pronounce it
         const wordObj = words.find(w => w.id === selectedWord)
         if (wordObj) audioService.speak(wordObj.en)
 
         setTimeout(() => {
-
           setMatchedIds((prev) => {
             const next = [...prev, selectedWord!]
             if (next.length === words.length) {
@@ -57,11 +47,9 @@ export default function MatchingGame({ words, onComplete }: Props) {
           setFlashId(null)
         }, 500)
       } else {
-        // Błąd
         setFlashId({ id: selectedWord, ok: false })
         audioService.playError()
         if (!errorIds.includes(selectedWord)) {
-
           setErrorIds((prev) => [...prev, selectedWord!])
         }
         setTimeout(() => setFlashId(null), 600)
@@ -90,13 +78,12 @@ export default function MatchingGame({ words, onComplete }: Props) {
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl mx-auto py-6">
       {/* Header */}
-      <div className="w-full flex flex-col gap-2 px-2">
-        <div className="flex justify-between text-xs font-black uppercase tracking-widest text-secondary">
-          <span>Etap 3: Dopasowanie</span>
-          <span>{matchedIds.length} / {words.length}</span>
-        </div>
-        <Progress value={(matchedIds.length / words.length) * 100} color="secondary" />
-      </div>
+      <StudyHeader 
+        title="Etap 3: Dopasowanie" 
+        current={matchedIds.length} 
+        total={words.length} 
+        color="secondary"
+      />
 
       {/* Legenda */}
       <div className="grid grid-cols-[auto_1fr_1fr] sm:grid-cols-2 gap-3 sm:gap-8 text-xs text-default-400 font-semibold uppercase tracking-widest w-full px-2">
@@ -104,15 +91,13 @@ export default function MatchingGame({ words, onComplete }: Props) {
         <span className="col-span-2 sm:col-span-1 text-center border-b-2 border-default-200 pb-1">🖼️ Obrazki</span>
       </div>
 
-      {/* Grid: 1 kolumna słów + 2 kolumny obrazków */}
+      {/* Grid */}
       <div className="grid grid-cols-[auto_1fr_1fr] sm:grid-cols-2 gap-3 sm:gap-8 w-full px-2">
-        {/* Kolumna słów */}
         <div className="flex flex-col gap-2 sm:gap-3 min-w-[70px] sm:min-w-0">
           {shuffleWords.map((word) => (
             <motion.button
               key={word.id}
               layout
-              transition={{ duration: 0.3 }}
               className={`h-12 sm:h-16 px-2 sm:px-4 cursor-pointer rounded-2xl border-2 flex items-center justify-center font-black text-[0.7rem] sm:text-sm uppercase tracking-wider shadow-sm transition-all duration-200 whitespace-nowrap ${getWordStyle(word.id)}`}
               onClick={() => !matchedIds.includes(word.id) && setSelectedWord(word.id)}
             >
@@ -121,33 +106,26 @@ export default function MatchingGame({ words, onComplete }: Props) {
           ))}
         </div>
 
-        {/* 2 kolumny obrazków — każdy obrazek jest ~2× wyższy niż słowo */}
         <div className="col-span-2 sm:col-span-1 grid grid-cols-2 gap-2 sm:gap-3 h-fit">
           {shuffleImages.map((word) => (
             <motion.button
               key={word.id}
               layout
-              transition={{ duration: 0.3 }}
               className={`aspect-square sm:aspect-auto sm:h-[140px] cursor-pointer rounded-2xl border-2 overflow-hidden shadow-sm transition-all duration-200 bg-white ${getImageStyle(word.id)}`}
               onClick={() => !matchedIds.includes(word.id) && setSelectedImage(word.id)}
             >
-              <div className="flex gap-1 items-center justify-center w-full h-full flex-wrap">
-                {word.image.split(',').map((imgSrc, idx, arr) => (
-                  <img
-                    key={idx}
-                    src={prefixPath(imgSrc.trim())}
-                    alt="match"
-                    className={`${arr.length > 1 ? 'object-contain max-w-[48%] max-h-[48%]' : 'object-cover w-full h-full'}`}
-                    draggable={false}
-                  />
-                ))}
-              </div>
+              <WordImage 
+                image={word.image} 
+                alt="match"
+                fit={word.image.includes(',') ? 'contain' : 'cover'}
+                className={word.image.includes(',') ? 'p-1' : ''}
+              />
             </motion.button>
           ))}
         </div>
       </div>
 
-      <style>{`
+      <style jsx global>{`
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
           20% { transform: translateX(-6px); }

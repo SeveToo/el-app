@@ -8,7 +8,8 @@ import { Input } from '@heroui/input'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { audioService } from '@/lib/audio'
-import { prefixPath } from '@/lib/utils'
+import { Word } from '@/types'
+import { WordImage } from '@/components/WordImage'
 
 const removeDiacritics = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ł/g, "l").replace(/Ł/g, "L")
 
@@ -22,16 +23,6 @@ const getSentenceParts = (word: { en_example: string; en: string }) => {
 }
 
 
-
-interface Word {
-  id: string
-  en: string
-  pl: string
-  en_example: string
-  pl_example: string
-  image: string
-}
-
 interface Props {
   words: Word[]
   onComplete: (errorIds: string[]) => void
@@ -39,6 +30,7 @@ interface Props {
 
 export default function SentenceFill({ words, onComplete }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [activeGapIndex, setActiveGapIndex] = useState(0)
   const [inputs, setInputs] = useState<string[][]>(() => 
     words.map(w => new Array(Math.floor(getSentenceParts(w).length / 2)).fill(''))
   )
@@ -68,10 +60,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
     if (!vv) return
 
     const handleViewport = () => {
-      // Offset top ensures the fixed header follows the visual top (above keyboard scroll)
       setVOffset(vv.offsetTop)
-      
-      // Determine if keyboard is likely open
       const ratio = vv.height / window.screen.height
       setKeyboardOpen(ratio < 0.75)
     }
@@ -91,7 +80,6 @@ export default function SentenceFill({ words, onComplete }: Props) {
     setIsPlRevealed(false)
     if (!showHint) {
       inputRefs.current[activeIndex]?.[0]?.focus()
-      // Auto-scroll to active card
       const el = inputRefs.current[activeIndex]?.[0]
       if (el) {
         setTimeout(() => {
@@ -107,16 +95,11 @@ export default function SentenceFill({ words, onComplete }: Props) {
     const others = words.filter(w => w.id !== correctWord.id)
     const shuffledOthers = [...others].sort(() => Math.random() - 0.5)
     
-    // Ensure we have at least some distractors if total words < 3
     const options = [correctWord, ...shuffledOthers.slice(0, 2)].sort(() => Math.random() - 0.5)
-    
-    // Użycie podpowiedzi oznacza niezablokowanie wiedzy z tego słowa, więc dodajemy do błędów (powtórka)
     setErrorIds(prev => prev.includes(correctWord.id) ? prev : [...prev, correctWord.id])
-
     setHintOptions(options)
     setShowHint(true)
   }
-
 
 
   const handleSubmit = (index: number) => {
@@ -141,11 +124,9 @@ export default function SentenceFill({ words, onComplete }: Props) {
         audioService.speak(word.en_example)
       }
       
-      // Move to next if not last
       if (index < words.length - 1) {
         setActiveIndex(index + 1)
       } else {
-        // Check if all are done
         const allSuccess = statuses.every((s, i) => i === index || s === 'success')
         if (allSuccess) {
           setTimeout(() => onComplete(errorIds), 1000)
@@ -164,12 +145,10 @@ export default function SentenceFill({ words, onComplete }: Props) {
         setErrorIds(prev => [...prev, word.id])
       }
 
-      // Auto-trigger hint after 2 fails
       if (newWrongCount[index] >= 2) {
         setTimeout(() => triggerHint(index), 500)
       }
 
-      // Briefly show error then reset
       setTimeout(() => {
         setStatuses(prev => {
           const s = [...prev]
@@ -288,7 +267,10 @@ export default function SentenceFill({ words, onComplete }: Props) {
                     setInputs(newInputs)
                   }}
                   onKeyDown={(e) => handleKeyDown(e, index, gapIdx, gapsCount)}
-                  onFocus={() => setActiveIndex(index)}
+                   onFocus={() => {
+                     setActiveIndex(index)
+                     setActiveGapIndex(gapIdx)
+                   }}
                   size="sm"
                   variant="underlined"
                   color={
@@ -318,16 +300,16 @@ export default function SentenceFill({ words, onComplete }: Props) {
   return (
     <div className="flex flex-col gap-2 w-full max-w-2xl mx-auto pb-40">
       
-      {/* Spacer – Rezerwacja miejsca pod fixed header */}
+      {/* Spacer */}
       <div className="h-[145px] sm:h-[165px] invisible pointer-events-none"></div>
 
-      {/* Fixed Header – Dynamicznie pozycjonowany na górze widocznego obszaru (Visual Viewport) */}
+      {/* Fixed Header */}
       <div 
         className="fixed left-0 right-0 z-[100] bg-background pt-3 pb-3 border-divider border-b px-3 shadow-md transition-all duration-75"
         style={{ top: `${vOffset}px` }}
       >
         <div className="max-w-2xl mx-auto flex flex-col gap-2">
-          {/* TOP BAR: Progres + Żarówy */}
+          {/* TOP BAR */}
           <div className="w-full flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-default-400">
             <div className="flex items-center gap-2">
               <Button 
@@ -365,26 +347,19 @@ export default function SentenceFill({ words, onComplete }: Props) {
             className="h-1"
           />
 
-          {/* MAIN BAR: Duży obrazek + Dużo miejsca na tekst */}
+          {/* MAIN BAR */}
           <div className="flex items-center gap-3 mt-1">
-            {/* Obrazek (nadal duży ale zwarty) */}
-            <AnimatePresence mode="wait">
-              <motion.div 
-                key={currentWord.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="shrink-0"
-              >
-                {currentWord.image.split(',').slice(0, 1).map((imgSrc, idx) => (
-                  <img 
-                    key={idx}
-                    src={prefixPath(imgSrc.trim())} 
-                    alt={currentWord.pl}
-                    className="h-20 w-20 sm:h-24 sm:w-24 object-cover object-center rounded-xl bg-white p-0.5 border-2 border-primary/20 shadow-sm scale-110 transition-transform duration-500"
-                  />
-                ))}
-              </motion.div>
-            </AnimatePresence>
+            <div className="shrink-0 h-20 w-20 sm:h-24 sm:w-24">
+               <WordImage 
+                 image={currentWord.image} 
+                 alt={currentWord.en}
+                 forceImageIndex={activeGapIndex}
+                 maxImages={1}
+                 zoom={true}
+                containerClassName="rounded-xl border-2 border-primary/20 shadow-sm"
+                className="p-0.5"
+              />
+            </div>
 
             {/* PL Hint Box */}
             <div className="flex-grow min-w-0">
@@ -460,10 +435,15 @@ export default function SentenceFill({ words, onComplete }: Props) {
                     }}
                   >
                     <CardBody className="flex flex-row items-center gap-4 p-4">
-                      <div className="shrink-0 bg-white p-1 rounded-xl border border-default-100 shadow-sm">
-                        {opt.image.split(',').slice(0, 1).map((imgSrc, idx) => (
-                           <img key={idx} src={prefixPath(imgSrc.trim())} className="h-14 w-14 sm:h-16 sm:w-16 object-contain" alt={opt.en} />
-                        ))}
+                      <div className="shrink-0 h-14 w-14 sm:h-16 sm:w-16">
+                        <WordImage 
+                          image={opt.image} 
+                          alt={opt.en}
+                          maxImages={1}
+                          containerClassName="rounded-xl border border-default-100 shadow-sm"
+                          fit="contain"
+                          className="p-1"
+                        />
                       </div>
                       <div className="flex-grow text-left">
                         <p className="text-lg sm:text-2xl font-black uppercase tracking-widest text-foreground">{opt.en}</p>

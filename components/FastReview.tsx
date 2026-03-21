@@ -6,17 +6,9 @@ import { Card, CardBody } from '@heroui/card'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
-import { prefixPath } from '@/lib/utils'
-
-
-interface Word {
-  id: string
-  en: string
-  pl: string
-  en_example: string
-  pl_example: string
-  image: string
-}
+import { Word } from '@/types'
+import { WordImage } from '@/components/WordImage'
+import { StudyHeader } from '@/components/StudyHeader'
 
 interface Props {
   words: Word[]
@@ -63,24 +55,14 @@ export default function FastReview({ words, onComplete }: Props) {
 
   if (!currentWord) return null
 
-  const images = currentWord.image.split(',').map(s => s.trim())
-
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto py-6 sm:py-10">
-      <div className="w-full flex flex-col gap-2 px-2">
-        <div className="flex justify-between text-xs text-amber-500 font-black uppercase tracking-widest">
-          <span>Szybka powtórka</span>
-          <span>
-            {currentIndex + 1} / {words.length}
-          </span>
-        </div>
-        <Progress
-          value={((currentIndex + 1) / words.length) * 100}
-          color="warning"
-          size="sm"
-          className="h-1"
-        />
-      </div>
+      <StudyHeader 
+        title="Etap 2: Szybka powtórka" 
+        current={currentIndex + 1} 
+        total={words.length} 
+        color="warning"
+      />
 
       {/* Card Container - Fixed height to prevent jumping */}
       <div className="w-full h-[480px] sm:h-[550px] relative px-2">
@@ -93,19 +75,12 @@ export default function FastReview({ words, onComplete }: Props) {
             transition={{ duration: 0.2 }}
             className="w-full h-full">
             <Card className="w-full h-full flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden">
-              {/* Image Section - matching Flashcards style with 65% height and object-cover */}
-              <div className="w-full h-[65%] flex-shrink-0 bg-white relative overflow-hidden">
-                <div className={`flex w-full h-full items-center justify-center ${images.length > 1 ? 'grid grid-cols-2 gap-0.5' : ''}`}>
-                  {images.map((imgSrc, idx) => (
-                    <img
-                      key={idx}
-                      src={prefixPath(imgSrc.trim())}
-                      alt={currentWord.en}
-                      className="w-full h-full object-cover"
-                      style={{ objectPosition: '50% 50%' }}
-                    />
-                  ))}
-                </div>
+              
+              <div className="w-full h-[65%] flex-shrink-0">
+                <WordImage 
+                  image={currentWord.image} 
+                  alt={currentWord.en} 
+                />
               </div>
 
               <CardBody className="flex-grow flex flex-col items-center justify-center gap-2 p-6 bg-content1 border-t-2 border-default-100">

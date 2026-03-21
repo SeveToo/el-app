@@ -6,16 +6,9 @@ import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
-import { prefixPath } from '@/lib/utils'
-
-interface Word {
-  id: string
-  en: string
-  pl: string
-  en_example: string
-  pl_example: string
-  image: string
-}
+import { Word } from '@/types'
+import { WordImage } from '@/components/WordImage'
+import { StudyHeader } from '@/components/StudyHeader'
 
 interface Props {
   words: Word[]
@@ -53,10 +46,8 @@ export default function Flashcards({ words, onComplete }: Props) {
       audioService.playSuccess()
     }
     
-    // Set animation direction (1 for right/success, -1 for left/fail)
     setDirection(isKnown ? 1 : -1)
 
-    // Delay to let animation finish before changing card
     setTimeout(() => {
       if (currentIndex < words.length - 1) {
         setCurrentIndex(currentIndex + 1)
@@ -70,27 +61,18 @@ export default function Flashcards({ words, onComplete }: Props) {
 
   if (!currentWord) return <div>Brak słówek...</div>
 
-  // Take only first image if multiple are provided
-  const imgPath = currentWord.image.split(',')[0].trim()
-
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl mx-auto py-6 sm:py-10 relative overflow-hidden">
       {/* Progress Section */}
-      <div className="w-full flex flex-col gap-2 max-w-md px-2">
-        <div className="flex justify-between text-xs font-black uppercase tracking-[0.2em] text-default-400">
-          <span>ETAP 1: FISZKI</span>
-          <span>
-            {currentIndex + 1} / {words.length}
-          </span>
-        </div>
-        <Progress
-          value={((currentIndex + 1) / words.length) * 100}
-          className="h-1"
-          color="primary"
-        />
-      </div>
+      <StudyHeader 
+        title="Etap 1: Fiszki" 
+        current={currentIndex + 1} 
+        total={words.length} 
+        className="max-w-md px-2"
+        color="primary"
+      />
 
-      {/* Card Container - Fixed height on mobile to prevent layout jumping */}
+      {/* Card Container */}
       <div className="w-full h-[480px] sm:h-[550px] relative px-2 max-w-md">
         <AnimatePresence mode="wait">
           <motion.div
@@ -121,11 +103,11 @@ export default function Flashcards({ words, onComplete }: Props) {
                 className="absolute inset-0 flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden"
                 style={{ backfaceVisibility: 'hidden' }}
               >
-                <div className="w-full h-[65%] relative overflow-hidden bg-white">
-                  <img
-                    src={prefixPath(imgPath)}
-                    alt={currentWord.pl}
-                    className="w-full h-full object-cover"
+                <div className="w-full h-[65%] flex-shrink-0">
+                  <WordImage 
+                    image={currentWord.image} 
+                    alt={currentWord.pl} 
+                    maxImages={1}
                   />
                 </div>
                 <CardBody className="flex-grow flex flex-col items-center justify-center gap-1 px-4 sm:px-6 bg-content1 border-t-2 border-default-100">
@@ -146,11 +128,11 @@ export default function Flashcards({ words, onComplete }: Props) {
                   transform: 'rotateY(180deg)' 
                 }}
               >
-                <div className="w-full h-[65%] relative overflow-hidden bg-white">
-                  <img
-                    src={prefixPath(imgPath)}
-                    alt={currentWord.en}
-                    className="w-full h-full object-cover"
+                <div className="w-full h-[65%] flex-shrink-0">
+                  <WordImage 
+                    image={currentWord.image} 
+                    alt={currentWord.en} 
+                    maxImages={1}
                   />
                 </div>
                 <CardBody className="flex-grow flex flex-col items-center justify-center gap-1 px-4 sm:px-6 bg-content1 border-t-2 border-default-100 relative">

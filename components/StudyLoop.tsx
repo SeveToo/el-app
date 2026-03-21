@@ -12,20 +12,9 @@ import { Button } from '@heroui/button'
 import Link from 'next/link'
 import { saveProgress, getProgress, ChapterProgress } from '@/lib/progress'
 
+import { Word } from '@/types'
 import { audioService } from '@/lib/audio'
 import confetti from 'canvas-confetti'
-
-
-
-interface Word {
-  id: string
-  en: string
-  pl: string
-  en_example: string
-  pl_example: string
-  image: string
-  status?: number
-}
 
 
 type Stage = 'flashcards' | 'fast_review' | 'matching' | 'written' | 'sentence_fill' | 'completed'
