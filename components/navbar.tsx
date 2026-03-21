@@ -20,7 +20,7 @@ const NavbarContentWrapper = () => {
   const subject = searchParams.get('subject') || 'english'
 
   const handleSelectionChange = (key: React.Key) => {
-    router.push(`/?subject=${key}`)
+    router.push(`/el-app?subject=${key}`)
   }
 
   return (
@@ -49,7 +49,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink
             className="flex justify-start items-center gap-1"
-            href="/">
+            href="/el-app">
             <AppLogo />
             <p  className="pl-2 font-bold text-inherit"> APP</p>
           </NextLink>

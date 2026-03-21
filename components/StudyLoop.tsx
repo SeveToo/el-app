@@ -250,7 +250,7 @@ export default function StudyLoop({
           Rozwaliłeś ten układ! Wszystkie luki wypełnione prawidłowo. Oby tak dalej! 💎
         </p>
 
-        <Link href="/">
+        <Link href="/el-app">
           <Button
             size="lg"
             color="primary"

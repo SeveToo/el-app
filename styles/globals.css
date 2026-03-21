@@ -22,7 +22,7 @@
 }
 
 @utility btn-premium {
-    @apply h-20 sm:h-28 text-lg sm:text-2xl font-black uppercase tracking-widest rounded-[2rem] shadow-2xl border-b-8 transition-all active:translate-y-1 active:border-b-0;
+    @apply h-20 sm:h-28 text-2xl sm:text-4xl font-black uppercase tracking-widest rounded-[2rem] border-b-[8px] border-default-300 shadow-2xl transition-all hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.15)] active:translate-y-2 active:border-b-0;
 }
 
 @utility glass-effect {

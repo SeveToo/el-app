@@ -44,7 +44,7 @@ export default async function ChapterPage(props: { params: Promise<{ id: string 
       <div className="container mx-auto max-w-4xl px-4">
         {words.length > 0 ? (
           id === 'articles' ? (
-            <ArticlesLesson questions={words} chapterId={id} />
+            <ArticlesLesson chapterId={id} />
           ) : (
             <StudyLoop words={words} chapterId={id} />
           )

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { Card, CardBody } from '@heroui/card'
+import { Image } from '@heroui/image'
 import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -235,93 +236,32 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
               </CardBody>
             </Card>
           ))}
+        </div>
 
-          {/* Mnemotechnika od USERA - WERSJA TABELKA */}
-          <Card className="card-premium border-none bg-amber-500/5 border-2 border-amber-500/20 shadow-sm">
-            <CardBody className="p-6 sm:p-10 space-y-8">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-500 shadow-lg shadow-amber-500/30 flex items-center justify-center text-2xl shrink-0">💡</div>
-                  <div className="space-y-1">
-                    <p className="text-[11px] font-black text-amber-600 uppercase tracking-[0.2em] leading-none">Lifehack dla Polaków:</p>
-                    <p className="text-base sm:text-lg font-black text-amber-900 uppercase tracking-tight">Słyszysz 2 litery? Wstaw 1 (A). Słyszysz 1? Wstaw 2 (AN)!</p>
-                  </div>
-                </div>
-
-                <div className="rounded-[1.5rem] overflow-hidden border-2 border-amber-500/20 shadow-xl bg-white/50 backdrop-blur-sm">
-                  {/* Nagłówki */}
-                  <div className="grid grid-cols-4 bg-amber-100/80 border-b-2 border-amber-500/10">
-                    <div className="p-3 text-[10px] font-black uppercase text-amber-700 text-center tracking-widest opacity-70">Słowo</div>
-                    <div className="p-3 text-[10px] font-black uppercase text-amber-700 text-center tracking-widest opacity-70">Dźwięk</div>
-                    <div className="p-3 text-[10px] font-black uppercase text-amber-700 text-center tracking-widest opacity-70">Wstaw</div>
-                    <div className="p-3 text-[10px] font-black uppercase text-amber-700 text-center tracking-widest opacity-70">Wynik</div>
-                  </div>
-                  
-                  {/* Wiersze danych */}
-                  {[
-                    { en: 'Dog', first: 'D', rest: 'og', sound: 'di', count: '2 litery', result: 'A', help: '1 litera', hl: false },
-                    { en: 'Apple', first: 'A', rest: 'pple', sound: 'æ', count: '1 litera', result: 'AN', help: '2 litery', hl: true },
-                    { en: 'Car', first: 'C', rest: 'ar', sound: 'ki', count: '2 litery', result: 'A', help: '1 litera', hl: false },
-                    { en: 'Egg', first: 'E', rest: 'gg', sound: 'e', count: '1 litera', result: 'AN', help: '2 litery', hl: true },
-                    { en: 'Banana', first: 'B', rest: 'anana', sound: 'bi', count: '2 litery', result: 'A', help: '1 litera', hl: false },
-                    { en: 'Orange', first: 'O', rest: 'range', sound: 'o', count: '1 litera', result: 'AN', help: '2 litery', hl: true },
-                    { en: 'Lemon', first: 'L', rest: 'emon', sound: 'li', count: '2 litery', result: 'A', help: '1 litera', hl: false },
-                    { en: 'Umbrella', first: 'U', rest: 'mbrella', sound: 'ʌ', count: '1 litera', result: 'AN', help: '2 litery', hl: true },
-                    { en: 'Garden', first: 'G', rest: 'arden', sound: 'gi', count: '2 litery', result: 'A', help: '1 litera', hl: false },
-                  ].map((row, i) => (
-                    <div key={i} className={`grid grid-cols-4 items-center border-b border-amber-500/10 last:border-0 ${i % 2 === 0 ? 'bg-white/30' : 'bg-transparent'}`}>
-                      <div className="p-4 text-center text-[12px] sm:text-[14px] font-black text-amber-900 border-r border-amber-500/5">
-                        <span className="text-amber-500 font-black">{row.first}</span>{row.rest}
-                      </div>
-                      <div className="p-4 text-center flex flex-col items-center justify-center gap-0.5 border-r border-amber-500/5">
-                        <span className="text-[12px] sm:text-[14px] font-black text-amber-500 italic">{row.sound}</span>
-                        <span className="text-[7px] sm:text-[8px] font-black text-amber-600/50 uppercase tracking-widest">{row.count}</span>
-                      </div>
-                      <div className="p-4 text-center flex flex-col items-center justify-center gap-0.5 border-r border-amber-500/5">
-                         <span className={`px-2 py-0.5 rounded-lg text-[10px] sm:text-[12px] font-black shadow-sm ${row.hl ? 'bg-blue-500 text-white' : 'bg-blue-50 text-blue-700 border border-blue-200'}`}>
-                           {row.result}
-                         </span>
-                         <span className="text-[7px] sm:text-[8px] font-black text-blue-600/50 uppercase tracking-widest">{row.help}</span>
-                      </div>
-                      <div className={`p-4 text-center ${row.hl ? 'bg-amber-500/5' : ''}`}>
-                         <p className="text-[12px] sm:text-[15px] font-black text-amber-950 tracking-tight lowercase">
-                            <span className="text-blue-600 font-black">{row.result}</span> <span className="text-amber-500 font-black">{row.first}</span>{row.rest}
-                         </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col items-center pt-2">
-                  <div className="w-full max-w-lg px-8 py-5 bg-gradient-to-r from-amber-500/5 via-amber-500/10 to-blue-500/5 rounded-[2rem] border-2 border-amber-500/10 shadow-lg relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform duration-500">✨</div>
-                    <div className="relative flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-amber-500/10">
-                      
-                      <div className="flex flex-col items-center">
-                        <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest leading-none mb-2">Słyszysz 2</p>
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl font-black text-amber-500">2</span>
-                          <span className="text-xl text-default-300">→</span>
-                          <span className="text-2xl font-black text-blue-500">1</span>
-                        </div>
-                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest leading-none mt-2">Wstawiasz 1</p>
-                      </div>
-
-                      <div className="flex flex-col items-center pt-4 sm:pt-0 sm:pl-8">
-                        <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest leading-none mb-2">Słyszysz 1</p>
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl font-black text-amber-500">1</span>
-                          <span className="text-xl text-default-300">→</span>
-                          <span className="text-2xl font-black text-blue-500">2</span>
-                        </div>
-                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest leading-none mt-2">Wstawiasz 2</p>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-             </CardBody>
-          </Card>
+        {/* Visual Mnemonic Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {[
+            { img: '/articles/dog_a.png', term: 'A', rule: 'Słyszysz 2 (di-og)', pl: 'Wstawiasz 1' },
+            { img: '/articles/apple_an.png', term: 'AN', rule: 'Słyszysz 1 (æ-pple)', pl: 'Wstawiasz 2' },
+            { img: '/articles/sun_the.png', term: 'THE', rule: 'Jedyny taki unikat', pl: 'Konkret' }
+          ].map((item, i) => (
+            <Card key={i} className="card-premium border-none bg-content1 shadow-xl group hover:scale-[1.05] transition-all duration-500 overflow-hidden">
+              <div className="aspect-[3/4] relative overflow-hidden">
+                 <Image 
+                   src={item.img} 
+                   alt={item.term} 
+                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end pb-6 z-10">
+                    <span className="text-5xl font-black text-white drop-shadow-2xl">{item.term}</span>
+                 </div>
+              </div>
+              <CardBody className="p-5 text-center space-y-1">
+                 <p className="text-[13px] font-black text-primary uppercase tracking-tighter leading-tight">{item.rule}</p>
+                 <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest italic">{item.pl}</p>
+              </CardBody>
+            </Card>
+          ))}
         </div>
 
         <Button 
@@ -363,7 +303,7 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
           </div>
         </div>
 
-        <Link href="/" className="w-full">
+        <Link href="/el-app" className="w-full">
           <Button color="primary" size="lg" className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg">
             Wróć do menu głównego
           </Button>
@@ -459,17 +399,17 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
       </div>
 
       {/* Floating Controls */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 glass-effect border-t z-[110] shadow-2xl">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t z-[110] shadow-2xl">
         <div className="max-w-2xl mx-auto space-y-4">
           <div className="grid grid-cols-5 gap-2 sm:gap-3">
             {OPTIONS.map((opt, i) => (
               <Button
                 key={opt}
                 size="lg"
-                className={`btn-premium ${
+                className={`h-16 sm:h-24 text-xl sm:text-3xl font-black uppercase tracking-widest rounded-3xl shadow-lg border-b-4 transition-all duration-200 active:translate-y-1 active:border-b-0 ${
                   currentIndex < localQuestions.length && selectedOption === opt 
                     ? (isCorrect ? 'bg-success text-white border-success-700' : 'bg-danger text-white border-danger-700 shake')
-                    : 'bg-content1 text-foreground border-default-200 hover:border-primary'
+                    : 'bg-content1 text-foreground border-default-200 hover:border-primary active:scale-95'
                 }`}
                 onClick={() => handleChoice(opt)}
                 isDisabled={isCorrect === true || showExplanation}
