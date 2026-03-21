@@ -157,7 +157,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
                       key={idx}
                       src={prefixPath(imgSrc.trim())}
                       alt={currentWord.pl}
-                      className={`object-contain rounded-2xl ${arr.length > 1 ? 'w-16 h-16' : 'w-24 h-24'}`}
+                      className={`object-contain rounded-2xl ${arr.length > 1 ? 'w-204 ' : 'w-204 '}`}
                     />
                   ))}
                 </div>

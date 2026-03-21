@@ -66,7 +66,7 @@ export default function FastReview({ words, onComplete }: Props) {
   const images = currentWord.image.split(',').map(s => s.trim())
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-lg mx-auto py-6 sm:py-10">
+    <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto py-6 sm:py-10">
       <div className="w-full flex flex-col gap-2 px-2">
         <div className="flex justify-between text-xs text-amber-500 font-black uppercase tracking-widest">
           <span>Szybka powtórka</span>
@@ -93,15 +93,16 @@ export default function FastReview({ words, onComplete }: Props) {
             transition={{ duration: 0.2 }}
             className="w-full h-full">
             <Card className="w-full h-full flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden">
-              {/* Image Section - slightly smaller on mobile for better balance */}
-              <div className="w-full h-[60%] bg-white relative overflow-hidden">
-                <div className={`grid w-full h-full ${images.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} gap-0.5`}>
+              {/* Image Section - matching Flashcards style with 65% height and object-cover */}
+              <div className="w-full h-[65%] flex-shrink-0 bg-white relative overflow-hidden">
+                <div className={`flex w-full h-full items-center justify-center ${images.length > 1 ? 'grid grid-cols-2 gap-0.5' : ''}`}>
                   {images.map((imgSrc, idx) => (
                     <img
                       key={idx}
-                      src={prefixPath(imgSrc)}
+                      src={prefixPath(imgSrc.trim())}
                       alt={currentWord.en}
                       className="w-full h-full object-cover"
+                      style={{ objectPosition: '50% 50%' }}
                     />
                   ))}
                 </div>
