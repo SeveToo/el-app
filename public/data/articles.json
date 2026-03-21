@@ -1,182 +1,212 @@
 [
   {
-    "id": "a_teacher",
-    "en": "A",
-    "pl": "przedrostek \"a\" (jakiś przed spółgłoską)",
-    "en_example": "I want to be a teacher.",
-    "pl_example": "Chcę być (jakimś) nauczycielem.",
-    "image": "/jobs/Teacher.webp",
-    "status": 0
+    "id": "a1",
+    "sentence": "I have ___ dog.",
+    "correct": "a",
+    "explanation": "'Dog' zaczyna się od spółgłoski (d), dlatego używamy 'a'.",
+    "pl": "Mam (jakiegoś) psa."
   },
   {
-    "id": "an_artist",
-    "en": "An",
-    "pl": "przedrostek \"an\" (jakiś przed samogłoską)",
-    "en_example": "She is an artist.",
-    "pl_example": "Ona jest artystką.",
-    "image": "/jobs/Artist.webp",
-    "status": 0
+    "id": "a2",
+    "sentence": "She eats ___ apple every morning.",
+    "correct": "an",
+    "explanation": "'Apple' zaczyna się od samogłoski (a), dlatego używamy 'an'.",
+    "pl": "Ona je jabłko każdego ranka."
   },
   {
-    "id": "the_sun",
-    "en": "The",
-    "pl": "przedrostek \"the\" (konkretny)",
-    "en_example": "Look at the sun.",
-    "pl_example": "Spójrz na słońce.",
-    "image": "/weather/Sunny.webp",
-    "status": 0
+    "id": "a3",
+    "sentence": "Look at ___ moon!",
+    "correct": "the",
+    "explanation": "Księżyc jest tylko jeden, konkretny, dlatego używamy 'the'.",
+    "pl": "Spójrz na księżyc!"
   },
   {
-    "id": "at_home",
-    "en": "At",
-    "pl": "w (w konkretnym miejscu lub o czasie)",
-    "en_example": "I am at home right now.",
-    "pl_example": "Teraz jestem w domu.",
-    "image": "/action_verbs/Cook.webp",
-    "status": 0
+    "id": "a4",
+    "sentence": "I am ___ home right now.",
+    "correct": "at",
+    "explanation": "Mówiąc o byciu w domu, używamy przyimka 'at home'.",
+    "pl": "Jestem teraz w domu."
   },
   {
-    "id": "a_cup",
-    "en": "A",
-    "pl": "przedrostek \"a\"",
-    "en_example": "Give me a cup of water, please.",
-    "pl_example": "Daj mi kubek wody, proszę.",
-    "image": "/kitchen_tools/Cup.webp",
-    "status": 0
+    "id": "a5",
+    "sentence": "He is ___ engineer.",
+    "correct": "an",
+    "explanation": "'Engineer' zaczyna się od samogłoski (e), więc potrzebujemy 'an'.",
+    "pl": "On jest inżynierem."
   },
   {
-    "id": "an_astronaut",
-    "en": "An",
-    "pl": "przedrostek \"an\"",
-    "en_example": "He wants to be an astronaut.",
-    "pl_example": "On chce być astronautą.",
-    "image": "/jobs/Astronaut.webp",
-    "status": 0
+    "id": "a6",
+    "sentence": "Can you pass me ___ salt, please?",
+    "correct": "the",
+    "explanation": "Chodzi o konkretną sól stojącą na stole, więc używamy 'the'.",
+    "pl": "Czy możesz mi podać sól?"
   },
   {
-    "id": "the_chef",
-    "en": "The",
-    "pl": "przedrostek \"the\"",
-    "en_example": "The chef cooks well.",
-    "pl_example": "Szef kuchni (ten konkretny) gotuje dobrze.",
-    "image": "/jobs/Chef.webp",
-    "status": 0
+    "id": "a7",
+    "sentence": "The movie starts ___ eight o'clock.",
+    "correct": "at",
+    "explanation": "Przy podawaniu konkretnej godziny zawsze używamy 'at'.",
+    "pl": "Film zaczyna się o ósmej."
   },
   {
-    "id": "at_night",
-    "en": "At",
-    "pl": "w nocy / o porze",
-    "en_example": "They sleep at night.",
-    "pl_example": "Oni śpią w nocy.",
-    "image": "/weather/Cloudy.webp",
-    "status": 0
+    "id": "a8",
+    "sentence": "I saw ___ elephant at the zoo.",
+    "correct": "an",
+    "explanation": "'Elephant' zaczyna się od 'e', więc używamy 'an'.",
+    "pl": "Widziałem słonia w zoo."
   },
   {
-    "id": "a_knife",
-    "en": "A",
-    "pl": "przedrostek \"a\"",
-    "en_example": "I need a knife to cut this.",
-    "pl_example": "Potrzebuję noża, by to przekroić.",
-    "image": "/kitchen_tools/Knife.webp",
-    "status": 0
+    "id": "a9",
+    "sentence": "He wants to buy ___ car.",
+    "correct": "a",
+    "explanation": "Chce kupić (jakiś) samochód, a 'car' zaczyna się na spółgłoskę.",
+    "pl": "On chce kupić samochód."
   },
   {
-    "id": "the_sky",
-    "en": "The",
-    "pl": "przedrostek \"the\"",
-    "en_example": "The sky is very blue today.",
-    "pl_example": "Niebo (to konkretne, jedyne) jest dziś bardzo niebieskie.",
-    "image": "/weather/Clear.webp",
-    "status": 0
+    "id": "a10",
+    "sentence": "___ sun is very hot today.",
+    "correct": "the",
+    "explanation": "Słońce jest unikalnym obiektem, dlatego zawsze używamy 'the'.",
+    "pl": "Słońce jest dzisiaj bardzo gorące."
   },
   {
-    "id": "an_engine",
-    "en": "An",
-    "pl": "przedrostek \"an\"",
-    "en_example": "This car has an engine problem.",
-    "pl_example": "To auto ma problem z silnikiem.",
-    "image": "/action_verbs/Drive.webp",
-    "status": 0
+    "id": "a11",
+    "sentence": "They are ___ school.",
+    "correct": "at",
+    "explanation": "Przyimek 'at' określa konkretne miejsce pobytu (at school).",
+    "pl": "Oni są w szkole."
   },
   {
-    "id": "at_work",
-    "en": "At",
-    "pl": "w pracy",
-    "en_example": "The doctor is at work.",
-    "pl_example": "Lekarz jest w pracy.",
-    "image": "/jobs/Doctor.webp",
-    "status": 0
+    "id": "a12",
+    "sentence": "It takes ___ hour to get there.",
+    "correct": "an",
+    "explanation": "Słowo 'hour' zaczyna się na nieme 'h' (brzmi jak samogłoska), więc dajemy 'an'.",
+    "pl": "Dojazd tam zajmuje godzinę."
   },
   {
-    "id": "a_bowl",
-    "en": "A",
-    "pl": "przedrostek \"a\"",
-    "en_example": "There is a bowl on the table.",
-    "pl_example": "Na stole leży (jakaś) miska.",
-    "image": "/kitchen_tools/Bowl.webp",
-    "status": 0
+    "id": "a13",
+    "sentence": "There is ___ fly in my soup!",
+    "correct": "a",
+    "explanation": "'Fly' zaczyna się na spółgłoskę (f), więc używamy 'a'.",
+    "pl": "W mojej zupie jest mucha!"
   },
   {
-    "id": "the_moon",
-    "en": "The",
-    "pl": "przedrostek \"the\"",
-    "en_example": "Look at the moon.",
-    "pl_example": "Spójrz na księżyc.",
-    "image": "/action_verbs/Climb.webp",
-    "status": 0
+    "id": "a14",
+    "sentence": "I like ___ blue dress you are wearing.",
+    "correct": "the",
+    "explanation": "Mówimy o tej konkretnej niebieskiej sukience, którą masz na sobie.",
+    "pl": "Podoba mi się ta niebieska sukienka, którą masz na sobie."
   },
   {
-    "id": "an_apple",
-    "en": "An",
-    "pl": "przedrostek \"an\"",
-    "en_example": "I eat an apple every day.",
-    "pl_example": "Piję jedno jabłko każdego dnia.",
-    "image": "/kitchen_tools/Plate.webp",
-    "status": 0
+    "id": "a15",
+    "sentence": "I'll see you ___ noon.",
+    "correct": "at",
+    "explanation": "'At' używamy z porami dnia takimi jak 'noon', 'night', 'midnight'.",
+    "pl": "Zobaczymy się w południe."
   },
   {
-    "id": "at_school",
-    "en": "At",
-    "pl": "w szkole",
-    "en_example": "The teacher is at school.",
-    "pl_example": "Nauczyciel jest w szkole.",
-    "image": "/jobs/Teacher.webp",
-    "status": 0
+    "id": "a16",
+    "sentence": "She has ___ umbrella.",
+    "correct": "an",
+    "explanation": "'Umbrella' zaczyna się na dźwięk samogłoski (u), więc dajemy 'an'.",
+    "pl": "Ona ma parasol."
   },
   {
-    "id": "the_car",
-    "en": "The",
-    "pl": "przedrostek \"the\"",
-    "en_example": "He washes the car.",
-    "pl_example": "On myje ten samochód.",
-    "image": "/action_verbs/Drive.webp",
-    "status": 0
+    "id": "a17",
+    "sentence": "This is ___ best day of my life!",
+    "correct": "the",
+    "explanation": "Przed stopniem najwyższym przymiotnika (the best) zawsze stawiamy 'the'.",
+    "pl": "To najlepszy dzień mojego życia!"
   },
   {
-    "id": "at_seven",
-    "en": "At",
-    "pl": "o (godzinie)",
-    "en_example": "Wake up at seven o'clock.",
-    "pl_example": "Obudź się o siódmej (godzinie).",
-    "image": "/weather/Sunny.webp",
-    "status": 0
+    "id": "a18",
+    "sentence": "He is sitting ___ the table.",
+    "correct": "at",
+    "explanation": "'At the table' oznacza siedzenie przy stole.",
+    "pl": "On siedzi przy stole."
   },
   {
-    "id": "a_bird",
-    "en": "A",
-    "pl": "przedrostek \"a\"",
-    "en_example": "A bird is flying.",
-    "pl_example": "Ptaszek (jakiś) sobie leci.",
-    "image": "/action_verbs/Fly.webp",
-    "status": 0
+    "id": "a19",
+    "sentence": "Wait ___ minute, please.",
+    "correct": "a",
+    "explanation": "'Minute' zaczyna się na spółgłoskę 'm'.",
+    "pl": "Poczekaj minutę, proszę."
   },
   {
-    "id": "the_end",
-    "en": "The",
-    "pl": "przedrostek \"the\"",
-    "en_example": "This is the end of the lesson.",
-    "pl_example": "To jest (ten) koniec lekcji.",
-    "image": "/action_verbs/Create.webp",
-    "status": 0
+    "id": "a20",
+    "sentence": "I'm looking for ___ airport.",
+    "correct": "the",
+    "explanation": "Zazwyczaj szukamy konkretnego lotniska (najbliższego/jedynego w okolicy).",
+    "pl": "Szukam lotniska."
+  },
+  {
+    "id": "a21",
+    "sentence": "They live in ___ old house.",
+    "correct": "an",
+    "explanation": "'Old' zaczyna się na samogłoskę, więc wybieramy 'an'.",
+    "pl": "Oni mieszkają w starym domu."
+  },
+  {
+    "id": "a22",
+    "sentence": "We arrived ___ midnight.",
+    "correct": "at",
+    "explanation": "'At' używamy z porą 'midnight' (północ).",
+    "pl": "Przyjechaliśmy o północy."
+  },
+  {
+    "id": "a23",
+    "sentence": "Paris is ___ capital of France.",
+    "correct": "the",
+    "explanation": "Paryż jest jedyną stolicą Francji, więc używamy 'the'.",
+    "pl": "Paryż jest stolicą Francji."
+  },
+  {
+    "id": "a24",
+    "sentence": "I need ___ new phone.",
+    "correct": "a",
+    "explanation": "'New' zaczyna się na spółgłoskę 'n'.",
+    "pl": "Potrzebuję nowego telefonu."
+  },
+  {
+    "id": "a25",
+    "sentence": "My brother is ___ university student.",
+    "correct": "a",
+    "explanation": "UWAGA: 'University' brzmi jak 'ju...', więc zaczyna się na dźwięk spółgłoski! Dajemy 'a'.",
+    "pl": "Mój brat jest studentem uniwersytetu."
+  },
+  {
+    "id": "a26",
+    "sentence": "Open ___ door, please.",
+    "correct": "the",
+    "explanation": "Mówimy o konkretnych drzwiach w pokoju.",
+    "pl": "Otwórz drzwi, proszę."
+  },
+  {
+    "id": "a27",
+    "sentence": "She works ___ night.",
+    "correct": "at",
+    "explanation": "Z porem dnia 'night' używamy 'at'.",
+    "pl": "Ona pracuje w nocy."
+  },
+  {
+    "id": "a28",
+    "sentence": "I want to see ___ ocean.",
+    "correct": "the",
+    "explanation": "Zazwyczaj myślimy o oceanie jako konkretnym elemencie świata.",
+    "pl": "Chcę zobaczyć ocean."
+  },
+  {
+    "id": "a29",
+    "sentence": "Do you have ___ idea?",
+    "correct": "an",
+    "explanation": "'Idea' zaczyna się na samogłoskę 'i'.",
+    "pl": "Masz (jakiś) pomysł?"
+  },
+  {
+    "id": "a30",
+    "sentence": "He's excellent ___ playing chess.",
+    "correct": "at",
+    "explanation": "Zwrot 'be good at / excellent at' zawsze używa 'at'.",
+    "pl": "On jest doskonały w grze w szachy."
   }
 ]

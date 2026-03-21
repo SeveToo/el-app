@@ -41,12 +41,18 @@ class AudioService {
       const voices = window.speechSynthesis.getVoices();
       if (voices.length === 0) return false;
 
-      const englishVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) || 
-                          voices.find(v => v.lang.startsWith('en')) ||
-                          voices[0];
+      const targetLang = lang.split('-')[0];
       
-      if (englishVoice) {
-        utterance.voice = englishVoice;
+      // Look for a high-quality voice for the target language
+      const matchingVoice = 
+        voices.find(v => v.lang.startsWith(targetLang) && v.name.includes('Natural')) || // Edge Natural
+        voices.find(v => v.lang.startsWith(targetLang) && v.name.includes('Online')) ||  // Edge Online
+        voices.find(v => v.lang.startsWith(targetLang) && v.name.includes('Google')) ||  // Chrome Google
+        voices.find(v => v.lang.startsWith(targetLang) && v.name.includes('Premium')) || // macOS Premium
+        voices.find(v => v.lang.startsWith(targetLang));                              // Any matching language
+
+      if (matchingVoice) {
+        utterance.voice = matchingVoice;
         return true;
       }
       return false;

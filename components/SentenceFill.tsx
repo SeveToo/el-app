@@ -305,34 +305,39 @@ export default function SentenceFill({ words, onComplete }: Props) {
 
       {/* Fixed Header */}
       <div 
-        className="fixed left-0 right-0 z-[100] bg-background pt-3 pb-3 border-divider border-b px-3 shadow-md transition-all duration-75"
+        className="fixed left-0 right-0 z-[100] bg-background/80 backdrop-blur-xl pt-4 pb-4 border-divider border-b px-4 shadow-xl transition-all duration-75"
         style={{ top: `${vOffset}px` }}
       >
-        <div className="max-w-2xl mx-auto flex flex-col gap-2">
+        <div className="max-w-2xl mx-auto flex flex-col gap-3">
           {/* TOP BAR */}
-          <div className="w-full flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-default-400">
-            <div className="flex items-center gap-2">
+          <div className="w-full flex justify-between items-center text-[11px] font-black uppercase tracking-[0.2em] text-default-500">
+            <div className="flex items-center gap-3">
               <Button 
                 isIconOnly 
                 size="sm" 
-                variant="light" 
+                variant="flat" 
                 onClick={() => window.location.href = '/'}
-                className="w-6 h-6 min-w-0 font-bold"
+                className="w-8 h-8 min-w-0 font-bold bg-content1 shadow-sm"
               >
                 ✕
               </Button>
-              <span className="text-primary/70">ETAP 5</span>
-              <span>{activeIndex + 1} / {words.length}</span>
+              <div className="flex flex-col">
+                <span className="text-primary/70 leading-none">ETAP 5</span>
+                <span className="text-foreground leading-none mt-1">{activeIndex + 1} z {words.length}</span>
+              </div>
             </div>
             
-            <div className="flex items-center gap-3">
-               <span>POSTĘP: {Math.round((statuses.filter(s => s === 'success').length / words.length) * 100)}%</span>
+            <div className="flex items-center gap-4">
+               <div className="flex flex-col text-right">
+                 <span className="opacity-50 leading-none">POSTĘP</span>
+                 <span className="text-primary leading-none mt-1">{Math.round((statuses.filter(s => s === 'success').length / words.length) * 100)}%</span>
+               </div>
                <Button 
                   isIconOnly 
                   size="sm" 
-                  variant="flat" 
+                  variant="shadow" 
                   color="warning"
-                  className="w-6 h-6 min-w-0 font-bold rounded-lg ml-2"
+                  className="w-10 h-10 min-w-0 text-lg rounded-xl ml-1"
                   onClick={() => triggerHint(activeIndex)}
                 >
                   💡
@@ -340,41 +345,49 @@ export default function SentenceFill({ words, onComplete }: Props) {
             </div>
           </div>
 
-          <Progress
-            value={(statuses.filter(s => s === 'success').length / words.length) * 100}
-            color="primary"
-            size="sm"
-            className="h-1"
-          />
+          <div className="relative w-full h-2 bg-default-100 rounded-full overflow-hidden">
+            <motion.div 
+               className="absolute left-0 top-0 h-full bg-primary"
+               initial={{ width: 0 }}
+               animate={{ width: `${(statuses.filter(s => s === 'success').length / words.length) * 100}%` }}
+               transition={{ duration: 0.5 }}
+            />
+          </div>
 
           {/* MAIN BAR */}
-          <div className="flex items-center gap-3 mt-1">
-            <div className="shrink-0 h-20 w-20 sm:h-24 sm:w-24">
+          <div className="flex items-center gap-4 mt-1">
+            <div className="shrink-0 h-24 w-24 sm:h-28 sm:w-28 relative">
                <WordImage 
                  image={currentWord.image} 
                  alt={currentWord.en}
                  forceImageIndex={activeGapIndex}
                  maxImages={1}
                  zoom={true}
-                containerClassName="rounded-xl border-2 border-primary/20 shadow-sm"
-                className="p-0.5"
+                containerClassName="rounded-2xl border-2 border-primary/10 shadow-lg bg-white p-1"
+                className="rounded-xl"
               />
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white border-4 border-background shadow-lg">
+                <span className="text-[10px] font-black">{activeIndex + 1}</span>
+              </div>
             </div>
 
             {/* PL Hint Box */}
             <div className="flex-grow min-w-0">
                <div 
-                className="relative cursor-pointer group flex items-center justify-center min-h-[50px] px-1 sm:px-4 bg-primary/5 rounded-2xl border-2 border-primary/20 hover:bg-primary/10 transition-all overflow-hidden"
+                className={`relative cursor-pointer group flex items-center justify-center min-h-[70px] px-4 sm:px-6 bg-primary/5 rounded-[1.5rem] border-2 transition-all overflow-hidden ${isPlRevealed ? 'border-primary/20 bg-primary/10' : 'border-dashed border-primary/30'}`}
                 onClick={() => setIsPlRevealed(true)}
               >
-                <div className={`text-sm sm:text-base font-black text-primary uppercase leading-tight text-center w-full transition-all duration-500 ${!isPlRevealed ? 'blur-xl opacity-10 select-none scale-110' : 'blur-0 opacity-100 scale-100'}`}>
+                <div className={`text-base sm:text-lg font-bold text-primary tracking-tight leading-tight text-center w-full transition-all duration-700 ${!isPlRevealed ? 'blur-2xl opacity-0 select-none scale-125' : 'blur-0 opacity-100 scale-100'}`}>
                   {renderPlExample(currentWord)}
                 </div>
                 
                 {!isPlRevealed && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="bg-primary/90 text-white px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-xl border border-white/20">
-                      👁️ POKAŻ PODPOWIEDŹ
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none p-2 text-center">
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="bg-primary text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl border-2 border-white/20">
+                        👁️ Podpowiedź
+                      </div>
+                      <p className="text-[9px] font-bold text-primary/60 uppercase tracking-widest mt-1">Kliknij, aby odkryć sens</p>
                     </div>
                   </div>
                 )}
@@ -389,14 +402,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
         {words.map((word, index) => (
           <Card 
             key={word.id}
-            className={`transition-all duration-300 border-2 ${
+            className={`transition-all duration-500 border-2 active:scale-[0.98] ${
               activeIndex === index 
-                ? 'border-primary ring-2 ring-primary/10 bg-primary/5 shadow-md z-10' 
-                : 'border-transparent bg-content1'
-            } ${statuses[index] === 'success' ? 'opacity-80 pointer-events-none' : ''}`}
+                ? 'border-primary ring-8 ring-primary/5 bg-primary/5 shadow-2xl z-10 translate-y-[-2px]' 
+                : 'border-transparent bg-content1 shadow-sm opacity-60 grayscale-[0.3]'
+            } ${statuses[index] === 'success' ? 'opacity-90 grayscale-0 !bg-success/5 !border-success/20' : ''}`}
             onClick={() => setActiveIndex(index)}
           >
-            <CardBody className="p-4 sm:p-5">
+            <CardBody className="p-6 sm:p-8">
               {renderSentence(word, index)}
             </CardBody>
           </Card>

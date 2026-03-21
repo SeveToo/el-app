@@ -1,4 +1,5 @@
 import StudyLoop from '@/components/StudyLoop'
+import ArticlesLesson from '@/components/ArticlesLesson'
 import { promises as fs } from 'fs'
 import path from 'path'
 import Link from 'next/link'
@@ -40,9 +41,13 @@ export default async function ChapterPage(props: { params: Promise<{ id: string 
 
   return (
     <section className="py-6 md:py-10 min-h-screen bg-background">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-4xl px-4">
         {words.length > 0 ? (
-        <StudyLoop words={words} chapterId={id} />
+          id === 'articles' ? (
+            <ArticlesLesson questions={words} chapterId={id} />
+          ) : (
+            <StudyLoop words={words} chapterId={id} />
+          )
         ) : (
           <div className="flex flex-col items-center gap-6 text-center mt-20">
             <div className="text-center p-10 bg-card rounded-2xl border-2 border-dashed border-default-200 max-w-md">
