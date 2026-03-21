@@ -8,15 +8,15 @@
   "theme_color": "#0ea5e9",
   "icons": [
     {
-      "src": "/el-app/logo.png",
+      "src": "/el-app/logo.webp",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "any maskable"
     },
     {
-      "src": "/el-app/logo.png",
+      "src": "/el-app/logo.webp",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/webp"
     }
   ]
 }

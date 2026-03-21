@@ -12,12 +12,15 @@
 /.next/
 /out/
 
-# datasets/images (allow images in public)
-# /public/action_verbs/
-# /public/prepositions/
-# /public/weather/
-# /public/kitchen_tools/
-# /public/jobs/
+# images
+*.png
+*.jpg
+*.jpeg
+
+# allow optimized images
+!*.webp
+!*.svg
+!*.gif
 
 # production
 /build

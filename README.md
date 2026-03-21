@@ -58,6 +58,12 @@ Zastosowałem **Visual Viewport API** (`window.visualViewport.offsetTop`), któr
 
 ---
 
+## 🎨 Obrazy (Assets)
+
+Obrazki użyte w aplikacji zostały wygenerowane za pomocą **Gemini Nanobanana**. Każdy z nich został zoptymalizowany do formatu `.webp`, aby zapewnić błyskawiczne ładowanie.
+
+---
+
 ## 🛠️ Stack Technologiczny
 
 - **Framework**: [Next.js 15](https://nextjs.org/) (App Router, App Context)

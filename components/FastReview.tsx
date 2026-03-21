@@ -41,7 +41,10 @@ export default function FastReview({ words, onComplete }: Props) {
 
 
   const handleAction = (isOk: boolean) => {
-    const newErrorIds = !isOk ? [...errorIds, currentWord.id] : errorIds
+    const wordId = currentWord.id
+    const newErrorIds = !isOk && !errorIds.includes(wordId) 
+      ? [...errorIds, wordId] 
+      : errorIds
     
     if (!isOk) {
       setErrorIds(newErrorIds)
@@ -60,11 +63,13 @@ export default function FastReview({ words, onComplete }: Props) {
 
   if (!currentWord) return null
 
+  const images = currentWord.image.split(',').map(s => s.trim())
+
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto py-10">
-      <div className="w-full flex flex-col gap-2">
-        <div className="flex justify-between text-sm text-amber-500 font-bold uppercase tracking-widest">
-          <span>Etap 1.5: Szybka powtórka</span>
+    <div className="flex flex-col items-center gap-4 w-full max-w-lg mx-auto py-6 sm:py-10">
+      <div className="w-full flex flex-col gap-2 px-2">
+        <div className="flex justify-between text-xs text-amber-500 font-black uppercase tracking-widest">
+          <span>Szybka powtórka</span>
           <span>
             {currentIndex + 1} / {words.length}
           </span>
@@ -72,65 +77,76 @@ export default function FastReview({ words, onComplete }: Props) {
         <Progress
           value={((currentIndex + 1) / words.length) * 100}
           color="warning"
+          size="sm"
+          className="h-1"
         />
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentWord.id}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
-          className="w-full">
-          <Card className="w-full p-4 border border-warning/20 bg-card shadow-lg">
-            <CardBody className="flex flex-col items-center gap-6">
-              <div className="flex gap-4 items-center justify-center flex-wrap w-full h-40">
-                {currentWord.image.split(',').map((imgSrc, idx, arr) => (
-                  <img
-                    key={idx}
-                    src={prefixPath(imgSrc.trim())}
-                    alt={currentWord.en}
-                    className={`object-contain rounded-md ${arr.length > 1 ? 'max-h-32' : 'w-full h-full'}`}
-                  />
-                ))}
+      {/* Card Container - Fixed height to prevent jumping */}
+      <div className="w-full h-[480px] sm:h-[550px] relative px-2">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentWord.id}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2 }}
+            className="w-full h-full">
+            <Card className="w-full h-full flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden">
+              {/* Image Section - slightly smaller on mobile for better balance */}
+              <div className="w-full h-[60%] bg-white relative overflow-hidden">
+                <div className={`grid w-full h-full ${images.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} gap-0.5`}>
+                  {images.map((imgSrc, idx) => (
+                    <img
+                      key={idx}
+                      src={prefixPath(imgSrc)}
+                      alt={currentWord.en}
+                      className="w-full h-full object-cover"
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="text-center space-y-3">
-                <div className="space-y-1">
-                  <p className="text-3xl font-black text-primary uppercase">
+
+              <CardBody className="flex-grow flex flex-col items-center justify-center gap-2 p-6 bg-content1 border-t-2 border-default-100">
+                <div className="text-center space-y-1">
+                  <h2 className="text-3xl sm:text-4xl font-black text-primary uppercase tracking-tighter leading-none">
                     {currentWord.en}
-                  </p>
-                  <p className="text-xl font-medium text-success uppercase">
+                  </h2>
+                  <p className="text-xl sm:text-2xl font-bold text-success uppercase tracking-widest leading-none">
                     {currentWord.pl}
                   </p>
                 </div>
+
                 {currentWord.en_example && (
-                  <div className="pt-2 border-t border-warning/10">
-                    <p className="text-sm font-bold text-primary italic">
+                  <div className="pt-3 border-t border-default-50 w-full text-center">
+                    <p className="text-base sm:text-lg font-bold text-primary italic leading-tight px-2 line-clamp-2">
                       "{currentWord.en_example}"
                     </p>
                     {currentWord.pl_example && (
-                      <p className="text-[10px] font-medium text-default-400 mt-1 uppercase tracking-wider">
+                      <p className="text-xs sm:text-sm font-black text-default-400 mt-1 uppercase tracking-widest opacity-80 line-clamp-2 px-2">
                         {currentWord.pl_example}
                       </p>
                     )}
                   </div>
                 )}
-              </div>
+              </CardBody>
+            </Card>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-            </CardBody>
-          </Card>
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="flex gap-4 w-full">
+      <div className="flex gap-4 w-full mt-2 px-2">
         <Button
-          className="flex-1 h-14 bg-danger/20 text-danger font-bold text-xl uppercase tracking-tighter"
+          className="flex-1 h-16 sm:h-20 text-lg sm:text-xl font-black uppercase tracking-widest rounded-3xl shadow-lg border-b-4 sm:border-b-8 border-danger hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-150"
+          color="danger"
           variant="flat"
           onClick={() => handleAction(false)}>
           WRONG 💥
         </Button>
         <Button
-          className="flex-1 h-14 bg-success text-success-foreground font-bold text-xl uppercase tracking-tighter shadow-lg"
+          className="flex-1 h-16 sm:h-20 text-lg sm:text-xl font-black uppercase tracking-widest rounded-3xl shadow-xl border-b-4 sm:border-b-8 border-success hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-150"
+          color="success"
+          variant="shadow"
           onClick={() => handleAction(true)}>
           OK ✅
         </Button>

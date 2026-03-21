@@ -37,17 +37,32 @@ class AudioService {
       utterance.onend = onEnd;
     }
 
-    // Try to find a good English voice
-    const voices = window.speechSynthesis.getVoices();
-    const englishVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) || 
-                        voices.find(v => v.lang.startsWith('en')) ||
-                        voices[0];
-    
-    if (englishVoice) {
-      utterance.voice = englishVoice;
-    }
+    const setVoice = () => {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length === 0) return false;
 
-    window.speechSynthesis.speak(utterance);
+      const englishVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) || 
+                          voices.find(v => v.lang.startsWith('en')) ||
+                          voices[0];
+      
+      if (englishVoice) {
+        utterance.voice = englishVoice;
+        return true;
+      }
+      return false;
+    };
+
+    if (!setVoice()) {
+      // If voices are not yet loaded, wait for them
+      window.speechSynthesis.onvoiceschanged = () => {
+        setVoice();
+        window.speechSynthesis.speak(utterance);
+        // Clear listener to avoid multiple speaks
+        window.speechSynthesis.onvoiceschanged = null;
+      };
+    } else {
+      window.speechSynthesis.speak(utterance);
+    }
   }
 
   /**

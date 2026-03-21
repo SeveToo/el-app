@@ -13,25 +13,20 @@ export const AdBanner = () => {
   };
 
   return (
-    <div className="w-full flex justify-center px-4 font-sans">
-      <Card className="w-full max-w-xl bg-white/50 dark:bg-white/[0.05] backdrop-blur-md overflow-hidden shadow-sm border border-default-200 dark:border-white/10 hover:border-primary hover:shadow-xl transition-all duration-300 group cursor-pointer active:scale-95 my-8">
+    <div className="w-full flex justify-center px-0 font-sans my-0">
+      <div className="w-full max-w-xl aspect-[843/245] overflow-hidden group cursor-pointer active:scale-95 transition-all duration-300">
         <Link 
           href="https://hypekorepetycje.pl" 
           target="_blank"
-          className="block w-full"
+          className="block w-full h-full"
         >
-          <div className="relative w-full aspect-[843/245] flex items-center justify-center overflow-hidden">
-            <img 
-              src={getPath('/ads/hype_ad.svg')} 
-              alt="HypeKorepetycje"
-              className="w-full h-full object-contain"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = getPath('/ads/ad.webp');
-              }}
-            />
-          </div>
+          <img 
+            src={getPath('/ads/ad.webp')} 
+            alt="HypeKorepetycje"
+            className="w-full h-full object-contain"
+          />
         </Link>
-      </Card>
+      </div>
     </div>
   )
 }
