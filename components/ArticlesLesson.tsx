@@ -223,7 +223,7 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
 
         <div className="grid grid-cols-1 gap-4">
           {RULES.map((r) => (
-            <Card key={r.term} className="border-none bg-content1 shadow-xl rounded-[2rem] overflow-hidden hover:scale-[1.02] transition-transform">
+            <Card key={r.term} className="card-premium hover:scale-[1.02] transition-transform">
               <CardBody className="p-6 sm:p-8 flex flex-row items-center gap-6">
                 <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center text-4xl font-black text-primary shrink-0 shadow-inner">
                   {r.term}
@@ -237,7 +237,7 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
           ))}
 
           {/* Mnemotechnika od USERA - WERSJA TABELKA */}
-          <Card className="border-none bg-amber-500/5 border-2 border-amber-500/20 rounded-[2rem] overflow-hidden shadow-sm">
+          <Card className="card-premium border-none bg-amber-500/5 border-2 border-amber-500/20 shadow-sm">
             <CardBody className="p-6 sm:p-10 space-y-8">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-amber-500 shadow-lg shadow-amber-500/30 flex items-center justify-center text-2xl shrink-0">💡</div>
@@ -353,11 +353,11 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
         </div>
 
         <div className="w-full grid grid-cols-2 gap-4">
-          <div className="p-6 bg-content1 rounded-[2rem] border-2 border-primary/10">
+          <div className="p-6 card-premium bg-content1">
             <p className="text-3xl font-black text-primary">{accuracy}%</p>
             <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">Skuteczność</p>
           </div>
-          <div className="p-6 bg-content1 rounded-[2rem] border-2 border-primary/10">
+          <div className="p-6 card-premium bg-content1">
             <p className="text-3xl font-black text-primary">{localQuestions.length}</p>
             <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">Zadań</p>
           </div>
@@ -459,17 +459,17 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
       </div>
 
       {/* Floating Controls */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-xl border-t border-divider z-[110] shadow-2xl">
+      <div className="fixed bottom-0 left-0 right-0 p-4 glass-effect border-t z-[110] shadow-2xl">
         <div className="max-w-2xl mx-auto space-y-4">
           <div className="grid grid-cols-5 gap-2 sm:gap-3">
             {OPTIONS.map((opt, i) => (
               <Button
                 key={opt}
                 size="lg"
-                className={`h-16 sm:h-24 text-lg sm:text-2xl font-black uppercase tracking-widest rounded-2xl shadow-lg border-b-4 transition-all duration-200 ${
+                className={`btn-premium ${
                   currentIndex < localQuestions.length && selectedOption === opt 
                     ? (isCorrect ? 'bg-success text-white border-success-700' : 'bg-danger text-white border-danger-700 shake')
-                    : 'bg-content1 text-foreground border-default-200 hover:border-primary active:scale-95'
+                    : 'bg-content1 text-foreground border-default-200 hover:border-primary'
                 }`}
                 onClick={() => handleChoice(opt)}
                 isDisabled={isCorrect === true || showExplanation}
