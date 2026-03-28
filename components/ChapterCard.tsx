@@ -22,7 +22,8 @@ const ChapterCard: React.FC<Props> = ({
   completed = false,
 }) => {
   return (
-    <Card className={`p-3 w-full transition-all duration-300 ${completed ? 'border-2 border-success/40 bg-success/5' : ''}`}>
+    <Card
+      className={`p-3 w-full transition-all duration-300 ${completed ? 'border-2 border-success/40 bg-success/5' : ''}`}>
       <CardHeader className="pb-1 flex items-start justify-between gap-2">
         <h3 className="text-base font-bold leading-tight">{title}</h3>
         {completed && (
@@ -31,7 +32,7 @@ const ChapterCard: React.FC<Props> = ({
       </CardHeader>
       <CardBody className="py-2 gap-2">
         {subtitle && (
-          <p className="text-default-500 text-xs">{subtitle}</p>
+          <p className="text-default-700 text-xs">{subtitle}</p>
         )}
         <Progress
           value={Math.max(0, Math.min(100, progress))}
@@ -39,9 +40,11 @@ const ChapterCard: React.FC<Props> = ({
           color={completed ? 'success' : 'primary'}
           aria-label="postep"
         />
-        <div className="text-xs text-default-400">
+        <div className="text-xs text-default-700 font-medium">
           {completed ? (
-            <span className="text-success font-semibold">Ukończone 🎉</span>
+            <span className="text-success font-semibold">
+              Ukończone 🎉
+            </span>
           ) : (
             `Postęp: ${progress}%`
           )}
@@ -54,13 +57,15 @@ const ChapterCard: React.FC<Props> = ({
               variant={completed ? 'flat' : 'ghost'}
               color={completed ? 'success' : 'default'}
               size="sm"
-              className="w-full font-semibold"
-            >
+              className="w-full font-semibold">
               {completed ? 'Powtórz' : 'Otwórz'}
             </Button>
           </NextLink>
         ) : (
-          <Button variant="ghost" size="sm" className="w-full font-semibold">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full font-semibold">
             Otwórz
           </Button>
         )}
@@ -70,3 +75,4 @@ const ChapterCard: React.FC<Props> = ({
 }
 
 export default ChapterCard
+

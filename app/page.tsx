@@ -51,24 +51,6 @@ const CHAPTERS = [
     subject: 'english',
     subtitle: 'Sprawdź swoje umiejętności',
   },
-  {
-    id: '1',
-    title: 'Podstawy: Present Simple',
-    subject: 'english',
-    subtitle: 'Czasy i słownictwo',
-  },
-  {
-    id: '4',
-    title: 'Matematyka: Ułamki',
-    subject: 'math',
-    subtitle: 'Zadania i logika',
-  },
-  {
-    id: '5',
-    title: 'Matematyka: Potęgi',
-    subject: 'math',
-    subtitle: 'Zadania i logika',
-  },
 ]
 
 function HomeContent() {
@@ -77,7 +59,9 @@ function HomeContent() {
   const subjectParam = searchParams.get('subject') || 'english'
 
   // Wczytaj postęp z localStorage (client-side)
-  const [progressMap, setProgressMap] = useState<Record<string, number>>({})
+  const [progressMap, setProgressMap] = useState<
+    Record<string, number>
+  >({})
 
   useEffect(() => {
     const all = getAllProgress()
@@ -88,7 +72,9 @@ function HomeContent() {
     setProgressMap(pct)
   }, [])
 
-  const filteredChapters = CHAPTERS.filter((c) => c.subject === subjectParam)
+  const filteredChapters = CHAPTERS.filter(
+    (c) => c.subject === subjectParam
+  )
 
   const handleSelectionChange = (key: React.Key) => {
     router.push(`/?subject=${key}`)
@@ -102,15 +88,13 @@ function HomeContent() {
 
         {/* Swicz widoczny tylko na mobile, zastępuje h1 */}
         <div className="flex justify-center -mb-2 sm:hidden">
-          <Tabs 
-            aria-label="Wybierz przedmiot" 
-            color="primary" 
+          <Tabs
+            aria-label="Wybierz przedmiot"
+            color="primary"
             radius="full"
             selectedKey={subjectParam}
-            onSelectionChange={handleSelectionChange}
-          >
+            onSelectionChange={handleSelectionChange}>
             <Tab key="english" title="Angielski" />
-            <Tab key="math" title="Matematyka" />
           </Tabs>
         </div>
 
@@ -138,9 +122,9 @@ export default function Home() {
         <div className="text-center py-20 font-bold uppercase tracking-widest animate-pulse">
           Ładowanie Centrum Nauki...
         </div>
-      }
-    >
+      }>
       <HomeContent />
     </Suspense>
   )
 }
+

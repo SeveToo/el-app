@@ -11,64 +11,107 @@ import Link from 'next/link'
 import { ARTICLE_QUESTIONS } from '@/data/articles'
 
 interface Question {
-  id: string;
-  sentence: string;
-  correct: string;
-  explanation: string;
-  pl: string;
+  id: string
+  sentence: string
+  correct: string
+  explanation: string
+  pl: string
 }
 
 interface Props {
-  questions: Question[];
-  chapterId: string;
+  questions: Question[]
+  chapterId: string
 }
 
 const RULES = [
-  { term: 'A', rule: 'Przed spółgłoską (dźwięk), gdy mówimy o czymś po raz pierwszy lub o pracy.', example: 'A car, a teacher' },
-  { term: 'AN', rule: 'Przed samogłoską (a, e, i, o, u), gdy mówimy o czymś ogólnie.', example: 'An apple, an hour' },
-  { id: 'THE', term: 'THE', rule: 'Gdy mówimy o konkretnej rzeczy, jedynej w swoim rodzaju lub już wspomnianej.', example: 'The sun, the best' },
-  { id: 'AT', term: 'AT', rule: 'Przy konkretnych godzinach, porach (night, noon) lub miejscach (at home, at work).', example: 'At 7:00, at school' },
-  { id: 'NONE', term: '–', rule: 'Brak przedimka (Zero Article). Przy miastach, sportach, posiłkach i rzeczach ogólnych.', example: 'I like apples, in London' }
+  {
+    term: 'A',
+    rule: 'Przed spółgłoską (dźwięk), gdy mówimy o czymś po raz pierwszy lub o pracy.',
+    example: 'A car, a teacher',
+  },
+  {
+    term: 'AN',
+    rule: 'Przed samogłoską (a, e, i, o, u), gdy mówimy o czymś ogólnie.',
+    example: 'An apple, an hour',
+  },
+  {
+    id: 'THE',
+    term: 'THE',
+    rule: 'Gdy mówimy o konkretnej rzeczy, jedynej w swoim rodzaju lub już wspomnianej.',
+    example: 'The sun, the best',
+  },
+  {
+    id: 'AT',
+    term: 'AT',
+    rule: 'Przy konkretnych godzinach, porach (night, noon) lub miejscach (at home, at work).',
+    example: 'At 7:00, at school',
+  },
+  {
+    id: 'NONE',
+    term: '–',
+    rule: 'Brak przedimka (Zero Article). Przy miastach, sportach, posiłkach i rzeczach ogólnych.',
+    example: 'I like apples, in London',
+  },
 ]
 
-const OPTIONS = ['a', 'an', 'the', 'at', '–'];
+const OPTIONS = ['a', 'an', 'the', 'at', '–']
 
-export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
-  const [view, setView] = useState<'intro' | 'practice' | 'summary'>('intro')
+export default function ArticlesLesson({
+  chapterId,
+}: {
+  chapterId: string
+}) {
+  const [view, setView] = useState<'intro' | 'practice' | 'summary'>(
+    'intro'
+  )
   const [currentIndex, setCurrentIndex] = useState(0)
   const [localQuestions, setLocalQuestions] = useState<Question[]>([])
   const [wrongAnswers, setWrongAnswers] = useState<string[]>([])
   const [showExplanation, setShowExplanation] = useState(false)
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
+  const [selectedOption, setSelectedOption] = useState<string | null>(
+    null
+  )
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [cooldown, setCooldown] = useState(0)
-  
+
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
 
   // Load scores and pick 10 questions
   useEffect(() => {
     if (view === 'practice' && localQuestions.length === 0) {
-      const savedScores = JSON.parse(localStorage.getItem('article_scores') || '{}');
-      
+      const savedScores = JSON.parse(
+        localStorage.getItem('article_scores') || '{}'
+      )
+
       // Filter available (score < 5)
-      const available = ARTICLE_QUESTIONS.filter(q => (savedScores[q.id] || 0) < 5);
-      
+      const available = ARTICLE_QUESTIONS.filter(
+        (q) => (savedScores[q.id] || 0) < 5
+      )
+
       // If none available, reset some or show all (fallback)
-      const pool = available.length > 0 ? available : ARTICLE_QUESTIONS;
-      
+      const pool =
+        available.length > 0 ? available : ARTICLE_QUESTIONS
+
       // Shuffle and take 10
-      const shuffled = [...pool].sort(() => 0.5 - Math.random()).slice(0, 10);
-      setLocalQuestions(shuffled);
+      const shuffled = [...pool]
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 10)
+      setLocalQuestions(shuffled)
     }
-  }, [view, localQuestions.length]);
+  }, [view, localQuestions.length])
 
   const updateScore = (qId: string, delta: number) => {
-    const savedScores = JSON.parse(localStorage.getItem('article_scores') || '{}');
-    const currentScore = savedScores[qId] || 0;
-    const newScore = Math.max(0, Math.min(5, currentScore + delta));
-    savedScores[qId] = newScore;
-    localStorage.setItem('article_scores', JSON.stringify(savedScores));
-  };
+    const savedScores = JSON.parse(
+      localStorage.getItem('article_scores') || '{}'
+    )
+    const currentScore = savedScores[qId] || 0
+    const newScore = Math.max(0, Math.min(5, currentScore + delta))
+    savedScores[qId] = newScore
+    localStorage.setItem(
+      'article_scores',
+      JSON.stringify(savedScores)
+    )
+  }
 
   const currentQ = localQuestions[currentIndex]
 
@@ -77,20 +120,20 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
     if (view === 'practice' && cardRefs.current[currentIndex]) {
       cardRefs.current[currentIndex]?.scrollIntoView({
         behavior: 'smooth',
-        block: 'center'
-      });
+        block: 'center',
+      })
     }
-  }, [currentIndex, view, localQuestions.length]);
+  }, [currentIndex, view, localQuestions.length])
 
   useEffect(() => {
-    if (view !== 'practice') return;
+    if (view !== 'practice') return
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (showExplanation) {
         if (e.key === 'Enter' && cooldown >= 100) {
-          nextQuestion();
+          nextQuestion()
         }
-        return;
+        return
       }
 
       const keyMap: Record<string, string> = {
@@ -98,95 +141,116 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
         '2': 'an',
         '3': 'the',
         '4': 'at',
-        '5': '–'
-      };
-      
-      if (keyMap[e.key]) {
-        handleChoice(keyMap[e.key]);
+        '5': '–',
       }
-    };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [view, currentIndex, isCorrect, showExplanation, cooldown, localQuestions.length]);
+      if (keyMap[e.key]) {
+        handleChoice(keyMap[e.key])
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [
+    view,
+    currentIndex,
+    isCorrect,
+    showExplanation,
+    cooldown,
+    localQuestions.length,
+  ])
 
   const speakExplanation = (text: string) => {
     // Split by single quotes e.g. 'Word' results in ["", "'Word'", " reszta"] or ["Rest ", "'Word'", " more"]
-    const parts = text.split(/('[\w\s-]+')/g);
-    
+    const parts = text.split(/('[\w\s-]+')/g)
+
     parts.forEach((part, index) => {
-      if (!part.trim()) return;
-      
-      const isEnglish = part.startsWith("'") && part.endsWith("'");
-      const cleanText = isEnglish ? part.slice(1, -1) : part;
-      
+      if (!part.trim()) return
+
+      const isEnglish = part.startsWith("'") && part.endsWith("'")
+      const cleanText = isEnglish ? part.slice(1, -1) : part
+
       audioService.speak(cleanText, {
         lang: isEnglish ? 'en-US' : 'pl-PL',
-        cancel: index === 0 // only cancel on the first part
-      });
-    });
-  };
+        cancel: index === 0, // only cancel on the first part
+      })
+    })
+  }
 
   const handleChoice = (choice: string) => {
-    if (!currentQ || showExplanation || (isCorrect === true && currentIndex === localQuestions.findIndex(q => q.id === currentQ.id))) return;
+    if (
+      !currentQ ||
+      showExplanation ||
+      (isCorrect === true &&
+        currentIndex ===
+          localQuestions.findIndex((q) => q.id === currentQ.id))
+    )
+      return
 
-    setSelectedOption(choice);
-    const correct = choice.toLowerCase() === currentQ.correct.toLowerCase();
-    
+    setSelectedOption(choice)
+    const correct =
+      choice.toLowerCase() === currentQ.correct.toLowerCase()
+
     if (correct) {
-      setIsCorrect(true);
-      audioService.playSuccess();
-      audioService.speak(currentQ.sentence.replace('___', choice));
-      
+      setIsCorrect(true)
+      audioService.playSuccess()
+      audioService.speak(currentQ.sentence.replace('___', choice))
+
       // Leveling: +1 for correct
-      updateScore(currentQ.id, 1);
-      
+      updateScore(currentQ.id, 1)
+
       setTimeout(() => {
-        nextQuestion();
-      }, 1200);
+        nextQuestion()
+      }, 1200)
     } else {
-      setIsCorrect(false);
-      audioService.playError();
-      setWrongAnswers(prev => [...prev, currentQ.id]);
-      setShowExplanation(true);
-      speakExplanation(currentQ.explanation);
-      
+      setIsCorrect(false)
+      audioService.playError()
+      setWrongAnswers((prev) => [...prev, currentQ.id])
+      setShowExplanation(true)
+      speakExplanation(currentQ.explanation)
+
       // Leveling: -3 for wrong
-      updateScore(currentQ.id, -3);
-      
+      updateScore(currentQ.id, -3)
+
       // Cooldown timer
-      setCooldown(0);
+      setCooldown(0)
       const timer = setInterval(() => {
-        setCooldown(prev => {
+        setCooldown((prev) => {
           if (prev >= 100) {
-            clearInterval(timer);
-            return 100;
+            clearInterval(timer)
+            return 100
           }
-          return prev + 1.1; // roughly 3 seconds
-        });
-      }, 30);
+          return prev + 1.1 // roughly 3 seconds
+        })
+      }, 30)
 
       // Add a copy of the question to the end for reinforcement
-      const qCopy = { ...currentQ, id: `${currentQ.id}-retry-${Date.now()}` };
-      setLocalQuestions(prev => [...prev, qCopy]);
+      const qCopy = {
+        ...currentQ,
+        id: `${currentQ.id}-retry-${Date.now()}`,
+      }
+      setLocalQuestions((prev) => [...prev, qCopy])
     }
   }
 
   const nextQuestion = () => {
-    setIsCorrect(null);
-    setSelectedOption(null);
-    setShowExplanation(false);
-    setCooldown(0);
-    
+    setIsCorrect(null)
+    setSelectedOption(null)
+    setShowExplanation(false)
+    setCooldown(0)
+
     if (currentIndex < localQuestions.length - 1) {
-      setCurrentIndex(prev => prev + 1);
+      setCurrentIndex((prev) => prev + 1)
     } else {
-      setView('summary');
+      setView('summary')
     }
   }
 
   if (view === 'intro') {
-    const lastAccuracy = typeof window !== 'undefined' ? localStorage.getItem('article_last_accuracy') : null;
+    const lastAccuracy =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('article_last_accuracy')
+        : null
 
     return (
       <div className="flex flex-col gap-8 w-full max-w-2xl mx-auto py-10 px-4">
@@ -195,43 +259,65 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
           <Card className="border-none bg-primary shadow-2xl rounded-[2.5rem] overflow-hidden animate-in fade-in slide-in-from-top-4 duration-1000">
             <CardBody className="p-8 sm:p-10 flex flex-col sm:flex-row items-center gap-8 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl opacity-50" />
-              
+
               <div className="relative flex flex-col items-center sm:items-start gap-1 shrink-0">
-                 <p className="text-[10px] font-black text-white/60 uppercase tracking-[0.3em]">MÓJ OSTATNI WYNIK</p>
-                 <div className="flex items-baseline gap-1">
-                   <span className="text-6xl font-black text-white">{lastAccuracy}%</span>
-                 </div>
+                <p className="text-[10px] font-black text-white/60 uppercase tracking-[0.3em]">
+                  MÓJ OSTATNI WYNIK
+                </p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-6xl font-black text-white">
+                    {lastAccuracy}%
+                  </span>
+                </div>
               </div>
 
               <div className="w-full space-y-3">
-                 <p className="text-sm font-bold text-white/90 leading-tight italic">
-                   {Number(lastAccuracy) >= 80 ? 'Świetnie! Trzymaj tak dalej 🔥' : 
-                    Number(lastAccuracy) >= 50 ? 'Dobry start, powalcz o wyższy wynik! 💪' : 
-                    'Trening czyni mistrza! Spróbuj jeszcze raz ⚡'}
-                 </p>
-                 <div className="h-1 w-full bg-white/20 rounded-full overflow-hidden">
-                    <div className="h-full bg-white transition-all duration-1000" style={{ width: `${lastAccuracy}%` }} />
-                 </div>
+                <p className="text-sm font-bold text-white/90 leading-tight italic">
+                  {Number(lastAccuracy) >= 80
+                    ? 'Świetnie! Trzymaj tak dalej 🔥'
+                    : Number(lastAccuracy) >= 50
+                      ? 'Dobry start, powalcz o wyższy wynik! 💪'
+                      : 'Trening czyni mistrza! Spróbuj jeszcze raz ⚡'}
+                </p>
+                <div className="h-1 w-full bg-white/20 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-white transition-all duration-1000"
+                    style={{ width: `${lastAccuracy}%` }}
+                  />
+                </div>
               </div>
             </CardBody>
           </Card>
         )}
 
         <div className="text-center space-y-2 mt-4">
-          <h1 className="text-4xl font-black text-primary uppercase tracking-tighter">Przedimki w praktyce</h1>
-          <p className="text-default-500 font-bold uppercase tracking-widest text-xs">System Adaptacyjny • Pula {ARTICLE_QUESTIONS.length} Zadań</p>
+          <h1 className="text-4xl font-black text-primary uppercase tracking-tighter">
+            Przedimki w praktyce
+          </h1>
+          <p className="text-default-500 font-bold uppercase tracking-widest text-xs">
+            System Adaptacyjny • Pula {ARTICLE_QUESTIONS.length} Zadań
+          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
           {RULES.map((r) => (
-            <Card key={r.term} className="card-premium hover:scale-[1.02] transition-transform">
+            <Card
+              key={r.term}
+              className="card-premium hover:scale-[1.02] transition-transform">
               <CardBody className="p-6 sm:p-8 flex flex-row items-center gap-6">
                 <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center text-4xl font-black text-primary shrink-0 shadow-inner">
                   {r.term}
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm sm:text-base font-black text-foreground leading-tight">{r.rule}</p>
-                  <p className="text-xs sm:text-sm font-bold text-default-400 italic">Przykład: <span className="text-primary/70">{r.example}</span></p>
+                  <p className="text-sm sm:text-base font-black text-foreground leading-tight">
+                    {r.rule}
+                  </p>
+                  <p className="text-xs sm:text-sm font-bold text-default-400 italic">
+                    Przykład:{' '}
+                    <span className="text-primary/70">
+                      {r.example}
+                    </span>
+                  </p>
                 </div>
               </CardBody>
             </Card>
@@ -241,35 +327,57 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
         {/* Visual Mnemonic Section */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
-            { img: '/articles/dog_a.png', term: 'A', rule: 'Słyszysz 2 (di-og)', pl: 'Wstawiasz 1' },
-            { img: '/articles/apple_an.png', term: 'AN', rule: 'Słyszysz 1 (æ-pple)', pl: 'Wstawiasz 2' },
-            { img: '/articles/sun_the.png', term: 'THE', rule: 'Jedyny taki unikat', pl: 'Konkret' }
+            {
+              img: '/articles/dog_a.png',
+              term: 'A',
+              rule: 'Słyszysz 2 (di-og)',
+              pl: 'Wstawiasz 1',
+            },
+            {
+              img: '/articles/apple_an.png',
+              term: 'AN',
+              rule: 'Słyszysz 1 (æ-pple)',
+              pl: 'Wstawiasz 2',
+            },
+            {
+              img: '/articles/sun_the.png',
+              term: 'THE',
+              rule: 'Jedyny taki unikat',
+              pl: 'Konkret',
+            },
           ].map((item, i) => (
-            <Card key={i} className="card-premium border-none bg-content1 shadow-xl group hover:scale-[1.05] transition-all duration-500 overflow-hidden">
+            <Card
+              key={i}
+              className="card-premium border-none bg-content1 shadow-xl group hover:scale-[1.05] transition-all duration-500 overflow-hidden">
               <div className="aspect-[3/4] relative overflow-hidden">
-                 <Image 
-                   src={item.img} 
-                   alt={item.term} 
-                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                 />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end pb-6 z-10">
-                    <span className="text-5xl font-black text-white drop-shadow-2xl">{item.term}</span>
-                 </div>
+                <Image
+                  src={item.img}
+                  alt={item.term}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end pb-6 z-10">
+                  <span className="text-5xl font-black text-white drop-shadow-2xl">
+                    {item.term}
+                  </span>
+                </div>
               </div>
               <CardBody className="p-5 text-center space-y-1">
-                 <p className="text-[13px] font-black text-primary uppercase tracking-tighter leading-tight">{item.rule}</p>
-                 <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest italic">{item.pl}</p>
+                <p className="text-[13px] font-black text-primary uppercase tracking-tighter leading-tight">
+                  {item.rule}
+                </p>
+                <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest italic">
+                  {item.pl}
+                </p>
               </CardBody>
             </Card>
           ))}
         </div>
 
-        <Button 
-          size="lg" 
-          color="primary" 
+        <Button
+          size="lg"
+          color="primary"
           className="h-16 text-xl font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl mt-4"
-          onClick={() => setView('practice')}
-        >
+          onClick={() => setView('practice')}>
           Zaczynamy! 🚀
         </Button>
       </div>
@@ -277,34 +385,56 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
   }
 
   if (view === 'summary') {
-    const accuracy = Math.round(((localQuestions.length - new Set(wrongAnswers).size) / localQuestions.length) * 100);
-    
+    const accuracy = Math.round(
+      ((localQuestions.length - new Set(wrongAnswers).size) /
+        localQuestions.length) *
+        100
+    )
+
     // Save to localStorage for intro screen
     if (typeof window !== 'undefined') {
-       localStorage.setItem('article_last_accuracy', accuracy.toString());
+      localStorage.setItem(
+        'article_last_accuracy',
+        accuracy.toString()
+      )
     }
 
     return (
       <div className="flex flex-col items-center gap-8 w-full max-w-md mx-auto py-20 px-4 text-center">
         <div className="space-y-4">
           <div className="text-8xl">🏆</div>
-          <h2 className="text-4xl font-black text-foreground uppercase tracking-tighter">Brawo!</h2>
-          <p className="text-default-500 font-medium">Ukończono lekcję o przedimkach.</p>
+          <h2 className="text-4xl font-black text-foreground uppercase tracking-tighter">
+            Brawo!
+          </h2>
+          <p className="text-default-500 font-medium">
+            Ukończono lekcję o przedimkach.
+          </p>
         </div>
 
         <div className="w-full grid grid-cols-2 gap-4">
           <div className="p-6 card-premium bg-content1">
-            <p className="text-3xl font-black text-primary">{accuracy}%</p>
-            <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">Skuteczność</p>
+            <p className="text-3xl font-black text-primary">
+              {accuracy}%
+            </p>
+            <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">
+              Skuteczność
+            </p>
           </div>
           <div className="p-6 card-premium bg-content1">
-            <p className="text-3xl font-black text-primary">{localQuestions.length}</p>
-            <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">Zadań</p>
+            <p className="text-3xl font-black text-primary">
+              {localQuestions.length}
+            </p>
+            <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">
+              Zadań
+            </p>
           </div>
         </div>
 
-        <Link href="/el-app" className="w-full">
-          <Button color="primary" size="lg" className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg">
+        <Link href="/" className="w-full">
+          <Button
+            color="primary"
+            size="lg"
+            className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg">
             Wróć do menu głównego
           </Button>
         </Link>
@@ -317,7 +447,7 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
       <div className="flex items-center justify-center p-20 text-primary font-black animate-pulse uppercase tracking-widest w-full text-center">
         Przygotowuję zadania... ⚙️
       </div>
-    );
+    )
   }
 
   return (
@@ -325,76 +455,110 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
       <div className="w-full space-y-2">
         <div className="flex justify-between text-[11px] font-black uppercase tracking-[0.2em] text-primary">
           <span>ETAP: PRZEDIMKI</span>
-          <span>{currentIndex + 1} / {localQuestions.length}</span>
+          <span>
+            {currentIndex + 1} / {localQuestions.length}
+          </span>
         </div>
-        <Progress 
-           value={((localQuestions.filter((q, i) => i < currentIndex || (i === currentIndex && isCorrect === true)).length) / localQuestions.length) * 100} 
-           color="primary" 
-           size="sm" 
-           className="h-1.5" 
+        <Progress
+          value={
+            (localQuestions.filter(
+              (q, i) =>
+                i < currentIndex ||
+                (i === currentIndex && isCorrect === true)
+            ).length /
+              localQuestions.length) *
+            100
+          }
+          color="primary"
+          size="sm"
+          className="h-1.5"
         />
       </div>
 
       <div className="flex flex-col gap-3">
         {localQuestions.map((q, index) => {
-          const isActive = currentIndex === index;
-          const isDone = index < currentIndex || (index === currentIndex && isCorrect === true);
-          const hasError = wrongAnswers.includes(q.id) && isActive && isCorrect === false;
+          const isActive = currentIndex === index
+          const isDone =
+            index < currentIndex ||
+            (index === currentIndex && isCorrect === true)
+          const hasError =
+            wrongAnswers.includes(q.id) &&
+            isActive &&
+            isCorrect === false
 
           return (
-            <Card 
+            <Card
               key={q.id}
               ref={(el: any) => (cardRefs.current[index] = el)}
               className={`transition-all duration-500 border-2 active:scale-[0.98] ${
-                isActive 
-                  ? 'border-primary ring-8 ring-primary/5 bg-primary/5 shadow-2xl z-10 translate-y-[-2px]' 
+                isActive
+                  ? 'border-primary ring-8 ring-primary/5 bg-primary/5 shadow-2xl z-10 translate-y-[-2px]'
                   : 'border-transparent bg-content1 shadow-sm opacity-50 grayscale-[0.2]'
               } ${isDone && !isActive ? 'opacity-90 grayscale-0 !bg-success/5 !border-success/20 pointer-events-none' : ''}`}
               onClick={() => {
-                if (!isDone) setCurrentIndex(index);
-              }}
-            >
+                if (!isDone) setCurrentIndex(index)
+              }}>
               <CardBody className="p-6 sm:p-8">
                 <div className="space-y-3">
-                <div className="text-lg sm:text-xl font-black text-foreground !leading-relaxed">
-                  {q.sentence.split('___').map((part, i, arr) => (
-                    <React.Fragment key={i}>
-                      {part}
-                      {i < arr.length - 1 && (
-                        <div className="relative inline-flex flex-col items-center mx-2 min-w-[60px] align-bottom h-10 sm:h-12 justify-end">
-                          <AnimatePresence>
-                            {isActive && isCorrect === false && (
-                              <motion.span 
-                                initial={{ opacity: 0, y: 10, rotate: -5 }}
-                                animate={{ opacity: 1, y: -20, rotate: -5 }}
-                                exit={{ opacity: 0 }}
-                                className="absolute -top-1 left-1/2 -translate-x-1/2 text-success font-black text-lg sm:text-2xl whitespace-nowrap italic drop-shadow-sm select-none"
-                                style={{ fontFamily: 'var(--font-cursive, cursive)' }}
-                              >
-                                {q.correct}
-                              </motion.span>
-                            )}
-                          </AnimatePresence>
-                          
-                          <span className={`w-full border-b-4 text-center pb-0.5 transition-all duration-300 ${
-                            (isActive && isCorrect === true) || (isDone && !isActive) ? 'text-success border-success' : 
-                            (isActive && isCorrect === false) ? 'text-default-300 border-default-200 line-through opacity-60 scale-95' : 
-                            isActive ? 'text-primary border-primary animate-pulse' : 'text-default-200 border-default-200'
-                          }`}>
-                            {isActive ? (selectedOption || '___') : (isDone ? q.correct : '___')}
-                          </span>
-                        </div>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
+                  <div className="text-lg sm:text-xl font-black text-foreground !leading-relaxed">
+                    {q.sentence.split('___').map((part, i, arr) => (
+                      <React.Fragment key={i}>
+                        {part}
+                        {i < arr.length - 1 && (
+                          <div className="relative inline-flex flex-col items-center mx-2 min-w-[60px] align-bottom h-10 sm:h-12 justify-end">
+                            <AnimatePresence>
+                              {isActive && isCorrect === false && (
+                                <motion.span
+                                  initial={{
+                                    opacity: 0,
+                                    y: 10,
+                                    rotate: -5,
+                                  }}
+                                  animate={{
+                                    opacity: 1,
+                                    y: -20,
+                                    rotate: -5,
+                                  }}
+                                  exit={{ opacity: 0 }}
+                                  className="absolute -top-1 left-1/2 -translate-x-1/2 text-success font-black text-lg sm:text-2xl whitespace-nowrap italic drop-shadow-sm select-none"
+                                  style={{
+                                    fontFamily:
+                                      'var(--font-cursive, cursive)',
+                                  }}>
+                                  {q.correct}
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
+
+                            <span
+                              className={`w-full border-b-4 text-center pb-0.5 transition-all duration-300 ${
+                                (isActive && isCorrect === true) ||
+                                (isDone && !isActive)
+                                  ? 'text-success border-success'
+                                  : isActive && isCorrect === false
+                                    ? 'text-default-300 border-default-200 line-through opacity-60 scale-95'
+                                    : isActive
+                                      ? 'text-primary border-primary animate-pulse'
+                                      : 'text-default-200 border-default-200'
+                              }`}>
+                              {isActive
+                                ? selectedOption || '___'
+                                : isDone
+                                  ? q.correct
+                                  : '___'}
+                            </span>
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
                   <p className="text-default-400 font-bold uppercase tracking-widest text-[10px] italic">
                     {q.pl}
                   </p>
                 </div>
               </CardBody>
             </Card>
-          );
+          )
         })}
       </div>
 
@@ -407,15 +571,19 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
                 key={opt}
                 size="lg"
                 className={`h-16 sm:h-24 text-xl sm:text-3xl font-black uppercase tracking-widest rounded-3xl shadow-lg border-b-4 transition-all duration-200 active:translate-y-1 active:border-b-0 ${
-                  currentIndex < localQuestions.length && selectedOption === opt 
-                    ? (isCorrect ? 'bg-success text-white border-success-700' : 'bg-danger text-white border-danger-700 shake')
+                  currentIndex < localQuestions.length &&
+                  selectedOption === opt
+                    ? isCorrect
+                      ? 'bg-success text-white border-success-700'
+                      : 'bg-danger text-white border-danger-700 shake'
                     : 'bg-content1 text-foreground border-default-200 hover:border-primary active:scale-95'
                 }`}
                 onClick={() => handleChoice(opt)}
-                isDisabled={isCorrect === true || showExplanation}
-              >
+                isDisabled={isCorrect === true || showExplanation}>
                 <div className="flex flex-col items-center">
-                  <span className="text-[10px] opacity-40 mb-1">{i + 1}</span>
+                  <span className="text-[10px] opacity-40 mb-1">
+                    {i + 1}
+                  </span>
                   <span>{opt}</span>
                 </div>
               </Button>
@@ -428,29 +596,31 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full"
-              >
+                className="w-full">
                 <Card className="border-none bg-white border-2 border-danger/20 rounded-2xl shadow-xl">
                   <CardBody className="p-5 text-center flex flex-row items-center justify-between gap-4">
                     <div className="text-left">
-                       <p className="text-[10px] font-black text-danger uppercase tracking-widest mb-1">❌ WYJAŚNIENIE</p>
-                       <p className="text-xs sm:text-sm font-bold text-danger/80 leading-tight italic">
-                         {currentQ.explanation}
-                       </p>
+                      <p className="text-[10px] font-black text-danger uppercase tracking-widest mb-1">
+                        ❌ WYJAŚNIENIE
+                      </p>
+                      <p className="text-xs sm:text-sm font-bold text-danger/80 leading-tight italic">
+                        {currentQ.explanation}
+                      </p>
                     </div>
-                    <Button 
-                      color="danger" 
-                      variant="shadow" 
+                    <Button
+                      color="danger"
+                      variant="shadow"
                       size="sm"
                       className="font-black uppercase tracking-widest rounded-xl px-6 min-w-fit relative overflow-hidden"
                       onClick={nextQuestion}
-                      isDisabled={cooldown < 100}
-                    >
-                      <div 
+                      isDisabled={cooldown < 100}>
+                      <div
                         className="absolute left-0 bottom-0 top-0 bg-white/20 transition-all duration-75"
                         style={{ width: `${cooldown}%` }}
                       />
-                      <span className="relative z-10">{cooldown < 100 ? 'Analiza...' : 'Dalej ➔'}</span>
+                      <span className="relative z-10">
+                        {cooldown < 100 ? 'Analiza...' : 'Dalej ➔'}
+                      </span>
                     </Button>
                   </CardBody>
                 </Card>
@@ -462,14 +632,28 @@ export default function ArticlesLesson({ chapterId }: { chapterId: string }) {
 
       <style jsx global>{`
         @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          20% { transform: translateX(-6px); }
-          40% { transform: translateX(6px); }
-          60% { transform: translateX(-4px); }
-          80% { transform: translateX(4px); }
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          20% {
+            transform: translateX(-6px);
+          }
+          40% {
+            transform: translateX(6px);
+          }
+          60% {
+            transform: translateX(-4px);
+          }
+          80% {
+            transform: translateX(4px);
+          }
         }
-        .shake { animation: shake 0.4s ease; }
+        .shake {
+          animation: shake 0.4s ease;
+        }
       `}</style>
     </div>
   )
 }
+

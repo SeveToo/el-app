@@ -20,7 +20,7 @@ const NavbarContentWrapper = () => {
   const subject = searchParams.get('subject') || 'english'
 
   const handleSelectionChange = (key: React.Key) => {
-    router.push(`/el-app?subject=${key}`)
+    router.push(`/?subject=${key}`)
   }
 
   return (
@@ -33,7 +33,6 @@ const NavbarContentWrapper = () => {
           selectedKey={subject}
           onSelectionChange={handleSelectionChange}>
           <Tab key="english" title="Angielski" />
-          <Tab key="math" title="Matematyka" />
         </Tabs>
       </NavbarItem>
     </NavbarContent>
@@ -49,16 +48,18 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink
             className="flex justify-start items-center gap-1"
-            href="/el-app">
+            href="/">
             <AppLogo />
-            <p  className="pl-2 font-bold text-inherit"> APP</p>
+            <p className="pl-2 font-bold text-inherit"> APP</p>
           </NextLink>
         </NavbarBrand>
       </NavbarContent>
 
-      <React.Suspense fallback={<div className="hidden sm:flex w-40" />}>
+      {/* there will be a navbar content wrapper */}
+      {/* <React.Suspense
+        fallback={<div className="hidden sm:flex w-40" />}>
         <NavbarContentWrapper />
-      </React.Suspense>
+      </React.Suspense> */}
 
       <NavbarContent
         className="basis-1/5 sm:basis-full"

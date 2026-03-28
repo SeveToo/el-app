@@ -2,19 +2,19 @@
   "name": "EL APP - Nauka Angielskiego",
   "short_name": "EL APP",
   "description": "Interaktywna nauka języka angielskiego etapami.",
-  "start_url": "/el-app/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#0ea5e9",
   "icons": [
     {
-      "src": "/el-app/logo.webp",
+      "src": "logo.webp",
       "sizes": "192x192",
       "type": "image/webp",
       "purpose": "any maskable"
     },
     {
-      "src": "/el-app/logo.webp",
+      "src": "logo.webp",
       "sizes": "512x512",
       "type": "image/webp"
     }
