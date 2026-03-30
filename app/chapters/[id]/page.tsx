@@ -1,41 +1,45 @@
-import StudyLoop from '@/components/StudyLoop'
-import ArticlesLesson from '@/components/ArticlesLesson'
-import { promises as fs } from 'fs'
-import path from 'path'
-import Link from 'next/link'
-import { Button } from '@heroui/button'
+import { promises as fs } from "fs";
+import path from "path";
+
+import Link from "next/link";
+import { Button } from "@heroui/button";
+
+import ArticlesLesson from "@/components/ArticlesLesson";
+import StudyLoop from "@/components/StudyLoop";
 
 // JSONy dostępne jako lekcje
 const JSON_LESSONS = [
-  'action_verbs',
-  'jobs',
-  'kitchen_tools',
-  'prepositions',
-  'weather',
-  'articles',
-  'final_test',
-]
+  "action_verbs",
+  "jobs",
+  "kitchen_tools",
+  "prepositions",
+  "weather",
+  "articles",
+  "final_test",
+];
 
 export async function generateStaticParams() {
   return JSON_LESSONS.map((id) => ({
     id: id,
-  }))
+  }));
 }
 
-export default async function ChapterPage(props: { params: Promise<{ id: string }> }) {
-  const { id } = await props.params
+export default async function ChapterPage(props: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await props.params;
 
-
-  let words: any[] = []
+  let words: any[] = [];
 
   // Sprawdź czy jest JSON dla tego id
   if (JSON_LESSONS.includes(id)) {
     try {
-      const filePath = path.join(process.cwd(), 'public', 'data', `${id}.json`)
-      const file = await fs.readFile(filePath, 'utf8')
-      words = JSON.parse(file)
+      const filePath = path.join(process.cwd(), "public", "data", `${id}.json`);
+      const file = await fs.readFile(filePath, "utf8");
+
+      words = JSON.parse(file);
     } catch (e) {
-      console.error('Error loading words:', e)
+      console.error("Error loading words:", e);
     }
   }
 
@@ -43,10 +47,10 @@ export default async function ChapterPage(props: { params: Promise<{ id: string 
     <section className="py-6 md:py-10 min-h-screen bg-background">
       <div className="container mx-auto max-w-4xl px-4">
         {words.length > 0 ? (
-          id === 'articles' ? (
+          id === "articles" ? (
             <ArticlesLesson chapterId={id} />
           ) : (
-            <StudyLoop words={words} chapterId={id} />
+            <StudyLoop chapterId={id} words={words} />
           )
         ) : (
           <div className="flex flex-col items-center gap-6 text-center mt-20">
@@ -67,5 +71,5 @@ export default async function ChapterPage(props: { params: Promise<{ id: string 
         )}
       </div>
     </section>
-  )
+  );
 }

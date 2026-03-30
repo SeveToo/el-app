@@ -1,27 +1,27 @@
-'use client'
+"use client";
 
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
   NavbarBrand,
   NavbarItem,
-} from '@heroui/navbar'
-import { Tabs, Tab } from '@heroui/tabs'
-import { useRouter, useSearchParams } from 'next/navigation'
-import * as React from 'react'
-import NextLink from 'next/link'
+} from "@heroui/navbar";
+import { Tabs, Tab } from "@heroui/tabs";
+import { useRouter, useSearchParams } from "next/navigation";
+import * as React from "react";
+import NextLink from "next/link";
 
-import { ThemeSwitch } from '@/components/theme-switch'
-import { AppLogo } from '@/components/AppLogo'
+import { ThemeSwitch } from "@/components/theme-switch";
+import { AppLogo } from "@/components/AppLogo";
 
 const NavbarContentWrapper = () => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const subject = searchParams.get('subject') || 'english'
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const subject = searchParams.get("subject") || "english";
 
   const handleSelectionChange = (key: React.Key) => {
-    router.push(`/?subject=${key}`)
-  }
+    router.push(`/?subject=${key}`);
+  };
 
   return (
     <NavbarContent className="hidden sm:flex" justify="center">
@@ -31,24 +31,21 @@ const NavbarContentWrapper = () => {
           color="primary"
           radius="full"
           selectedKey={subject}
-          onSelectionChange={handleSelectionChange}>
+          onSelectionChange={handleSelectionChange}
+        >
           <Tab key="english" title="Angielski" />
         </Tabs>
       </NavbarItem>
     </NavbarContent>
-  )
-}
+  );
+};
 
 export const Navbar = () => {
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent
-        className="basis-1/5 sm:basis-full"
-        justify="start">
+      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink
-            className="flex justify-start items-center gap-1"
-            href="/">
+          <NextLink className="flex justify-start items-center gap-1" href="/">
             <AppLogo />
             <p className="pl-2 font-bold text-inherit"> APP</p>
           </NextLink>
@@ -61,14 +58,11 @@ export const Navbar = () => {
         <NavbarContentWrapper />
       </React.Suspense> */}
 
-      <NavbarContent
-        className="basis-1/5 sm:basis-full"
-        justify="end">
+      <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
         <NavbarItem className="flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
     </HeroUINavbar>
-  )
-}
-
+  );
+};

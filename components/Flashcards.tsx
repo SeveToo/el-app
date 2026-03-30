@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardBody } from '@heroui/card'
 import { Button } from '@heroui/button'
-import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
 import { Word } from '@/types'
@@ -35,9 +34,10 @@ export default function Flashcards({ words, onComplete }: Props) {
 
   const handleNext = (isKnown: boolean) => {
     const wordId = currentWord.id
-    const newErrorIds = !isKnown && !errorIds.includes(wordId) 
-      ? [...errorIds, wordId] 
-      : errorIds
+    const newErrorIds =
+      !isKnown && !errorIds.includes(wordId)
+        ? [...errorIds, wordId]
+        : errorIds
 
     if (!isKnown) {
       setErrorIds(newErrorIds)
@@ -45,7 +45,7 @@ export default function Flashcards({ words, onComplete }: Props) {
     } else {
       audioService.playSuccess()
     }
-    
+
     setDirection(isKnown ? 1 : -1)
 
     setTimeout(() => {
@@ -64,12 +64,12 @@ export default function Flashcards({ words, onComplete }: Props) {
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl mx-auto py-6 sm:py-10 relative overflow-hidden">
       {/* Progress Section */}
-      <StudyHeader 
-        title="Etap 1: Fiszki" 
-        current={currentIndex + 1} 
-        total={words.length} 
+      <StudyHeader
         className="max-w-md px-2"
         color="primary"
+        current={currentIndex + 1}
+        title="Etap 1: Fiszki"
+        total={words.length}
       />
 
       {/* Card Container */}
@@ -77,36 +77,37 @@ export default function Flashcards({ words, onComplete }: Props) {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ x: 0, opacity: 1, scale: 1 }}
-            animate={{ 
+            animate={{
               x: direction === 1 ? 600 : direction === -1 ? -600 : 0,
               opacity: direction !== 0 ? 0 : 1,
-              rotate: direction === 1 ? 25 : direction === -1 ? -25 : 0
+              rotate:
+                direction === 1 ? 25 : direction === -1 ? -25 : 0,
             }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
             className="relative w-full h-full cursor-pointer"
+            initial={{ x: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
             onClick={() => setIsFlipped(!isFlipped)}>
-            
             <motion.div
-              className="w-full h-full relative"
-              style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
               animate={{ rotateY: isFlipped ? 180 : 0 }}
+              className="w-full h-full relative"
+              style={{
+                transformStyle: 'preserve-3d',
+                perspective: '1000px',
+              }}
               transition={{
                 duration: 0.6,
                 type: 'spring',
                 stiffness: 260,
                 damping: 20,
               }}>
-              
               {/* Front Side (PL) */}
-              <Card 
+              <Card
                 className="absolute inset-0 flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden"
-                style={{ backfaceVisibility: 'hidden' }}
-              >
+                style={{ backfaceVisibility: 'hidden' }}>
                 <div className="w-full h-[65%] flex-shrink-0">
-                  <WordImage 
-                    image={currentWord.image} 
-                    alt={currentWord.pl} 
+                  <WordImage
+                    alt={currentWord.pl}
+                    image={currentWord.image}
                     maxImages={1}
                   />
                 </div>
@@ -121,17 +122,16 @@ export default function Flashcards({ words, onComplete }: Props) {
               </Card>
 
               {/* Back Side (EN) */}
-              <Card 
+              <Card
                 className="absolute inset-0 flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden"
-                style={{ 
-                  backfaceVisibility: 'hidden', 
-                  transform: 'rotateY(180deg)' 
-                }}
-              >
+                style={{
+                  backfaceVisibility: 'hidden',
+                  transform: 'rotateY(180deg)',
+                }}>
                 <div className="w-full h-[65%] flex-shrink-0">
-                  <WordImage 
-                    image={currentWord.image} 
-                    alt={currentWord.en} 
+                  <WordImage
+                    alt={currentWord.en}
+                    image={currentWord.image}
                     maxImages={1}
                   />
                 </div>
@@ -140,20 +140,19 @@ export default function Flashcards({ words, onComplete }: Props) {
                     {currentWord.en}
                   </h2>
                   <p className="text-base sm:text-xl font-bold text-primary italic text-center px-4 leading-snug overflow-hidden line-clamp-2">
-                    "{currentWord.en_example}"
+                    &quot;{currentWord.en_example}&quot;
                   </p>
-                  
-                  <Button 
-                    isIconOnly 
-                    variant="light" 
+
+                  <Button
+                    isIconOnly
+                    className="absolute bottom-2 right-4 text-primary opacity-50 hover:opacity-100"
                     radius="full"
                     size="sm"
+                    variant="light"
                     onClick={(e) => {
                       e.stopPropagation()
                       audioService.speak(currentWord.en)
-                    }}
-                    className="absolute bottom-2 right-4 text-primary opacity-50 hover:opacity-100"
-                  >
+                    }}>
                     🔊
                   </Button>
                 </CardBody>
@@ -187,7 +186,8 @@ export default function Flashcards({ words, onComplete }: Props) {
         </Button>
       </div>
 
-      <style jsx global>{`
+      {/* eslint-disable-next-line react/no-unknown-property */}
+      <style global jsx>{`
         .perspective-1000 {
           perspective: 1000px;
         }
@@ -204,3 +204,4 @@ export default function Flashcards({ words, onComplete }: Props) {
     </div>
   )
 }
+

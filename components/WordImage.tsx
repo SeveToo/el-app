@@ -1,15 +1,16 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { prefixPath } from '@/lib/utils'
-import { motion } from 'framer-motion'
+import React from "react";
+import { motion } from "framer-motion";
+
+import { prefixPath } from "@/lib/utils";
 
 interface WordImageProps {
   image: string;
   alt: string;
   className?: string;
   containerClassName?: string;
-  fit?: 'cover' | 'contain';
+  fit?: "cover" | "contain";
   zoom?: boolean;
   maxImages?: number;
   forceImageIndex?: number;
@@ -25,25 +26,26 @@ interface WordImageProps {
  * - Zoom effect
  * - Responsive sizing and consistent styling
  */
-export const WordImage: React.FC<WordImageProps> = ({ 
-  image, 
-  alt, 
-  className = "", 
+export const WordImage: React.FC<WordImageProps> = ({
+  image,
+  alt,
+  className = "",
   containerClassName = "",
-  fit = 'cover',
+  fit = "cover",
   zoom = false,
   maxImages = 2,
-  forceImageIndex
+  forceImageIndex,
 }) => {
   if (!image) return null;
 
   let imageSources = image
-    .split(',')
-    .map(s => s.trim())
+    .split(",")
+    .map((s) => s.trim())
     .filter(Boolean);
 
-  if (typeof forceImageIndex === 'number' && forceImageIndex >= 0) {
+  if (typeof forceImageIndex === "number" && forceImageIndex >= 0) {
     const single = imageSources[forceImageIndex] || imageSources[0]; // fallback to first if out-of-bounds
+
     imageSources = [single];
   } else {
     imageSources = imageSources.slice(0, maxImages);
@@ -52,34 +54,36 @@ export const WordImage: React.FC<WordImageProps> = ({
   const isMulti = imageSources.length > 1;
 
   return (
-    <div className={`w-full h-full relative overflow-hidden bg-white ${containerClassName}`}>
-      <div 
+    <div
+      className={`w-full h-full relative overflow-hidden bg-white ${containerClassName}`}
+    >
+      <div
         className={`flex w-full h-full items-center justify-center ${
-          isMulti ? 'grid grid-cols-2 gap-0.5' : ''
+          isMulti ? "grid grid-cols-2 gap-0.5" : ""
         }`}
       >
         {imageSources.map((src, idx) => (
           <motion.img
             key={`${src}-${idx}`}
-            initial={zoom ? { scale: 1.1 } : false}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-            src={prefixPath(src)}
             alt={alt}
+            animate={{ scale: 1 }}
             className={`
               w-full h-full 
-              ${fit === 'cover' ? 'object-cover' : 'object-contain'} 
+              ${fit === "cover" ? "object-cover" : "object-contain"} 
               object-center 
-              ${zoom ? 'scale-110' : ''}
+              ${zoom ? "scale-110" : ""}
               ${className}
             `}
-            style={{ 
-              objectPosition: '50% 50%',
+            initial={zoom ? { scale: 1.1 } : false}
+            src={prefixPath(src)}
+            style={{
+              objectPosition: "50% 50%",
               // Force redraw on src change for cleaner transition if mapping doesn't have good keys
             }}
+            transition={{ duration: 0.5 }}
           />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

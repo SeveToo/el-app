@@ -6,10 +6,11 @@ class AudioService {
   private audioContext: AudioContext | null = null;
 
   private initAudio() {
-    if (!this.audioContext && typeof window !== 'undefined') {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    if (!this.audioContext && typeof window !== "undefined") {
+      this.audioContext = new (window.AudioContext ||
+        (window as any).webkitAudioContext)();
     }
-    if (this.audioContext?.state === 'suspended') {
+    if (this.audioContext?.state === "suspended") {
       this.audioContext.resume();
     }
   }
@@ -17,18 +18,21 @@ class AudioService {
   /**
    * Pronounces the given text using the Web Speech API.
    */
-  speak(text: string, options: { lang?: string; cancel?: boolean; onEnd?: () => void } = {}) {
-    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+  speak(
+    text: string,
+    options: { lang?: string; cancel?: boolean; onEnd?: () => void } = {},
+  ) {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
 
-    const { lang = 'en-US', cancel = true, onEnd } = options;
+    const { lang = "en-US", cancel = true, onEnd } = options;
 
     if (cancel) {
       // Cancel any ongoing speech
       window.speechSynthesis.cancel();
     }
 
-
     const utterance = new SpeechSynthesisUtterance(text);
+
     utterance.lang = lang;
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
@@ -39,22 +43,33 @@ class AudioService {
 
     const setVoice = () => {
       const voices = window.speechSynthesis.getVoices();
+
       if (voices.length === 0) return false;
 
-      const targetLang = lang.split('-')[0];
-      
+      const targetLang = lang.split("-")[0];
+
       // Look for a high-quality voice for the target language
-      const matchingVoice = 
-        voices.find(v => v.lang.startsWith(targetLang) && v.name.includes('Natural')) || // Edge Natural
-        voices.find(v => v.lang.startsWith(targetLang) && v.name.includes('Online')) ||  // Edge Online
-        voices.find(v => v.lang.startsWith(targetLang) && v.name.includes('Google')) ||  // Chrome Google
-        voices.find(v => v.lang.startsWith(targetLang) && v.name.includes('Premium')) || // macOS Premium
-        voices.find(v => v.lang.startsWith(targetLang));                              // Any matching language
+      const matchingVoice =
+        voices.find(
+          (v) => v.lang.startsWith(targetLang) && v.name.includes("Natural"),
+        ) || // Edge Natural
+        voices.find(
+          (v) => v.lang.startsWith(targetLang) && v.name.includes("Online"),
+        ) || // Edge Online
+        voices.find(
+          (v) => v.lang.startsWith(targetLang) && v.name.includes("Google"),
+        ) || // Chrome Google
+        voices.find(
+          (v) => v.lang.startsWith(targetLang) && v.name.includes("Premium"),
+        ) || // macOS Premium
+        voices.find((v) => v.lang.startsWith(targetLang)); // Any matching language
 
       if (matchingVoice) {
         utterance.voice = matchingVoice;
+
         return true;
       }
+
       return false;
     };
 
@@ -81,12 +96,18 @@ class AudioService {
     const osc = this.audioContext.createOscillator();
     const gain = this.audioContext.createGain();
 
-    osc.type = 'sine';
+    osc.type = "sine";
     osc.frequency.setValueAtTime(523.25, this.audioContext.currentTime); // C5
-    osc.frequency.exponentialRampToValueAtTime(880, this.audioContext.currentTime + 0.1); // A5
+    osc.frequency.exponentialRampToValueAtTime(
+      880,
+      this.audioContext.currentTime + 0.1,
+    ); // A5
 
     gain.gain.setValueAtTime(0.1, this.audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.3);
+    gain.gain.exponentialRampToValueAtTime(
+      0.01,
+      this.audioContext.currentTime + 0.3,
+    );
 
     osc.connect(gain);
     gain.connect(this.audioContext.destination);
@@ -105,12 +126,18 @@ class AudioService {
     const osc = this.audioContext.createOscillator();
     const gain = this.audioContext.createGain();
 
-    osc.type = 'sawtooth';
+    osc.type = "sawtooth";
     osc.frequency.setValueAtTime(220, this.audioContext.currentTime); // A3
-    osc.frequency.linearRampToValueAtTime(110, this.audioContext.currentTime + 0.2); // A2
+    osc.frequency.linearRampToValueAtTime(
+      110,
+      this.audioContext.currentTime + 0.2,
+    ); // A2
 
     gain.gain.setValueAtTime(0.05, this.audioContext.currentTime);
-    gain.gain.linearRampToValueAtTime(0.01, this.audioContext.currentTime + 0.3);
+    gain.gain.linearRampToValueAtTime(
+      0.01,
+      this.audioContext.currentTime + 0.3,
+    );
 
     osc.connect(gain);
     gain.connect(this.audioContext.destination);

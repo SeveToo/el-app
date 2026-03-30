@@ -6,8 +6,9 @@ import { Image } from '@heroui/image'
 import { Button } from '@heroui/button'
 import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
-import { audioService } from '@/lib/audio'
 import Link from 'next/link'
+
+import { audioService } from '@/lib/audio'
 import { ARTICLE_QUESTIONS } from '@/data/articles'
 
 interface Question {
@@ -96,6 +97,7 @@ export default function ArticlesLesson({
       const shuffled = [...pool]
         .sort(() => 0.5 - Math.random())
         .slice(0, 10)
+
       setLocalQuestions(shuffled)
     }
   }, [view, localQuestions.length])
@@ -106,6 +108,7 @@ export default function ArticlesLesson({
     )
     const currentScore = savedScores[qId] || 0
     const newScore = Math.max(0, Math.min(5, currentScore + delta))
+
     savedScores[qId] = newScore
     localStorage.setItem(
       'article_scores',
@@ -133,6 +136,7 @@ export default function ArticlesLesson({
         if (e.key === 'Enter' && cooldown >= 100) {
           nextQuestion()
         }
+
         return
       }
 
@@ -150,6 +154,7 @@ export default function ArticlesLesson({
     }
 
     window.addEventListener('keydown', handleKeyDown)
+
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [
     view,
@@ -218,8 +223,10 @@ export default function ArticlesLesson({
         setCooldown((prev) => {
           if (prev >= 100) {
             clearInterval(timer)
+
             return 100
           }
+
           return prev + 1.1 // roughly 3 seconds
         })
       }, 30)
@@ -229,6 +236,7 @@ export default function ArticlesLesson({
         ...currentQ,
         id: `${currentQ.id}-retry-${Date.now()}`,
       }
+
       setLocalQuestions((prev) => [...prev, qCopy])
     }
   }
@@ -351,9 +359,9 @@ export default function ArticlesLesson({
               className="card-premium border-none bg-content1 shadow-xl group hover:scale-[1.05] transition-all duration-500 overflow-hidden">
               <div className="aspect-[3/4] relative overflow-hidden">
                 <Image
-                  src={item.img}
                   alt={item.term}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  src={item.img}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end pb-6 z-10">
                   <span className="text-5xl font-black text-white drop-shadow-2xl">
@@ -374,9 +382,9 @@ export default function ArticlesLesson({
         </div>
 
         <Button
-          size="lg"
-          color="primary"
           className="h-16 text-xl font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl mt-4"
+          color="primary"
+          size="lg"
           onClick={() => setView('practice')}>
           Zaczynamy! 🚀
         </Button>
@@ -430,11 +438,11 @@ export default function ArticlesLesson({
           </div>
         </div>
 
-        <Link href="/" className="w-full">
+        <Link className="w-full" href="/">
           <Button
+            className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg"
             color="primary"
-            size="lg"
-            className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg">
+            size="lg">
             Wróć do menu głównego
           </Button>
         </Link>
@@ -460,6 +468,9 @@ export default function ArticlesLesson({
           </span>
         </div>
         <Progress
+          className="h-1.5"
+          color="primary"
+          size="sm"
           value={
             (localQuestions.filter(
               (q, i) =>
@@ -469,9 +480,6 @@ export default function ArticlesLesson({
               localQuestions.length) *
             100
           }
-          color="primary"
-          size="sm"
-          className="h-1.5"
         />
       </div>
 
@@ -509,18 +517,18 @@ export default function ArticlesLesson({
                             <AnimatePresence>
                               {isActive && isCorrect === false && (
                                 <motion.span
-                                  initial={{
-                                    opacity: 0,
-                                    y: 10,
-                                    rotate: -5,
-                                  }}
                                   animate={{
                                     opacity: 1,
                                     y: -20,
                                     rotate: -5,
                                   }}
-                                  exit={{ opacity: 0 }}
                                   className="absolute -top-1 left-1/2 -translate-x-1/2 text-success font-black text-lg sm:text-2xl whitespace-nowrap italic drop-shadow-sm select-none"
+                                  exit={{ opacity: 0 }}
+                                  initial={{
+                                    opacity: 0,
+                                    y: 10,
+                                    rotate: -5,
+                                  }}
                                   style={{
                                     fontFamily:
                                       'var(--font-cursive, cursive)',
@@ -569,7 +577,6 @@ export default function ArticlesLesson({
             {OPTIONS.map((opt, i) => (
               <Button
                 key={opt}
-                size="lg"
                 className={`h-16 sm:h-24 text-xl sm:text-3xl font-black uppercase tracking-widest rounded-3xl shadow-lg border-b-4 transition-all duration-200 active:translate-y-1 active:border-b-0 ${
                   currentIndex < localQuestions.length &&
                   selectedOption === opt
@@ -578,8 +585,9 @@ export default function ArticlesLesson({
                       : 'bg-danger text-white border-danger-700 shake'
                     : 'bg-content1 text-foreground border-default-200 hover:border-primary active:scale-95'
                 }`}
-                onClick={() => handleChoice(opt)}
-                isDisabled={isCorrect === true || showExplanation}>
+                isDisabled={isCorrect === true || showExplanation}
+                size="lg"
+                onClick={() => handleChoice(opt)}>
                 <div className="flex flex-col items-center">
                   <span className="text-[10px] opacity-40 mb-1">
                     {i + 1}
@@ -593,10 +601,10 @@ export default function ArticlesLesson({
           <AnimatePresence>
             {showExplanation && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
+                className="w-full"
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full">
+                initial={{ opacity: 0, y: 20 }}>
                 <Card className="border-none bg-white border-2 border-danger/20 rounded-2xl shadow-xl">
                   <CardBody className="p-5 text-center flex flex-row items-center justify-between gap-4">
                     <div className="text-left">
@@ -608,12 +616,12 @@ export default function ArticlesLesson({
                       </p>
                     </div>
                     <Button
-                      color="danger"
-                      variant="shadow"
-                      size="sm"
                       className="font-black uppercase tracking-widest rounded-xl px-6 min-w-fit relative overflow-hidden"
-                      onClick={nextQuestion}
-                      isDisabled={cooldown < 100}>
+                      color="danger"
+                      isDisabled={cooldown < 100}
+                      size="sm"
+                      variant="shadow"
+                      onClick={nextQuestion}>
                       <div
                         className="absolute left-0 bottom-0 top-0 bg-white/20 transition-all duration-75"
                         style={{ width: `${cooldown}%` }}
@@ -630,7 +638,8 @@ export default function ArticlesLesson({
         </div>
       </div>
 
-      <style jsx global>{`
+      {/* eslint-disable-next-line react/no-unknown-property */}
+      <style jsx>{`
         @keyframes shake {
           0%,
           100% {

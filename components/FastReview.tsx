@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from '@heroui/button'
 import { Card, CardBody } from '@heroui/card'
-import { Progress } from '@heroui/progress'
 import { motion, AnimatePresence } from 'framer-motion'
+
 import { audioService } from '@/lib/audio'
 import { Word } from '@/types'
 import { WordImage } from '@/components/WordImage'
@@ -31,20 +31,19 @@ export default function FastReview({ words, onComplete }: Props) {
     }
   }, [currentIndex, currentWord])
 
-
   const handleAction = (isOk: boolean) => {
     const wordId = currentWord.id
-    const newErrorIds = !isOk && !errorIds.includes(wordId) 
-      ? [...errorIds, wordId] 
-      : errorIds
-    
+    const newErrorIds =
+      !isOk && !errorIds.includes(wordId)
+        ? [...errorIds, wordId]
+        : errorIds
+
     if (!isOk) {
       setErrorIds(newErrorIds)
       audioService.playError()
     } else {
       audioService.playSuccess()
     }
-
 
     if (currentIndex < words.length - 1) {
       setCurrentIndex(currentIndex + 1)
@@ -57,11 +56,11 @@ export default function FastReview({ words, onComplete }: Props) {
 
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto py-6 sm:py-10">
-      <StudyHeader 
-        title="Etap 2: Szybka powtórka" 
-        current={currentIndex + 1} 
-        total={words.length} 
+      <StudyHeader
         color="warning"
+        current={currentIndex + 1}
+        title="Etap 2: Szybka powtórka"
+        total={words.length}
       />
 
       {/* Card Container - Fixed height to prevent jumping */}
@@ -69,17 +68,16 @@ export default function FastReview({ words, onComplete }: Props) {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentWord.id}
-            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
+            className="w-full h-full"
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.2 }}
-            className="w-full h-full">
+            initial={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2 }}>
             <Card className="w-full h-full flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden">
-              
               <div className="w-full h-[65%] flex-shrink-0">
-                <WordImage 
-                  image={currentWord.image} 
-                  alt={currentWord.en} 
+                <WordImage
+                  alt={currentWord.en}
+                  image={currentWord.image}
                 />
               </div>
 
@@ -96,7 +94,7 @@ export default function FastReview({ words, onComplete }: Props) {
                 {currentWord.en_example && (
                   <div className="pt-3 border-t border-default-50 w-full text-center">
                     <p className="text-base sm:text-lg font-bold text-primary italic leading-tight px-2 line-clamp-2">
-                      "{currentWord.en_example}"
+                      &quot;{currentWord.en_example}&quot;
                     </p>
                     {currentWord.pl_example && (
                       <p className="text-xs sm:text-sm font-black text-default-400 mt-1 uppercase tracking-widest opacity-80 line-clamp-2 px-2">
@@ -130,3 +128,4 @@ export default function FastReview({ words, onComplete }: Props) {
     </div>
   )
 }
+
