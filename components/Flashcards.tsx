@@ -172,7 +172,7 @@ export default function Flashcards({ words, onComplete }: Props) {
             e.stopPropagation()
             handleNext(false)
           }}>
-          ❌ NIE
+          NIE ZNAM
         </Button>
         <Button
           className="flex-1 h-16 sm:h-20 text-lg sm:text-xl font-black uppercase tracking-widest rounded-3xl shadow-xl border-b-4 sm:border-b-8 border-success hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-150"
@@ -182,7 +182,7 @@ export default function Flashcards({ words, onComplete }: Props) {
             e.stopPropagation()
             handleNext(true)
           }}>
-          ✅ TAK!
+          ZNAM
         </Button>
       </div>
 
