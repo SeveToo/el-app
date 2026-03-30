@@ -18,35 +18,17 @@ interface Props {
 export default function FastReview({ words, onComplete }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [errorIds, setErrorIds] = useState<string[]>([])
-  const [canContinue, setCanContinue] = useState(false)
-  const [countdown, setCountdown] = useState(2)
 
   const currentWord = words[currentIndex]
 
-  // Pronounce English word when it appears and disable button for 2 seconds
+  // Pronounce English word when it appears
   useEffect(() => {
-    setCanContinue(false)
-    setCountdown(2)
     if (currentWord) {
       audioService.speak(currentWord.en)
       if (currentWord.en_example) {
         audioService.speak(currentWord.en_example, { cancel: false })
       }
     }
-
-    // Countdown timer
-    const countdownInterval = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(countdownInterval)
-          setCanContinue(true)
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-
-    return () => clearInterval(countdownInterval)
   }, [currentIndex, currentWord])
 
   const handleNext = () => {
@@ -116,12 +98,11 @@ export default function FastReview({ words, onComplete }: Props) {
 
       <div className="flex gap-4 w-full mt-2 px-2">
         <Button
-          className="w-full h-16 sm:h-20 text-lg sm:text-xl font-black uppercase tracking-widest rounded-3xl shadow-xl border-b-4 sm:border-b-8 border-primary hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full h-16 sm:h-20 text-lg sm:text-xl font-black uppercase tracking-widest rounded-3xl shadow-xl border-b-4 sm:border-b-8 border-primary hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-150"
           color="primary"
-          disabled={!canContinue}
           variant="shadow"
           onClick={handleNext}>
-          {canContinue ? 'DALEJ' : `czekaj (${countdown}s)`}
+          DALEJ
         </Button>
       </div>
     </div>
