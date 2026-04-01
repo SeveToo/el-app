@@ -29,5 +29,3 @@ export interface Question {
   explanation: string;
   pl: string;
 }
-
-

@@ -3,135 +3,192 @@
     "id": "artist",
     "en": "Artist",
     "pl": "Artysta",
-    "en_example": "The artist is painting a beautiful picture.",
-    "pl_example": "Artysta maluje piękny obraz.",
-    "image": "/jobs/Artist.webp",
-    "status": 0
+    "image": "jobs/Artist.webp",
+    "en_example": "The artist is painting a masterpiece.",
+    "pl_example": "Artysta maluje arcydzieło."
+  },
+  {
+    "id": "baker",
+    "en": "Baker",
+    "pl": "Piekarz",
+    "image": "jobs/Baker.webp",
+    "en_example": "The baker makes fresh bread every day.",
+    "pl_example": "Piekarz codziennie piecze świeży chleb."
   },
   {
     "id": "builder",
     "en": "Builder",
     "pl": "Budowniczy",
-    "en_example": "The builder is working on a new house.",
-    "pl_example": "Budowniczy pracuje nad nowym domem.",
-    "image": "/jobs/Builder.webp",
-    "status": 0
+    "image": "jobs/Builder.webp",
+    "en_example": "The builder works on the construction site.",
+    "pl_example": "Budowniczy pracuje na placu budowy."
   },
   {
     "id": "chef",
     "en": "Chef",
     "pl": "Szef kuchni",
-    "en_example": "The chef prepares delicious meals.",
-    "pl_example": "Szef kuchni przygotowuje pyszne posiłki.",
-    "image": "/jobs/Chef.webp",
-    "status": 0
+    "image": "jobs/Chef.webp",
+    "en_example": "The chef prepares gourmet meals.",
+    "pl_example": "Szef kuchni przygotowuje wykwintne posiłki."
+  },
+  {
+    "id": "const_worker",
+    "en": "Construction Worker",
+    "pl": "Robotnik budowlany",
+    "image": "jobs/Construction_Worker.webp",
+    "en_example": "Construction workers wear hard hats.",
+    "pl_example": "Robotnicy budowlani noszą kaski."
   },
   {
     "id": "cook",
     "en": "Cook",
     "pl": "Kucharz",
-    "en_example": "The cook is in the kitchen.",
-    "pl_example": "Kucharz jest w kuchni.",
-    "image": "/jobs/Cook.webp",
-    "status": 0
+    "image": "jobs/Cook.webp",
+    "en_example": "The cook is making a soup.",
+    "pl_example": "Kucharz gotuje zupę."
+  },
+  {
+    "id": "dentist",
+    "en": "Dentist",
+    "pl": "Dentysta",
+    "image": "jobs/Dentist.webp",
+    "en_example": "I visit the dentist twice a year.",
+    "pl_example": "Odwiedzam dentystę dwa razy w roku."
   },
   {
     "id": "doctor",
     "en": "Doctor",
     "pl": "Lekarz",
-    "en_example": "The doctor helps sick people.",
-    "pl_example": "Lekarz pomaga chorym ludziom.",
-    "image": "/jobs/Doctor.webp",
-    "status": 0
+    "image": "jobs/Doctor.webp",
+    "en_example": "The doctor examines the patient.",
+    "pl_example": "Lekarz bada pacjenta."
+  },
+  {
+    "id": "driver",
+    "en": "Driver",
+    "pl": "Kierowca",
+    "image": "jobs/Driver.webp",
+    "en_example": "A professional driver needs a license.",
+    "pl_example": "Zawodowy kierowca potrzebuje prawa jazdy."
+  },
+  {
+    "id": "eng_archist",
+    "en": "Engineer / Architect",
+    "pl": "Inżynier / Architekt",
+    "image": "jobs/Engineer_Architect.webp",
+    "en_example": "The architect designs modern buildings.",
+    "pl_example": "Architekt projektuje nowoczesne budynki."
   },
   {
     "id": "farmer",
     "en": "Farmer",
     "pl": "Rolnik",
-    "en_example": "The farmer grows vegetables.",
-    "pl_example": "Rolnik uprawia warzywa.",
-    "image": "/jobs/Farmer.webp",
-    "status": 0
+    "image": "jobs/Farmer.webp",
+    "en_example": "The farmer raises chickens and cows.",
+    "pl_example": "Rolnik hoduje kurczaki i krowy."
   },
   {
     "id": "firefighter",
     "en": "Firefighter",
     "pl": "Strażak",
-    "en_example": "The firefighter puts out fires.",
-    "pl_example": "Strażak gasi pożary.",
-    "image": "/jobs/Firefighter.webp",
-    "status": 0
+    "image": "jobs/Firefighter.webp",
+    "en_example": "The firefighter rescued the kitten.",
+    "pl_example": "Strażak uratował kotka."
+  },
+  {
+    "id": "garb_coll",
+    "en": "Garbage collector",
+    "pl": "Pracownik gospodarczy / Śmieciarz",
+    "image": "jobs/Garbage_collector.webp",
+    "en_example": "Garbage collectors keep our city clean.",
+    "pl_example": "Śmieciarze dbają o czystość naszego miasta."
+  },
+  {
+    "id": "hairdresser",
+    "en": "Hairdresser",
+    "pl": "Fryzjer",
+    "image": "jobs/Hairdresser.webp",
+    "en_example": "I need to visit the hairdresser today.",
+    "pl_example": "Muszę dzisiaj iść do fryzjera."
+  },
+  {
+    "id": "it_spec",
+    "en": "IT Specialist",
+    "pl": "Informatyk",
+    "image": "jobs/IT_Specialist.webp",
+    "en_example": "The IT specialist fixed the server.",
+    "pl_example": "Informatyk naprawił serwer."
   },
   {
     "id": "mechanic",
     "en": "Mechanic",
     "pl": "Mechanik",
-    "en_example": "The mechanic is fixing the car.",
-    "pl_example": "Mechanik naprawia samochód.",
-    "image": "/jobs/Mechanic.webp",
-    "status": 0
+    "image": "jobs/Mechanic.webp",
+    "en_example": "The mechanic repair cars and motorcycles.",
+    "pl_example": "Mechanik naprawia samochody i motocykle."
   },
   {
     "id": "nurse",
     "en": "Nurse",
     "pl": "Pielęgniarka",
-    "en_example": "The nurse works in a hospital.",
-    "pl_example": "Pielęgniarka pracuje w szpitalu.",
-    "image": "/jobs/Nurse.webp",
-    "status": 0
+    "image": "jobs/Nurse.webp",
+    "en_example": "The nurse works in the emergency room.",
+    "pl_example": "Pielęgniarka pracuje na izbie przyjęć."
+  },
+  {
+    "id": "off_worker",
+    "en": "Office Worker",
+    "pl": "Pracownik biurowy",
+    "image": "jobs/Office_Worker.webp",
+    "en_example": "The office worker spends long hours at the PC.",
+    "pl_example": "Pracownik biurowy spędza długie godziny przy komputerze."
   },
   {
     "id": "pilot",
     "en": "Pilot",
     "pl": "Pilot",
-    "en_example": "The pilot flies the airplane.",
-    "pl_example": "Pilot lata samolotem.",
-    "image": "/jobs/Pilot.webp",
-    "status": 0
+    "image": "jobs/Pilot.webp",
+    "en_example": "Commercial pilots fly all over the world.",
+    "pl_example": "Piloci komercyjni latają po całym świecie."
   },
   {
-    "id": "police_officer",
-    "en": "Police Officer",
+    "id": "pol_officer",
+    "en": "Police officer",
     "pl": "Policjant",
-    "en_example": "The police officer keeps us safe.",
-    "pl_example": "Policjant dba o nasze bezpieczeństwo.",
-    "image": "/jobs/Police_Officer.webp",
-    "status": 0
+    "image": "jobs/Police_officer.webp",
+    "en_example": "A police officer enforces the law.",
+    "pl_example": "Policjant egzekwuje prawo."
   },
   {
-    "id": "scientist",
-    "en": "Scientist",
-    "pl": "Naukowiec",
-    "en_example": "The scientist does experiments.",
-    "pl_example": "Naukowiec przeprowadza eksperymenty.",
-    "image": "/jobs/Scientist.webp",
-    "status": 0
+    "id": "post_worker",
+    "en": "Postal worker",
+    "pl": "Listonosz / Pracownik poczty",
+    "image": "jobs/Postal_worker.webp",
+    "en_example": "The postal worker delivered the package.",
+    "pl_example": "Pracownik poczty dostarczył paczkę."
+  },
+  {
+    "id": "shop_assistant",
+    "en": "Shop assistant",
+    "pl": "Sprzedawca / Ekspedient",
+    "image": "jobs/Shop_assistant.webp",
+    "en_example": "The shop assistant helped me find the right size.",
+    "pl_example": "Sprzedawca pomógł mi znaleźć właściwy rozmiar."
   },
   {
     "id": "teacher",
     "en": "Teacher",
     "pl": "Nauczyciel",
-    "en_example": "The teacher explains the lesson.",
-    "pl_example": "Nauczyciel wyjaśnia lekcję.",
-    "image": "/jobs/Teacher.webp",
-    "status": 0
+    "image": "jobs/Teacher.webp",
+    "en_example": "The teacher inspires the students.",
+    "pl_example": "Nauczyciel inspiruje uczniów."
   },
   {
-    "id": "postman",
-    "en": "Postman",
-    "pl": "Listonosz",
-    "en_example": "The postman delivers letters.",
-    "pl_example": "Listonosz dostarcza listy.",
-    "image": "/jobs/postman.webp",
-    "status": 0
-  },
-  {
-    "id": "waiter",
-    "en": "Waiter",
-    "pl": "Kelner",
-    "en_example": "The waiter serves food.",
-    "pl_example": "Kelner serwuje jedzenie.",
-    "image": "/jobs/weater.webp",
-    "status": 0
+    "id": "vet",
+    "en": "Vet",
+    "pl": "Weterynarz",
+    "image": "jobs/Vet.webp",
+    "en_example": "I took my dog to the vet for a checkup.",
+    "pl_example": "Zabrałem psa do weterynarza na przegląd."
   }
 ]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "hobby_1",
+    "en": "Travel",
+    "pl": "Podróżować",
+    "image": "hobbies/Travel.webp",
+    "en_example": "I love to travel to new places.",
+    "pl_example": "Uwielbiam podróżować do nowych miejsc."
+  },
+  {
+    "id": "hobby_2",
+    "en": "Ride a bike",
+    "pl": "Jeździć na rowerze",
+    "image": "hobbies/Ride_a_bike.webp",
+    "en_example": "I ride a bike every weekend.",
+    "pl_example": "Jeżdżę na rowerze w każdy weekend."
+  },
+  {
+    "id": "hobby_3",
+    "en": "Listen to music",
+    "pl": "Słuchać muzyki",
+    "image": "hobbies/Listen_to_music.webp",
+    "en_example": "I often listen to music while working.",
+    "pl_example": "Często słucham muzyki podczas pracy."
+  },
+  {
+    "id": "hobby_4",
+    "en": "Play games",
+    "pl": "Grać w gry",
+    "image": "hobbies/Play_games.webp",
+    "en_example": "He likes to play games after dinner.",
+    "pl_example": "On lubi grać w gry po obiedzie."
+  },
+  {
+    "id": "hobby_5",
+    "en": "Take photos",
+    "pl": "Robić zdjęcia",
+    "image": "hobbies/Take_photos.webp",
+    "en_example": "Taking photos of nature is relaxing.",
+    "pl_example": "Robienie zdjęć natury jest relaksujące."
+  },
+  {
+    "id": "hobby_6",
+    "en": "Watch a movie",
+    "pl": "Oglądać film",
+    "image": "hobbies/Watch_a_movie.webp",
+    "en_example": "Let's watch a movie tonight.",
+    "pl_example": "Obejrzyjmy dziś wieczorem film."
+  },
+  {
+    "id": "hobby_7",
+    "en": "Draw and Paint",
+    "pl": "Rysować i malować",
+    "image": "hobbies/Draw_Paint.webp",
+    "en_example": "She likes to draw and paint in her free time.",
+    "pl_example": "Ona lubi rysować i malować w wolnym czasie."
+  },
+  {
+    "id": "hobby_8",
+    "en": "Play instrument",
+    "pl": "Grać na instrumencie",
+    "image": "hobbies/Play_instrument.webp",
+    "en_example": "Can you play any musical instrument?",
+    "pl_example": "Czy potrafisz grać na jakimś instrumencie?"
+  },
+  {
+    "id": "hobby_9",
+    "en": "Surf the net",
+    "pl": "Surfować po sieci",
+    "image": "hobbies/Surf_the_net.webp",
+    "en_example": "I surf the net for several hours a day.",
+    "pl_example": "Surfuję po sieci przez kilka godzin dziennie."
+  },
+  {
+    "id": "hobby_10",
+    "en": "Meet friends",
+    "pl": "Spotykać się ze znajomymi",
+    "image": "hobbies/Meet_friends.webp",
+    "en_example": "On Saturdays I meet my friends.",
+    "pl_example": "W soboty spotykam się z moimi znajomymi."
+  }
+]

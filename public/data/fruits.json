@@ -1,0 +1,82 @@
+[
+  {
+    "id": "fruit_1",
+    "en": "Apple",
+    "pl": "Jabłko",
+    "image": "fruits/Apple.webp",
+    "en_example": "An apple a day keeps the doctor away.",
+    "pl_example": "Jedno jabłko dziennie trzyma lekarza z daleka."
+  },
+  {
+    "id": "fruit_2",
+    "en": "Banana",
+    "pl": "Banan",
+    "image": "fruits/Banana.webp",
+    "en_example": "He likes eating bananas.",
+    "pl_example": "On lubi jeść banany."
+  },
+  {
+    "id": "fruit_3",
+    "en": "Orange",
+    "pl": "Pomarańcza",
+    "image": "fruits/Orange.webp",
+    "en_example": "Orange juice is very refreshing.",
+    "pl_example": "Sok pomarańczowy jest bardzo orzeźwiający."
+  },
+  {
+    "id": "fruit_4",
+    "en": "Strawberry",
+    "pl": "Truskawka",
+    "image": "fruits/Strawberry.webp",
+    "en_example": "I love strawberries and cream.",
+    "pl_example": "Uwielbiam truskawki ze śmietaną."
+  },
+  {
+    "id": "fruit_5",
+    "en": "Grapes",
+    "pl": "Winogrona",
+    "image": "fruits/Grapes.webp",
+    "en_example": "Green grapes are very sweet.",
+    "pl_example": "Zielone winogrona są bardzo słodkie."
+  },
+  {
+    "id": "fruit_6",
+    "en": "Watermelon",
+    "pl": "Arbuz",
+    "image": "fruits/Watermelon.webp",
+    "en_example": "Watermelon is perfect for summer.",
+    "pl_example": "Arbuz jest idealny na lato."
+  },
+  {
+    "id": "fruit_7",
+    "en": "Lemon",
+    "pl": "Cytryna",
+    "image": "fruits/Lemon.webp",
+    "en_example": "Lemons are very sour.",
+    "pl_example": "Cytryny są bardzo kwaśne."
+  },
+  {
+    "id": "fruit_8",
+    "en": "Pineapple",
+    "pl": "Ananas",
+    "image": "fruits/Pineapple.webp",
+    "en_example": "Pineapple grows on the ground.",
+    "pl_example": "Ananas rośnie na ziemi."
+  },
+  {
+    "id": "fruit_9",
+    "en": "Peach",
+    "pl": "Brzoskwinia",
+    "image": "fruits/Peach.webp",
+    "en_example": "This peach is very soft and juicy.",
+    "pl_example": "Ta brzoskwinia jest bardzo miękka i soczystna."
+  },
+  {
+    "id": "fruit_10",
+    "en": "Pear",
+    "pl": "Gruszka",
+    "image": "fruits/Pear.webp",
+    "en_example": "Pears are my favorite fruit.",
+    "pl_example": "Gruszki to moje ulubione owoce."
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "body_1",
+    "en": "Shoulder",
+    "pl": "Ramię / Bark",
+    "image": "body_parts/Shoulder.webp",
+    "en_example": "My shoulders are broad.",
+    "pl_example": "Moje barki są szerokie."
+  },
+  {
+    "id": "body_2",
+    "en": "Elbow",
+    "pl": "Łokieć",
+    "image": "body_parts/Elbow.webp",
+    "en_example": "He hurt his elbow during a fall.",
+    "pl_example": "Zranił się w łokieć podczas upadku."
+  },
+  {
+    "id": "body_3",
+    "en": "Wrist",
+    "pl": "Nadgarstek",
+    "image": "body_parts/Wrist.webp",
+    "en_example": "She wears a thin bracelet on her wrist.",
+    "pl_example": "Nosi cienką bransoletkę na nadgarstku."
+  },
+  {
+    "id": "body_4",
+    "en": "Finger",
+    "pl": "Palec (u ręki)",
+    "image": "body_parts/Finger.webp",
+    "en_example": "Don't point your finger at people.",
+    "pl_example": "Nie wskazuj palcem na ludzi."
+  },
+  {
+    "id": "body_5",
+    "en": "Back",
+    "pl": "Plecy",
+    "image": "body_parts/Back.webp",
+    "en_example": "Sleeping on your back is healthy.",
+    "pl_example": "Spanie na plecach jest zdrowe."
+  },
+  {
+    "id": "body_6",
+    "en": "Stomach",
+    "pl": "Brzuch / Żołądek",
+    "image": "body_parts/Stomach.webp",
+    "en_example": "Eating too many sweets can cause a stomach ache.",
+    "pl_example": "Jedzenie zbyt wielu słodyczy może powodować ból brzucha."
+  },
+  {
+    "id": "body_7",
+    "en": "Knee",
+    "pl": "Kolano",
+    "image": "body_parts/Knee.webp",
+    "en_example": "He went down on one knee to propose.",
+    "pl_example": "Uklęknął na jedno kolano, by się oświadczyć."
+  },
+  {
+    "id": "body_8",
+    "en": "Ankle",
+    "pl": "Kostka (u nogi)",
+    "image": "body_parts/Ankle.webp",
+    "en_example": "I twisted my ankle while jogging.",
+    "pl_example": "Skręciłem kostkę podczas joggingu."
+  },
+  {
+    "id": "body_9",
+    "en": "Toe",
+    "pl": "Palec u nogi",
+    "image": "body_parts/Toe.webp",
+    "en_example": "Watch out! Don't step on my toes.",
+    "pl_example": "Uważaj! Nie nadepnij mi na palce u nóg."
+  },
+  {
+    "id": "body_10",
+    "en": "Neck",
+    "pl": "Szyja",
+    "image": "body_parts/Neck.webp",
+    "en_example": "A giraffe has a very long neck.",
+    "pl_example": "Żyrafa ma bardzo długą szyję."
+  }
+]

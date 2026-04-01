@@ -1,13 +1,12 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Card, CardBody } from '@heroui/card'
-import { Button } from '@heroui/button'
-import Link from 'next/link'
+import React from "react";
+import { Button } from "@heroui/button";
+import Link from "next/link";
 
 interface Props {
-  accuracy: number
-  totalTasks: number
+  accuracy: number;
+  totalTasks: number;
 }
 
 export default function ArticlesSummary({ accuracy, totalTasks }: Props) {
@@ -25,17 +24,13 @@ export default function ArticlesSummary({ accuracy, totalTasks }: Props) {
 
       <div className="w-full grid grid-cols-2 gap-4">
         <div className="p-6 card-premium bg-content1">
-          <p className="text-3xl font-black text-primary">
-            {accuracy}%
-          </p>
+          <p className="text-3xl font-black text-primary">{accuracy}%</p>
           <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">
             Skuteczność
           </p>
         </div>
         <div className="p-6 card-premium bg-content1">
-          <p className="text-3xl font-black text-primary">
-            {totalTasks}
-          </p>
+          <p className="text-3xl font-black text-primary">{totalTasks}</p>
           <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">
             Zadań
           </p>
@@ -46,10 +41,11 @@ export default function ArticlesSummary({ accuracy, totalTasks }: Props) {
         <Button
           className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg"
           color="primary"
-          size="lg">
+          size="lg"
+        >
           Wróć do menu głównego
         </Button>
       </Link>
     </div>
-  )
+  );
 }

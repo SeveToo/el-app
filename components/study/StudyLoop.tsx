@@ -11,6 +11,7 @@ import FastReview from "./FastReview";
 import MatchingGame from "./MatchingGame";
 import WrittenTest from "./WrittenTest";
 import SentenceFill from "./SentenceFill";
+
 import { saveProgress, getProgress } from "@/lib/progress";
 import { Word } from "@/types";
 import { audioService } from "@/lib/audio";
@@ -42,7 +43,6 @@ export default function StudyLoop({
 }): React.JSX.Element | null {
   const [allWords] = useState<Word[]>(words);
 
-
   // Indeks bieżącej "rundy" (grupy 10 słówek)
   const [roundIndex, setRoundIndex] = useState(0);
 
@@ -58,7 +58,6 @@ export default function StudyLoop({
   const [resumeProgress, setResumeProgress] = useState(0);
 
   const stageIndex = STAGES.indexOf(stage);
-
 
   // ---------------------------------------------------------------------------
   // Inicjalizacja / Wznawianie
@@ -83,7 +82,6 @@ export default function StudyLoop({
       setIsInitializing(false);
     }
   }, [chapterId, allWords.length]);
-
 
   const handleResume = () => {
     const saved = getProgress(chapterId);
@@ -278,7 +276,6 @@ export default function StudyLoop({
             onClick={handleResume}
           >
             Kontynuuj 🚀 {resumeProgress}%
-
           </Button>
           <Button
             className="w-full h-14 font-bold uppercase tracking-widest rounded-2xl"

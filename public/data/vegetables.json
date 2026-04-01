@@ -1,0 +1,74 @@
+[
+  {
+    "id": "veg_1",
+    "en": "Potato",
+    "pl": "Ziemniak",
+    "image": "vegetables/Potato.webp",
+    "en_example": "Boil the potatoes for 20 minutes.",
+    "pl_example": "Gotuj ziemniaki przez 20 minut."
+  },
+  {
+    "id": "veg_2",
+    "en": "Tomato",
+    "pl": "Pomidor",
+    "image": "vegetables/Tomato.webp",
+    "en_example": "Tomatoes are technically fruit.",
+    "pl_example": "Pomidory to technicznie owoce."
+  },
+  {
+    "id": "veg_3",
+    "en": "Onion",
+    "pl": "Cebula",
+    "image": "vegetables/Onion.webp",
+    "en_example": "Cutting onions makes me cry.",
+    "pl_example": "Krojenie cebuli sprawia, że płaczę."
+  },
+  {
+    "id": "veg_4",
+    "en": "Cucumber",
+    "pl": "Ogórek",
+    "image": "vegetables/Cucumber.webp",
+    "en_example": "I like cucumbers in my salad.",
+    "pl_example": "Lubię ogórki w sałatce."
+  },
+  {
+    "id": "veg_5",
+    "en": "Carrot",
+    "pl": "Marchewka",
+    "image": "vegetables/Carrot.webp",
+    "en_example": "Carrots are good for your eyesight.",
+    "pl_example": "Marchewki są dobre na wzrok."
+  },
+  {
+    "id": "veg_6",
+    "en": "Garlic",
+    "pl": "Czosnek",
+    "image": "vegetables/Garlic.webp",
+    "en_example": "Garlic smells very strong.",
+    "pl_example": "Czosnek ma bardzo silny zapach."
+  },
+  {
+    "id": "veg_7",
+    "en": "Pepper",
+    "pl": "Papryka",
+    "image": "vegetables/Pepper.webp",
+    "en_example": "Red peppers are very sweet.",
+    "pl_example": "Czerwone papryki są bardzo słodkie."
+  },
+  {
+    "id": "veg_8",
+    "en": "Lettuce",
+    "pl": "Sałata",
+    "image": "vegetables/Lettuce.webp",
+    "en_example": "Lettuce is the base of many salads.",
+    "pl_example": "Sałata jest bazą wielu sałatek."
+  },
+  {
+    "id": "veg_9",
+    "en": "Cabbage",
+    "pl": "Kapusta",
+    "image": "vegetables/Cabbage.webp",
+    "en_example": "Cabbage is used to make bigos.",
+    "pl_example": "Kapusta jest używana do robienia bigosu."
+  }
+]

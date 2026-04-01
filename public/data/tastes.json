@@ -1,0 +1,82 @@
+[
+  {
+    "id": "tast_1",
+    "en": "Sweet",
+    "pl": "Słodki",
+    "image": "tastes/Sweet.webp",
+    "en_example": "Sugar is sweet.",
+    "pl_example": "Cukier jest słodki."
+  },
+  {
+    "id": "tast_2",
+    "en": "Sour",
+    "pl": "Kwaśny",
+    "image": "tastes/Sour.webp",
+    "en_example": "Lemons are sour.",
+    "pl_example": "Cytryny są kwaśne."
+  },
+  {
+    "id": "tast_3",
+    "en": "Salty",
+    "pl": "Słony",
+    "image": "tastes/Salty.webp",
+    "en_example": "Sea water is salty.",
+    "pl_example": "Woda morska jest słona."
+  },
+  {
+    "id": "tast_4",
+    "en": "Bitter",
+    "pl": "Gorzki",
+    "image": "tastes/Bitter.webp",
+    "en_example": "Dark chocolate is bitter.",
+    "pl_example": "Gorzka czekolada jest gorzka."
+  },
+  {
+    "id": "tast_5",
+    "en": "Spicy",
+    "pl": "Ostry / Pikantny",
+    "image": "tastes/Spicy.webp",
+    "en_example": "I like spicy food.",
+    "pl_example": "Lubię ostre jedzenie."
+  },
+  {
+    "id": "tast_6",
+    "en": "Delicious",
+    "pl": "Pyszny",
+    "image": "tastes/Delicious.webp",
+    "en_example": "This cake is delicious.",
+    "pl_example": "To ciasto jest pyszne."
+  },
+  {
+    "id": "tast_7",
+    "en": "Disgusting",
+    "pl": "Obrzydliwy",
+    "image": "tastes/Disgusting.webp",
+    "en_example": "Rotten milk is disgusting.",
+    "pl_example": "Zepsute mleko jest obrzydliwe."
+  },
+  {
+    "id": "tast_8",
+    "en": "Fresh",
+    "pl": "Świeży",
+    "image": "tastes/Fresh.webp",
+    "en_example": "The bread is fresh and warm.",
+    "pl_example": "Chleb jest świeży i ciepły."
+  },
+  {
+    "id": "tast_9",
+    "en": "Frozen",
+    "pl": "Zamrożony",
+    "image": "tastes/Frozen.webp",
+    "en_example": "I bought some frozen pizza.",
+    "pl_example": "Kupiłem mrożoną pizzę."
+  },
+  {
+    "id": "tast_10",
+    "en": "Crunchy",
+    "pl": "Chrupiący",
+    "image": "tastes/Crunchy.webp",
+    "en_example": "These chips are very crunchy.",
+    "pl_example": "Te chipsy są bardzo chrupiące."
+  }
+]

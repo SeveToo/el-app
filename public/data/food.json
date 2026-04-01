@@ -1,0 +1,82 @@
+[
+  {
+    "id": "food_1",
+    "en": "Bread",
+    "pl": "Chleb",
+    "image": "food/Bread.webp",
+    "en_example": "I buy fresh bread every morning.",
+    "pl_example": "Codziennie rano kupuję świeży chleb."
+  },
+  {
+    "id": "food_2",
+    "en": "Milk",
+    "pl": "Mleko",
+    "image": "food/Milk.webp",
+    "en_example": "Milk is good for your bones.",
+    "pl_example": "Mleko jest dobre dla twoich kości."
+  },
+  {
+    "id": "food_3",
+    "en": "Eggs",
+    "pl": "Jajka",
+    "image": "food/Eggs.webp",
+    "en_example": "She eats two eggs for breakfast.",
+    "pl_example": "Ona je dwa jajka na śniadanie."
+  },
+  {
+    "id": "food_4",
+    "en": "Cheese",
+    "pl": "Ser",
+    "image": "food/Cheese.webp",
+    "en_example": "I like cheese on my pizza.",
+    "pl_example": "Lubię ser na mojej pizzy."
+  },
+  {
+    "id": "food_5",
+    "en": "Ham",
+    "pl": "Szynka",
+    "image": "food/Ham.webp",
+    "en_example": "He likes a ham sandwich.",
+    "pl_example": "On lubi kanapkę z szynką."
+  },
+  {
+    "id": "food_6",
+    "en": "Pasta",
+    "pl": "Makaron",
+    "image": "food/Pasta.webp",
+    "en_example": "Italian pasta is famous worldwide.",
+    "pl_example": "Włoski makaron jest znany na całym świecie."
+  },
+  {
+    "id": "food_7",
+    "en": "Rice",
+    "pl": "Ryż",
+    "image": "food/Rice.webp",
+    "en_example": "Rice is a staple food in many countries.",
+    "pl_example": "Ryż jest podstawowym pokarmem w wielu krajach."
+  },
+  {
+    "id": "food_8",
+    "en": "Butter",
+    "pl": "Masło",
+    "image": "food/Butter.webp",
+    "en_example": "Put some butter on the bread.",
+    "pl_example": "Połóż trochę masła na chleb."
+  },
+  {
+    "id": "food_9",
+    "en": "Honey",
+    "pl": "Miód",
+    "image": "food/Honey.webp",
+    "en_example": "Honey is a natural sweetener.",
+    "pl_example": "Miód jest naturalnym słodzikiem."
+  },
+  {
+    "id": "food_10",
+    "en": "Receipt",
+    "pl": "Paragon / Rachunek",
+    "image": "food/Receipt.webp",
+    "en_example": "Don't forget to take the receipt.",
+    "pl_example": "Nie zapomnij wziąć paragonu."
+  }
+]

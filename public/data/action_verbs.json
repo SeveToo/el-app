@@ -1,92 +1,82 @@
 [
-    {
-        "id": "build",
-        "en": "Build",
-        "pl": "Budować",
-        "en_example": "They build new houses.",
-        "pl_example": "Oni budują nowe domy.",
-        "image": "/action_verbs/Build.webp",
-        "status": 0
-    },
-    {
-        "id": "climb",
-        "en": "Climb",
-        "pl": "Wspinać się",
-        "en_example": "She likes to climb mountains.",
-        "pl_example": "Ona lubi wspinać się po górach.",
-        "image": "/action_verbs/Climb.webp",
-        "status": 0
-    },
-    {
-        "id": "cook",
-        "en": "Cook",
-        "pl": "Gotować",
-        "en_example": "I will cook dinner today.",
-        "pl_example": "Ugotuję dzisiaj obiad.",
-        "image": "/action_verbs/Cook.webp",
-        "status": 0
-    },
-    {
-        "id": "create",
-        "en": "Create",
-        "pl": "Tworzyć",
-        "en_example": "He wants to create a game.",
-        "pl_example": "On chce stworzyć grę.",
-        "image": "/action_verbs/Create.webp",
-        "status": 0
-    },
-    {
-        "id": "cry",
-        "en": "Cry",
-        "pl": "Płakać",
-        "en_example": "Don't cry over spilt milk.",
-        "pl_example": "Nie płacz nad rozlanym mlekiem.",
-        "image": "/action_verbs/Cry.webp",
-        "status": 0
-    },
-    {
-        "id": "dance",
-        "en": "Dance",
-        "pl": "Tańczyć",
-        "en_example": "We like to dance together.",
-        "pl_example": "Lubimy razem tańczyć.",
-        "image": "/action_verbs/Dance.webp",
-        "status": 0
-    },
-    {
-        "id": "drink",
-        "en": "Drink",
-        "pl": "Pić",
-        "en_example": "Drink plenty of water.",
-        "pl_example": "Pij dużo wody.",
-        "image": "/action_verbs/Drink.webp",
-        "status": 0
-    },
-    {
-        "id": "drive",
-        "en": "Drive",
-        "pl": "Prowadzić auto",
-        "en_example": "Can you drive a car?",
-        "pl_example": "Czy potrafisz prowadzić samochód?",
-        "image": "/action_verbs/Drive.webp",
-        "status": 0
-    },
-    {
-        "id": "fly",
-        "en": "Fly",
-        "pl": "Latać",
-        "en_example": "Birds can fly high.",
-        "pl_example": "Ptaki potrafią latać wysoko.",
-        "image": "/action_verbs/Fly.webp",
-        "status": 0
-    },
-    {
-        "id": "hug",
-        "en": "Hug",
-        "pl": "Przytulać",
-        "en_example": "Give me a hug.",
-        "pl_example": "Przytul mnie.",
-        "image": "/action_verbs/Hug.webp",
-        "status": 0
-    }
+  {
+    "id": "verb_1",
+    "en": "Eat",
+    "pl": "Jeść",
+    "image": "action_verbs/Eat.webp",
+    "en_example": "I like to eat apples for breakfast.",
+    "pl_example": "Lubię jeść jabłka na śniadanie."
+  },
+  {
+    "id": "verb_2",
+    "en": "Drink",
+    "pl": "Pić",
+    "image": "action_verbs/Drink.webp",
+    "en_example": "Drink some water, it's hot.",
+    "pl_example": "Napij się wody, jest gorąco."
+  },
+  {
+    "id": "verb_3",
+    "en": "Read",
+    "pl": "Czytać",
+    "image": "action_verbs/Read.webp",
+    "en_example": "She reads a book every night.",
+    "pl_example": "Ona czyta książkę każdej nocy."
+  },
+  {
+    "id": "verb_4",
+    "en": "Sleep",
+    "pl": "Spać",
+    "image": "action_verbs/Sleep.webp",
+    "en_example": "I need to sleep at least 8 hours.",
+    "pl_example": "Muszę spać przynajmniej 8 godzin."
+  },
+  {
+    "id": "verb_5",
+    "en": "Run",
+    "pl": "Biegać",
+    "image": "action_verbs/Run.webp",
+    "en_example": "He runs in the park every morning.",
+    "pl_example": "On biega w parku co rano."
+  },
+  {
+    "id": "verb_6",
+    "en": "Think",
+    "pl": "Myśleć",
+    "image": "action_verbs/Think.webp",
+    "en_example": "What do you think about this plan?",
+    "pl_example": "Co myślisz o tym planie?"
+  },
+  {
+    "id": "verb_7",
+    "en": "Speak",
+    "pl": "Mówić",
+    "image": "action_verbs/Speak.webp",
+    "en_example": "She can speak three languages.",
+    "pl_example": "Ona mówi w trzech językach."
+  },
+  {
+    "id": "verb_8",
+    "en": "Play",
+    "pl": "Grać / Bawić się",
+    "image": "action_verbs/Play.webp",
+    "en_example": "Children like to play outside.",
+    "pl_example": "Dzieci lubią bawić się na zewnątrz."
+  },
+  {
+    "id": "verb_9",
+    "en": "Work",
+    "pl": "Pracować",
+    "image": "action_verbs/Work.webp",
+    "en_example": "I work from home on Mondays.",
+    "pl_example": "W poniedziejki pracuję z domu."
+  },
+  {
+    "id": "verb_10",
+    "en": "Have",
+    "pl": "Mieć / Posiadać",
+    "image": "action_verbs/Have.webp",
+    "en_example": "I have a lot of work today.",
+    "pl_example": "Mam dzisiaj dużo pracy."
+  }
 ]

@@ -59,7 +59,9 @@ export const WordImage: React.FC<WordImageProps> = ({
     >
       <div
         className={`w-full h-full ${
-          isMulti ? "grid grid-cols-2 gap-0.5 items-center" : "flex items-center justify-center"
+          isMulti
+            ? "grid grid-cols-2 gap-0.5 items-center"
+            : "flex items-center justify-center"
         }`}
       >
         {imageSources.map((src, idx) => (

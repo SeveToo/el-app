@@ -1,0 +1,82 @@
+[
+  {
+    "id": "nat_1",
+    "en": "Mountain",
+    "pl": "Góra",
+    "image": "nature/Mountain.webp",
+    "en_example": "Mount Everest is the highest mountain.",
+    "pl_example": "Mount Everest to najwyższa góra."
+  },
+  {
+    "id": "nat_2",
+    "en": "Forest",
+    "pl": "Las",
+    "image": "nature/Forest.webp",
+    "en_example": "We love walking in the forest.",
+    "pl_example": "Uwielbiamy spacerować po lesie."
+  },
+  {
+    "id": "nat_3",
+    "en": "Lake",
+    "pl": "Jezioro",
+    "image": "nature/Lake.webp",
+    "en_example": "The water in the lake is very clear.",
+    "pl_example": "Woda w jeziorze jest bardzo czysta."
+  },
+  {
+    "id": "nat_4",
+    "en": "River",
+    "pl": "Rzeka",
+    "image": "nature/River.webp",
+    "en_example": "The Amazon is a long river.",
+    "pl_example": "Amazonka to długa rzeka."
+  },
+  {
+    "id": "nat_5",
+    "en": "Beach",
+    "pl": "Plaża",
+    "image": "nature/Beach.webp",
+    "en_example": "Let's go to the beach this weekend.",
+    "pl_example": "Chodźmy w ten weekend na plażę."
+  },
+  {
+    "id": "nat_6",
+    "en": "Sea / Ocean",
+    "pl": "Morze / Ocean",
+    "image": "nature/Sea_Ocean.webp",
+    "en_example": "The sea is calm today.",
+    "pl_example": "Morze jest dzisiaj spokojne."
+  },
+  {
+    "id": "nat_7",
+    "en": "Waterfall",
+    "pl": "Wodospad",
+    "image": "nature/Waterfall.webp",
+    "en_example": "Niagara Falls is a famous waterfall.",
+    "pl_example": "Wodospad Niagara jest słynny."
+  },
+  {
+    "id": "nat_8",
+    "en": "Wildlife",
+    "pl": "Dzika przyroda",
+    "image": "nature/Wildlife.webp",
+    "en_example": "African wildlife is amazing.",
+    "pl_example": "Afrykańska dzika przyroda jest niesamowita."
+  },
+  {
+    "id": "nat_9",
+    "en": "Environment",
+    "pl": "Środowisko",
+    "image": "nature/Environment.webp",
+    "en_example": "We must protect the environment.",
+    "pl_example": "Musimy chronić środowisko."
+  },
+  {
+    "id": "nat_10",
+    "en": "Protect",
+    "pl": "Chronić / Chronimy",
+    "image": "nature/Protect.webp",
+    "en_example": "Protect your skin from the sun.",
+    "pl_example": "Chroń swoją skórę przed słońcem."
+  }
+]

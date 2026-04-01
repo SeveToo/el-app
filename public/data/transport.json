@@ -1,0 +1,82 @@
+[
+  {
+    "id": "trans_1",
+    "en": "Car",
+    "pl": "Samochód",
+    "image": "transport/Car.webp",
+    "en_example": "My father has a fast car.",
+    "pl_example": "Mój tata ma szybki samochód."
+  },
+  {
+    "id": "trans_2",
+    "en": "Bus",
+    "pl": "Autobus",
+    "image": "transport/Bus.webp",
+    "en_example": "I go to school by bus.",
+    "pl_example": "Jadę do szkoły autobusem."
+  },
+  {
+    "id": "trans_3",
+    "en": "Train",
+    "pl": "Pociąg",
+    "image": "transport/Train.webp",
+    "en_example": "The train is late again.",
+    "pl_example": "Pociąg znowu jest opóźniony."
+  },
+  {
+    "id": "trans_4",
+    "en": "Airplane",
+    "pl": "Samolot",
+    "image": "transport/Airplane.webp",
+    "en_example": "The airplane flies very high.",
+    "pl_example": "Samolot leci bardzo wysoko."
+  },
+  {
+    "id": "trans_5",
+    "en": "Bicycle",
+    "pl": "Rower",
+    "image": "transport/Bicycle.webp",
+    "en_example": "I ride my bicycle on sunny days.",
+    "pl_example": "Jeżdżę na rowerze w słoneczne dni."
+  },
+  {
+    "id": "trans_6",
+    "en": "Ship",
+    "pl": "Statek",
+    "image": "transport/Ship.webp",
+    "en_example": "A large ship passed by the harbor.",
+    "pl_example": "Duży statek przepłynął obok portu."
+  },
+  {
+    "id": "trans_7",
+    "en": "Helicopter",
+    "pl": "Helikopter",
+    "image": "transport/Helicopter.webp",
+    "en_example": "The helicopter landed on the roof.",
+    "pl_example": "Helikopter wylądował na dachu."
+  },
+  {
+    "id": "trans_8",
+    "en": "Taxi",
+    "pl": "Taksówka",
+    "image": "transport/Taxi.webp",
+    "en_example": "Call a taxi for me, please.",
+    "pl_example": "Proszę, wezwij dla mnie taksówkę."
+  },
+  {
+    "id": "trans_9",
+    "en": "Scooter",
+    "pl": "Hulajnoga / Skuter",
+    "image": "transport/Scooter.webp",
+    "en_example": "Electric scooters are popular in the city.",
+    "pl_example": "Hulajnogi elektryczne są popularne w mieście."
+  },
+  {
+    "id": "trans_10",
+    "en": "Submarine",
+    "pl": "Łódź podwodna",
+    "image": "transport/Submarine.webp",
+    "en_example": "The submarine dives deep into the ocean.",
+    "pl_example": "Łódź podwodna schodzi głęboko do oceanu."
+  }
+]

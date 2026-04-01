@@ -1,0 +1,82 @@
+[
+  {
+    "id": "furn_1",
+    "en": "Armchair",
+    "pl": "Fotel",
+    "image": "furniture/Armchair.webp",
+    "en_example": "This armchair is very comfortable.",
+    "pl_example": "Ten fotel jest bardzo wygodny."
+  },
+  {
+    "id": "furn_2",
+    "en": "Cushion",
+    "pl": "Poduszka ozdobna",
+    "image": "furniture/Cushion.webp",
+    "en_example": "She arranged colorful cushions on the sofa.",
+    "pl_example": "Ułożyła kolorowe poduszki na kanapie."
+  },
+  {
+    "id": "furn_3",
+    "en": "Drawer",
+    "pl": "Szuflada / Komoda",
+    "image": "furniture/Drawer.webp",
+    "en_example": "Put your clothes in the drawer.",
+    "pl_example": "Włóż ubrania do szuflady."
+  },
+  {
+    "id": "furn_4",
+    "en": "Blanket",
+    "pl": "Koc / Tepe",
+    "image": "furniture/Blanket.webp",
+    "en_example": "Cover yourself with a warm blanket.",
+    "pl_example": "Przykryj się ciepłym kocem."
+  },
+  {
+    "id": "furn_5",
+    "en": "Carpet",
+    "pl": "Dywan",
+    "image": "furniture/Carpet.webp",
+    "en_example": "The hotel has thick red carpets.",
+    "pl_example": "Hotel ma grube czerwone dywany."
+  },
+  {
+    "id": "furn_6",
+    "en": "Curtain",
+    "pl": "Zasłona",
+    "image": "furniture/Curtain.webp",
+    "en_example": "Close the curtains, please.",
+    "pl_example": "Proszę, zasłoń zasłony."
+  },
+  {
+    "id": "furn_7",
+    "en": "Mirror",
+    "pl": "Lustro",
+    "image": "furniture/Mirror.webp",
+    "en_example": "Look at yourself in the mirror.",
+    "pl_example": "Spójrz na siebie w lustrze."
+  },
+  {
+    "id": "furn_8",
+    "en": "Shelf",
+    "pl": "Półka",
+    "image": "furniture/Shelf.webp",
+    "en_example": "The shelf is full of books.",
+    "pl_example": "Półka jest pełna książek."
+  },
+  {
+    "id": "furn_9",
+    "en": "Lamp",
+    "pl": "Lampa",
+    "image": "furniture/Lamp.webp",
+    "en_example": "Turn on the lamp on the desk.",
+    "pl_example": "Włącz lampę na biurku."
+  },
+  {
+    "id": "furn_10",
+    "en": "Wardrobe",
+    "pl": "Szafa",
+    "image": "furniture/Wardrobe.webp",
+    "en_example": "Hang your coat in the wardrobe.",
+    "pl_example": "Powieś płaszcz w szafie."
+  }
+]

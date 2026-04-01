@@ -10,7 +10,6 @@ import { AdBanner } from "@/components/layout/AdBanner";
 import { getAllProgress, calcPercent } from "@/lib/progress";
 import { LESSONS } from "@/config/lessons";
 
-
 function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();

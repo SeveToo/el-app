@@ -1,0 +1,82 @@
+[
+  {
+    "id": "emot_1",
+    "en": "Happy",
+    "pl": "Szczęśliwy",
+    "image": "emotions/Happy.webp",
+    "en_example": "She is very happy today.",
+    "pl_example": "Ona jest dzisiaj bardzo szczęśliwa."
+  },
+  {
+    "id": "emot_2",
+    "en": "Sad",
+    "pl": "Smutny",
+    "image": "emotions/Sad.webp",
+    "en_example": "Why are you looking so sad?",
+    "pl_example": "Dlaczego wyglądasz tak smutno?"
+  },
+  {
+    "id": "emot_3",
+    "en": "Angry",
+    "pl": "Zły",
+    "image": "emotions/Angry.webp",
+    "en_example": "The boss is very angry with us.",
+    "pl_example": "Szef jest na nas bardzo zły."
+  },
+  {
+    "id": "emot_4",
+    "en": "Surprised",
+    "pl": "Zaskoczony",
+    "image": "emotions/Surprised.webp",
+    "en_example": "I was surprised by the news.",
+    "pl_example": "Byłem zaskoczony tą wiadomością."
+  },
+  {
+    "id": "emot_5",
+    "en": "Fearful",
+    "pl": "Przestraszony",
+    "image": "emotions/Fearful.webp",
+    "en_example": "He was fearful of the dark.",
+    "pl_example": "Bał się ciemności."
+  },
+  {
+    "id": "emot_6",
+    "en": "Tired",
+    "pl": "Zmęczony",
+    "image": "emotions/Tired.webp",
+    "en_example": "I'm always tired after work.",
+    "pl_example": "Zawsze jestem zmęczony po pracy."
+  },
+  {
+    "id": "emot_7",
+    "en": "Shy",
+    "pl": "Nieśmiały",
+    "image": "emotions/Shy.webp",
+    "en_example": "She is too shy to speak up.",
+    "pl_example": "Ona jest zbyt nieśmiała, by zabrać głos."
+  },
+  {
+    "id": "emot_8",
+    "en": "Proud",
+    "pl": "Dumny",
+    "image": "emotions/Proud.webp",
+    "en_example": "Parents are proud of their son.",
+    "pl_example": "Rodzice są dumni ze swojego syna."
+  },
+  {
+    "id": "emot_9",
+    "en": "Confused",
+    "pl": "Zdezorientowany",
+    "image": "emotions/Confused.webp",
+    "en_example": "I am a bit confused by these maps.",
+    "pl_example": "Jestem nieco zdezorientowany tymi mapami."
+  },
+  {
+    "id": "emot_10",
+    "en": "Fascinated",
+    "pl": "Zafascynowany",
+    "image": "emotions/Fascinated.webp",
+    "en_example": "They were fascinated by the story.",
+    "pl_example": "Byli zafascynowani tą historią."
+  }
+]

@@ -48,4 +48,3 @@ export const AppLogo: React.FC<IconSvgProps> = ({
     </svg>
   </>
 );
-

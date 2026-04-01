@@ -1,64 +1,66 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import ArticlesIntro from './ArticlesIntro'
-import ArticlesPractice from './ArticlesPractice'
-import ArticlesSummary from './ArticlesSummary'
-import { Question } from '@/types'
+import React, { useState } from "react";
+
+import ArticlesIntro from "./ArticlesIntro";
+import ArticlesPractice from "./ArticlesPractice";
+import ArticlesSummary from "./ArticlesSummary";
+
+import { Question } from "@/types";
 
 interface Props {
-  questions: Question[]
+  questions: Question[];
 }
 
 export default function ArticlesLesson({ questions }: Props) {
-  const [view, setView] = useState<'intro' | 'practice' | 'summary'>('intro')
+  const [view, setView] = useState<"intro" | "practice" | "summary">("intro");
   const [results, setResults] = useState<{
-    wrongAnswers: string[]
-    totalTasks: number
-  } | null>(null)
+    wrongAnswers: string[];
+    totalTasks: number;
+  } | null>(null);
 
-  const handlePracticeComplete = (wrongAnswers: string[], totalTasks: number) => {
-    setResults({ wrongAnswers, totalTasks })
-    setView('summary')
-  }
+  const handlePracticeComplete = (
+    wrongAnswers: string[],
+    totalTasks: number,
+  ) => {
+    setResults({ wrongAnswers, totalTasks });
+    setView("summary");
+  };
 
-  if (view === 'intro') {
+  if (view === "intro") {
     return (
-      <ArticlesIntro 
-        questions={questions} 
-        onStart={() => setView('practice')} 
+      <ArticlesIntro
+        questions={questions}
+        onStart={() => setView("practice")}
       />
-    )
+    );
   }
 
-  if (view === 'practice') {
+  if (view === "practice") {
     return (
-      <ArticlesPractice 
-        questions={questions} 
-        onComplete={handlePracticeComplete} 
+      <ArticlesPractice
+        questions={questions}
+        onComplete={handlePracticeComplete}
       />
-    )
+    );
   }
 
-  if (view === 'summary' && results) {
+  if (view === "summary" && results) {
     const accuracy = Math.round(
       ((results.totalTasks - new Set(results.wrongAnswers).size) /
         results.totalTasks) *
-        100
-    )
+        100,
+    );
 
     // Save to localStorage for intro screen
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('article_last_accuracy', accuracy.toString())
+    if (typeof window !== "undefined") {
+      localStorage.setItem("article_last_accuracy", accuracy.toString());
     }
 
     return (
-      <ArticlesSummary 
-        accuracy={accuracy} 
-        totalTasks={results.totalTasks} 
-      />
-    )
+      <ArticlesSummary accuracy={accuracy} totalTasks={results.totalTasks} />
+    );
   }
 
-  return null
+  return null;
 }

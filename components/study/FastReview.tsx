@@ -1,46 +1,46 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import { Button } from '@heroui/button'
-import { GameButton } from '@/components/ui/GameButton'
-import { Card, CardBody } from '@heroui/card'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useState, useEffect } from "react";
+import { Card, CardBody } from "@heroui/card";
+import { motion, AnimatePresence } from "framer-motion";
 
-import { audioService } from '@/lib/audio'
-import { Word } from '@/types'
-import { WordImage } from '@/components/ui/WordImage'
-import { StudyHeader } from './StudyHeader'
+import { StudyHeader } from "./StudyHeader";
+
+import { GameButton } from "@/components/ui/GameButton";
+import { audioService } from "@/lib/audio";
+import { Word } from "@/types";
+import { WordImage } from "@/components/ui/WordImage";
 
 interface Props {
-  words: Word[]
-  onComplete: (errorIds: string[]) => void
+  words: Word[];
+  onComplete: (errorIds: string[]) => void;
 }
 
 export default function FastReview({ words, onComplete }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [errorIds, setErrorIds] = useState<string[]>([])
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [errorIds] = useState<string[]>([]);
 
-  const currentWord = words[currentIndex]
+  const currentWord = words[currentIndex];
 
   // Pronounce English word when it appears
   useEffect(() => {
     if (currentWord) {
-      audioService.speak(currentWord.en)
+      audioService.speak(currentWord.en);
       if (currentWord.en_example) {
-        audioService.speak(currentWord.en_example, { cancel: false })
+        audioService.speak(currentWord.en_example, { cancel: false });
       }
     }
-  }, [currentIndex, currentWord])
+  }, [currentIndex, currentWord]);
 
   const handleNext = () => {
     if (currentIndex < words.length - 1) {
-      setCurrentIndex(currentIndex + 1)
+      setCurrentIndex(currentIndex + 1);
     } else {
-      onComplete(errorIds)
+      onComplete(errorIds);
     }
-  }
+  };
 
-  if (!currentWord) return null
+  if (!currentWord) return null;
 
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto py-6 sm:py-10">
@@ -60,13 +60,11 @@ export default function FastReview({ words, onComplete }: Props) {
             className="w-full h-full"
             exit={{ opacity: 0, scale: 0.9 }}
             initial={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.2 }}>
+            transition={{ duration: 0.2 }}
+          >
             <Card className="w-full h-full flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden">
               <div className="w-full h-[65%] flex-shrink-0">
-                <WordImage
-                  alt={currentWord.en}
-                  image={currentWord.image}
-                />
+                <WordImage alt={currentWord.en} image={currentWord.image} />
               </div>
 
               <CardBody className="flex-grow flex flex-col items-center justify-center gap-2 p-6 bg-content1 border-t-2 border-default-100">
@@ -98,13 +96,10 @@ export default function FastReview({ words, onComplete }: Props) {
       </div>
 
       <div className="flex gap-4 w-full mt-2 px-2">
-        <GameButton
-          color="primary"
-          onClick={handleNext}>
+        <GameButton color="primary" onClick={handleNext}>
           DALEJ
         </GameButton>
       </div>
     </div>
-  )
+  );
 }
-

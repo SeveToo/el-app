@@ -1,0 +1,82 @@
+[
+  {
+    "id": "fam_1",
+    "en": "Mother",
+    "pl": "Matka",
+    "image": "family/Mother.webp",
+    "en_example": "My mother is a doctor.",
+    "pl_example": "Moja mama jest lekarzem."
+  },
+  {
+    "id": "fam_2",
+    "en": "Father",
+    "pl": "Ojciec",
+    "image": "family/Father.webp",
+    "en_example": "My father works in a bank.",
+    "pl_example": "Mój tata pracuje w banku."
+  },
+  {
+    "id": "fam_3",
+    "en": "Brother",
+    "pl": "Brat",
+    "image": "family/Brother.webp",
+    "en_example": "He has one younger brother.",
+    "pl_example": "On ma jednego młodszego brata."
+  },
+  {
+    "id": "fam_4",
+    "en": "Sister",
+    "pl": "Siostra",
+    "image": "family/Sister.webp",
+    "en_example": "My sister likes dancing.",
+    "pl_example": "Moja siostra lubi tańczyć."
+  },
+  {
+    "id": "fam_5",
+    "en": "Grandfather",
+    "pl": "Dziadek",
+    "image": "family/Grandfather.webp",
+    "en_example": "My grandfather is very old.",
+    "pl_example": "Mój dziadek jest bardzo stary."
+  },
+  {
+    "id": "fam_6",
+    "en": "Grandmother",
+    "pl": "Babcia",
+    "image": "family/Grandmother.webp",
+    "en_example": "My grandmother makes great cookies.",
+    "pl_example": "Moja babcia robi świetne ciastka."
+  },
+  {
+    "id": "fam_7",
+    "en": "Son",
+    "pl": "Syn",
+    "image": "family/Son.webp",
+    "en_example": "They have one son and two daughters.",
+    "pl_example": "Mają jednego syna i dwie córki."
+  },
+  {
+    "id": "fam_8",
+    "en": "Daughter",
+    "pl": "Córka",
+    "image": "family/Daughter.webp",
+    "en_example": "Her daughter is still at school.",
+    "pl_example": "Jej córka jest jeszcze w szkole."
+  },
+  {
+    "id": "fam_9",
+    "en": "Parents",
+    "pl": "Rodzice",
+    "image": "family/Parents.webp",
+    "en_example": "My parents live in the village.",
+    "pl_example": "Moi rodzice mieszkają na wsi."
+  },
+  {
+    "id": "fam_10",
+    "en": "Uncle",
+    "pl": "Wujek",
+    "image": "family/Uncle.webp",
+    "en_example": "My uncle is a police officer.",
+    "pl_example": "Mój wujek jest policjantem."
+  }
+]

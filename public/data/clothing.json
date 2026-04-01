@@ -1,0 +1,82 @@
+[
+  {
+    "id": "clothing_1",
+    "en": "Shirt",
+    "pl": "Koszula",
+    "image": "clothing/Shirt.webp",
+    "en_example": "He is wearing a white shirt.",
+    "pl_example": "On ma na sobie białą koszulę."
+  },
+  {
+    "id": "clothing_2",
+    "en": "Dress",
+    "pl": "Sukienka",
+    "image": "clothing/Dress.webp",
+    "en_example": "She bought a beautiful red dress.",
+    "pl_example": "Kupiła piękną czerwoną sukienkę."
+  },
+  {
+    "id": "clothing_3",
+    "en": "Pants",
+    "pl": "Spodnie",
+    "image": "clothing/Pants.webp",
+    "en_example": "My pants are too long.",
+    "pl_example": "Moje spodnie są za długie."
+  },
+  {
+    "id": "clothing_4",
+    "en": "Jacket",
+    "pl": "Kurtka",
+    "image": "clothing/Jacket.webp",
+    "en_example": "Take a jacket, it's cold outside.",
+    "pl_example": "Weź kurtkę, na zewnątrz jest zimno."
+  },
+  {
+    "id": "clothing_5",
+    "en": "Shoes",
+    "pl": "Buty",
+    "image": "clothing/Shoes.webp",
+    "en_example": "I need new running shoes.",
+    "pl_example": "Potrzebuję nowych butów do biegania."
+  },
+  {
+    "id": "clothing_6",
+    "en": "Hat",
+    "pl": "Czapka",
+    "image": "clothing/Hat.webp",
+    "en_example": "He always wears a brown hat.",
+    "pl_example": "On zawsze nosi brązową czapkę."
+  },
+  {
+    "id": "clothing_7",
+    "en": "Socks",
+    "pl": "Skarpetki",
+    "image": "clothing/Socks.webp",
+    "en_example": "Where is my left sock?",
+    "pl_example": "Gdzie jest moja lewa skarpetka?"
+  },
+  {
+    "id": "clothing_8",
+    "en": "Sweater",
+    "pl": "Sweter",
+    "image": "clothing/Sweater.webp",
+    "en_example": "This wool sweater is very warm.",
+    "pl_example": "Ten wełniany sweter jest bardzo ciepły."
+  },
+  {
+    "id": "clothing_9",
+    "en": "Skirt",
+    "pl": "Spódnica",
+    "image": "clothing/Skirt.webp",
+    "en_example": "She likes wearing short skirts.",
+    "pl_example": "Ona lubi nosić krótkie spódnice."
+  },
+  {
+    "id": "clothing_10",
+    "en": "Belt",
+    "pl": "Pasek",
+    "image": "clothing/Belt.webp",
+    "en_example": "I need a leather belt for these trousers.",
+    "pl_example": "Potrzebuję skórzanego paska do tych spodni."
+  }
+]

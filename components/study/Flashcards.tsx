@@ -1,66 +1,66 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import { Card, CardBody } from '@heroui/card'
-import { Button } from '@heroui/button'
-import { motion, AnimatePresence } from 'framer-motion'
-import { audioService } from '@/lib/audio'
-import { Word } from '@/types'
-import { WordImage } from '@/components/ui/WordImage'
-import { StudyHeader } from './StudyHeader'
-import { GameButton } from '@/components/ui/GameButton'
+import React, { useState, useEffect } from "react";
+import { Card, CardBody } from "@heroui/card";
+import { Button } from "@heroui/button";
+import { motion, AnimatePresence } from "framer-motion";
+
+import { StudyHeader } from "./StudyHeader";
+
+import { audioService } from "@/lib/audio";
+import { Word } from "@/types";
+import { WordImage } from "@/components/ui/WordImage";
+import { GameButton } from "@/components/ui/GameButton";
 
 interface Props {
-  words: Word[]
-  onComplete: (errorIds: string[]) => void
+  words: Word[];
+  onComplete: (errorIds: string[]) => void;
 }
 
 export default function Flashcards({ words, onComplete }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isFlipped, setIsFlipped] = useState(false)
-  const [errorIds, setErrorIds] = useState<string[]>([])
-  const [direction, setDirection] = useState<number>(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [errorIds, setErrorIds] = useState<string[]>([]);
+  const [direction, setDirection] = useState<number>(0);
 
-  const currentWord = words[currentIndex]
+  const currentWord = words[currentIndex];
 
   // Pronounce word and example when card is flipped to English side
   useEffect(() => {
     if (isFlipped && currentWord) {
-      audioService.speak(currentWord.en)
+      audioService.speak(currentWord.en);
       if (currentWord.en_example) {
-        audioService.speak(currentWord.en_example, { cancel: false })
+        audioService.speak(currentWord.en_example, { cancel: false });
       }
     }
-  }, [isFlipped, currentWord])
+  }, [isFlipped, currentWord]);
 
   const handleNext = (isKnown: boolean) => {
-    const wordId = currentWord.id
+    const wordId = currentWord.id;
     const newErrorIds =
-      !isKnown && !errorIds.includes(wordId)
-        ? [...errorIds, wordId]
-        : errorIds
+      !isKnown && !errorIds.includes(wordId) ? [...errorIds, wordId] : errorIds;
 
     if (!isKnown) {
-      setErrorIds(newErrorIds)
-      audioService.playError()
+      setErrorIds(newErrorIds);
+      audioService.playError();
     } else {
-      audioService.playSuccess()
+      audioService.playSuccess();
     }
 
-    setDirection(isKnown ? 1 : -1)
+    setDirection(isKnown ? 1 : -1);
 
     setTimeout(() => {
       if (currentIndex < words.length - 1) {
-        setCurrentIndex(currentIndex + 1)
-        setIsFlipped(false)
-        setDirection(0)
+        setCurrentIndex(currentIndex + 1);
+        setIsFlipped(false);
+        setDirection(0);
       } else {
-        onComplete(newErrorIds)
+        onComplete(newErrorIds);
       }
-    }, 400)
-  }
+    }, 400);
+  };
 
-  if (!currentWord) return <div>Brak słówek...</div>
+  if (!currentWord) return <div>Brak słówek...</div>;
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl mx-auto py-6 sm:py-10 relative overflow-hidden">
@@ -81,30 +81,32 @@ export default function Flashcards({ words, onComplete }: Props) {
             animate={{
               x: direction === 1 ? 600 : direction === -1 ? -600 : 0,
               opacity: direction !== 0 ? 0 : 1,
-              rotate:
-                direction === 1 ? 25 : direction === -1 ? -25 : 0,
+              rotate: direction === 1 ? 25 : direction === -1 ? -25 : 0,
             }}
             className="relative w-full h-full cursor-pointer"
             initial={{ x: 0, opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            onClick={() => setIsFlipped(!isFlipped)}>
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            onClick={() => setIsFlipped(!isFlipped)}
+          >
             <motion.div
               animate={{ rotateY: isFlipped ? 180 : 0 }}
               className="w-full h-full relative"
               style={{
-                transformStyle: 'preserve-3d',
-                perspective: '1000px',
+                transformStyle: "preserve-3d",
+                perspective: "1000px",
               }}
               transition={{
                 duration: 0.6,
-                type: 'spring',
+                type: "spring",
                 stiffness: 260,
                 damping: 20,
-              }}>
+              }}
+            >
               {/* Front Side (PL) */}
               <Card
                 className="absolute inset-0 flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden"
-                style={{ backfaceVisibility: 'hidden' }}>
+                style={{ backfaceVisibility: "hidden" }}
+              >
                 <div className="w-full h-[65%] flex-shrink-0">
                   <WordImage
                     alt={currentWord.pl}
@@ -126,9 +128,10 @@ export default function Flashcards({ words, onComplete }: Props) {
               <Card
                 className="absolute inset-0 flex flex-col border-none bg-content1 shadow-2xl rounded-[2.5rem] overflow-hidden"
                 style={{
-                  backfaceVisibility: 'hidden',
-                  transform: 'rotateY(180deg)',
-                }}>
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                }}
+              >
                 <div className="w-full h-[65%] flex-shrink-0">
                   <WordImage
                     alt={currentWord.en}
@@ -151,9 +154,10 @@ export default function Flashcards({ words, onComplete }: Props) {
                     size="sm"
                     variant="light"
                     onClick={(e) => {
-                      e.stopPropagation()
-                      audioService.speak(currentWord.en)
-                    }}>
+                      e.stopPropagation();
+                      audioService.speak(currentWord.en);
+                    }}
+                  >
                     🔊
                   </Button>
                 </CardBody>
@@ -170,9 +174,10 @@ export default function Flashcards({ words, onComplete }: Props) {
           color="danger"
           variant="flat"
           onClick={(e) => {
-            e.stopPropagation()
-            handleNext(false)
-          }}>
+            e.stopPropagation();
+            handleNext(false);
+          }}
+        >
           NIE ZNAM
         </GameButton>
         <GameButton
@@ -180,9 +185,10 @@ export default function Flashcards({ words, onComplete }: Props) {
           color="success"
           variant="shadow"
           onClick={(e) => {
-            e.stopPropagation()
-            handleNext(true)
-          }}>
+            e.stopPropagation();
+            handleNext(true);
+          }}
+        >
           ZNAM
         </GameButton>
       </div>
@@ -203,5 +209,5 @@ export default function Flashcards({ words, onComplete }: Props) {
         }
       `}</style>
     </div>
-  )
+  );
 }

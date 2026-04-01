@@ -19,6 +19,7 @@
 new_photos/
 /scripts/tmp_*
 /public/comparison_test/
+/app/preview-new-cards/
 
 # allow optimized images
 !*.webp

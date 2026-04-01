@@ -6,39 +6,11 @@ import {
   NavbarBrand,
   NavbarItem,
 } from "@heroui/navbar";
-import { Tabs, Tab } from "@heroui/tabs";
-import { useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 import NextLink from "next/link";
 
 import { ThemeSwitch } from "./theme-switch";
 import { AppLogo } from "./AppLogo";
-
-const NavbarContentWrapper = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const subject = searchParams.get("subject") || "english";
-
-  const handleSelectionChange = (key: React.Key) => {
-    router.push(`/?subject=${key}`);
-  };
-
-  return (
-    <NavbarContent className="hidden sm:flex" justify="center">
-      <NavbarItem>
-        <Tabs
-          aria-label="Wybierz przedmiot"
-          color="primary"
-          radius="full"
-          selectedKey={subject}
-          onSelectionChange={handleSelectionChange}
-        >
-          <Tab key="english" title="Angielski" />
-        </Tabs>
-      </NavbarItem>
-    </NavbarContent>
-  );
-};
 
 export const Navbar = () => {
   return (
@@ -51,12 +23,6 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
       </NavbarContent>
-
-      {/* there will be a navbar content wrapper */}
-      {/* <React.Suspense
-        fallback={<div className="hidden sm:flex w-40" />}>
-        <NavbarContentWrapper />
-      </React.Suspense> */}
 
       <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
         <NavbarItem className="flex gap-2">

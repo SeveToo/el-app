@@ -1,0 +1,82 @@
+[
+  {
+    "id": "cho_1",
+    "en": "Vacuuming",
+    "pl": "Odkurzanie",
+    "image": "chores/Vacuuming.webp",
+    "en_example": "Vacuuming is my least favorite chore.",
+    "pl_example": "Odkurzanie to mój najmniej ulubiony obowiązek."
+  },
+  {
+    "id": "cho_2",
+    "en": "Dusting",
+    "pl": "Ścieranie kurzy",
+    "image": "chores/Dusting.webp",
+    "en_example": "She is dusting the furniture.",
+    "pl_example": "Ona ściera kurze z mebli."
+  },
+  {
+    "id": "cho_3",
+    "en": "Ironing",
+    "pl": "Prasowanie",
+    "image": "chores/Ironing.webp",
+    "en_example": "I spend two hours ironing every week.",
+    "pl_example": "Każdego tygodnia spędzam dwie godziny na prasowaniu."
+  },
+  {
+    "id": "cho_4",
+    "en": "Laundry",
+    "pl": "Robienie prania",
+    "image": "chores/Laundry.webp",
+    "en_example": "I carry out the laundry on Sundays.",
+    "pl_example": "Robię pranie w niedziele."
+  },
+  {
+    "id": "cho_5",
+    "en": "Mopping",
+    "pl": "Mycie podłogi (mopowanie)",
+    "image": "chores/Mopping.webp",
+    "en_example": "The floor is clean after mopping.",
+    "pl_example": "Podłoga jest czysta po mopowaniu."
+  },
+  {
+    "id": "cho_6",
+    "en": "Sweeping",
+    "pl": "Zamiatanie",
+    "image": "chores/Sweeping.webp",
+    "en_example": "Sweep the floor before you leave.",
+    "pl_example": "Zamieć podłogę zanim wyjdziesz."
+  },
+  {
+    "id": "cho_7",
+    "en": "Tidying up",
+    "pl": "Sprzątanie / Porządkowanie",
+    "image": "chores/Tidying_up.webp",
+    "en_example": "Let's tidy up the room quickly.",
+    "pl_example": "Posprzątajmy szybko pokój."
+  },
+  {
+    "id": "cho_8",
+    "en": "Watering plants",
+    "pl": "Podlewanie roślin",
+    "image": "chores/Watering_plants.webp",
+    "en_example": "Don't forget to water the plants.",
+    "pl_example": "Nie zapomnij podlać roślin."
+  },
+  {
+    "id": "cho_9",
+    "en": "Recycling",
+    "pl": "Recykling / Segregacja śmieci",
+    "image": "chores/Recycling.webp",
+    "en_example": "Recycling is important for the planet.",
+    "pl_example": "Recykling jest ważny dla planety."
+  },
+  {
+    "id": "cho_10",
+    "en": "Scrubbing",
+    "pl": "Szorowanie",
+    "image": "chores/Scrubbing.webp",
+    "en_example": "He spent an hour scrubbing the floor.",
+    "pl_example": "Spędził godzinę szorując podłogę."
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "acc_1",
+    "en": "Watch",
+    "pl": "Zegarek",
+    "image": "accessories/Watch.webp",
+    "en_example": "My watch is broken.",
+    "pl_example": "Mój zegarek jest zepsuty."
+  },
+  {
+    "id": "acc_2",
+    "en": "Glasses",
+    "pl": "Okulary",
+    "image": "accessories/Glasses.webp",
+    "en_example": "He wears glasses for reading.",
+    "pl_example": "On nosi okulary do czytania."
+  },
+  {
+    "id": "acc_3",
+    "en": "Sunglasses",
+    "pl": "Okulary przeciwsłoneczne",
+    "image": "accessories/Sunglasses.webp",
+    "en_example": "I need sunglasses on sunny days.",
+    "pl_example": "Potrzebuję okularów przeciwsłonecznych w słoneczne dni."
+  },
+  {
+    "id": "acc_4",
+    "en": "Wallet",
+    "pl": "Portfel",
+    "image": "accessories/Wallet.webp",
+    "en_example": "I lost my wallet yesterday.",
+    "pl_example": "Wczoraj zgubiłem portfel."
+  },
+  {
+    "id": "acc_5",
+    "en": "Handbag",
+    "pl": "Torebka",
+    "image": "accessories/Handbag.webp",
+    "en_example": "She carries a small handbag.",
+    "pl_example": "Ona nosi małą torebkę."
+  },
+  {
+    "id": "acc_6",
+    "en": "Umbrella",
+    "pl": "Parasol",
+    "image": "accessories/Umbrella.webp",
+    "en_example": "Don't forget your umbrella, it's raining.",
+    "pl_example": "Nie zapomnij parasola, pada deszcz."
+  },
+  {
+    "id": "acc_7",
+    "en": "Ring",
+    "pl": "Pierścionek",
+    "image": "accessories/Ring.webp",
+    "en_example": "This is a gold ring.",
+    "pl_example": "To jest złoty pierścionek."
+  },
+  {
+    "id": "acc_8",
+    "en": "Necklace",
+    "pl": "Naszyjnik",
+    "image": "accessories/Necklace.webp",
+    "en_example": "She is wearing a pearl necklace.",
+    "pl_example": "Ona ma na sobie perłowy naszyjnik."
+  },
+  {
+    "id": "acc_9",
+    "en": "Bracelet",
+    "pl": "Bransoletka",
+    "image": "accessories/Bracelet.webp",
+    "en_example": "The bracelet is made of silver.",
+    "pl_example": "Bransoletka wykonana jest ze srebra."
+  },
+  {
+    "id": "acc_10",
+    "en": "Earrings",
+    "pl": "Kolczyki",
+    "image": "accessories/Earrings.webp",
+    "en_example": "Her earrings are very beautiful.",
+    "pl_example": "Jej kolczyki są bardzo piękne."
+  }
+]

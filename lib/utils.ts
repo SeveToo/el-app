@@ -21,14 +21,12 @@ export function prefixPath(src: string): string {
 
   const isProd = process.env.NODE_ENV === "production";
   const basePath = "/el-app";
+  const cleanSrc = src.startsWith("/") ? src : `/${src}`;
 
   // Na GitHub Pages potrzebujemy dopisać basePath
   if (isProd) {
-    // Zapobiegamy podwójnemu ukośnikowi
-    const cleanSrc = src.startsWith("/") ? src : `/${src}`;
-
     return `${basePath}${cleanSrc}`;
   }
 
-  return src;
+  return cleanSrc;
 }

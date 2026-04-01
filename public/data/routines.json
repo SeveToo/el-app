@@ -1,0 +1,82 @@
+[
+  {
+    "id": "rout_1",
+    "en": "Wake up",
+    "pl": "Budzić się",
+    "image": "routines/Wake_up.webp",
+    "en_example": "I wake up early in the morning.",
+    "pl_example": "Budzę się wcześnie rano."
+  },
+  {
+    "id": "rout_2",
+    "en": "Brush teeth",
+    "pl": "Myć zęby",
+    "image": "routines/Brush_teeth.webp",
+    "en_example": "Brush your teeth twice a day.",
+    "pl_example": "Myj zęby dwa razy dziennie."
+  },
+  {
+    "id": "rout_3",
+    "en": "Make breakfast",
+    "pl": "Robić śniadanie",
+    "image": "routines/Make_breakfast.webp",
+    "en_example": "He makes breakfast for his children.",
+    "pl_example": "On robi śniadanie dla swoich dzieci."
+  },
+  {
+    "id": "rout_4",
+    "en": "Get dressed",
+    "pl": "Ubierać się",
+    "image": "routines/Get_dressed.webp",
+    "en_example": "Get dressed for the party.",
+    "pl_example": "Ubierz się na imprezę."
+  },
+  {
+    "id": "rout_5",
+    "en": "Take a shower",
+    "pl": "Brać prysznic",
+    "image": "routines/Take_a_shower.webp",
+    "en_example": "I take a shower before going to bed.",
+    "pl_example": "Biorę prysznic przed pójściem spać."
+  },
+  {
+    "id": "rout_6",
+    "en": "Go to school",
+    "pl": "Iść do szkoły",
+    "image": "routines/Go_to_school.webp",
+    "en_example": "I go to school by bicycle.",
+    "pl_example": "Idę do szkoły na rowerze."
+  },
+  {
+    "id": "rout_7",
+    "en": "Study",
+    "pl": "Uczyć się",
+    "image": "routines/Study.webp",
+    "en_example": "She studies hard for her exams.",
+    "pl_example": "Wiele się uczy do egzaminów."
+  },
+  {
+    "id": "rout_8",
+    "en": "Do homework",
+    "pl": "Odrabiać pracę domową",
+    "image": "routines/Do_homework.webp",
+    "en_example": "Do your homework after dinner.",
+    "pl_example": "Odrób pracę domową po kolacji."
+  },
+  {
+    "id": "rout_9",
+    "en": "Go for a walk",
+    "pl": "Iść na spacer",
+    "image": "routines/Go_for_a_walk.webp",
+    "en_example": "Let's go for a walk in the evening.",
+    "pl_example": "Chodźmy wieczorem na spacer."
+  },
+  {
+    "id": "rout_10",
+    "en": "Go to bed",
+    "pl": "Iść do łóżka / spać",
+    "image": "routines/Go_to_bed.webp",
+    "en_example": "It's time to go to bed.",
+    "pl_example": "Czas iść spać."
+  }
+]

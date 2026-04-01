@@ -3,7 +3,6 @@ import path from "path";
 
 import Link from "next/link";
 import { Button } from "@heroui/button";
-
 import { Metadata } from "next";
 
 import ArticlesLesson from "@/components/articles/ArticlesLesson";
@@ -29,8 +28,6 @@ export async function generateStaticParams() {
   }));
 }
 
-
-
 export default async function ChapterPage(props: {
   params: Promise<{ id: string }>;
 }) {
@@ -48,6 +45,7 @@ export default async function ChapterPage(props: {
 
       words = JSON.parse(file) as (Word | Question)[];
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Error loading words:", e);
     }
   }
