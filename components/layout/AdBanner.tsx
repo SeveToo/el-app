@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@heroui/link";
 import Image from "next/image";
+import { prefixPath } from "@/lib/utils";
 
 export const AdBanner = () => {
   return (
@@ -16,7 +17,7 @@ export const AdBanner = () => {
             alt="HypeKorepetycje"
             className="w-full h-full object-contain"
             height={245}
-            src="/ads/ad.webp"
+            src={prefixPath("/ads/ad.webp")}
             width={843}
           />
         </Link>
