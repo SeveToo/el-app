@@ -16,6 +16,9 @@
 *.png
 *.jpg
 *.jpeg
+new_photos/
+/scripts/tmp_*
+/public/comparison_test/
 
 # allow optimized images
 !*.webp
