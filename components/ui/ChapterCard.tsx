@@ -10,7 +10,7 @@ type Props = {
   title: string;
   subtitle?: string;
   progress?: number;
-  href?: string;
+  href: string;
   completed?: boolean;
 };
 
@@ -46,22 +46,16 @@ const ChapterCard: React.FC<Props> = ({
         </div>
       </CardBody>
       <CardFooter className="pt-2">
-        {href ? (
-          <NextLink className="w-full" href={href}>
-            <Button
-              className="w-full font-semibold"
-              color={completed ? "success" : "default"}
-              size="sm"
-              variant={completed ? "flat" : "ghost"}
-            >
-              {completed ? "Powtórz" : "Otwórz"}
-            </Button>
-          </NextLink>
-        ) : (
-          <Button className="w-full font-semibold" size="sm" variant="ghost">
-            Otwórz
+        <NextLink className="w-full" href={href}>
+          <Button
+            className="w-full font-semibold"
+            color={completed ? "success" : "default"}
+            size="sm"
+            variant={completed ? "flat" : "ghost"}
+          >
+            {completed ? "Powtórz" : "Otwórz"}
           </Button>
-        )}
+        </NextLink>
       </CardFooter>
     </Card>
   );

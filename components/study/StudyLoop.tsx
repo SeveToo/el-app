@@ -6,11 +6,11 @@ import { Button } from "@heroui/button";
 import Link from "next/link";
 import confetti from "canvas-confetti";
 
-import Flashcards from "@/components/Flashcards";
-import FastReview from "@/components/FastReview";
-import MatchingGame from "@/components/MatchingGame";
-import WrittenTest from "@/components/WrittenTest";
-import SentenceFill from "@/components/SentenceFill";
+import Flashcards from "./Flashcards";
+import FastReview from "./FastReview";
+import MatchingGame from "./MatchingGame";
+import WrittenTest from "./WrittenTest";
+import SentenceFill from "./SentenceFill";
 import { saveProgress, getProgress } from "@/lib/progress";
 import { Word } from "@/types";
 import { audioService } from "@/lib/audio";
@@ -37,10 +37,11 @@ export default function StudyLoop({
   words,
   chapterId,
 }: {
-  words: any[];
+  words: Word[];
   chapterId: string;
 }): React.JSX.Element | null {
   const [allWords] = useState<Word[]>(words);
+
 
   // Indeks bieżącej "rundy" (grupy 10 słówek)
   const [roundIndex, setRoundIndex] = useState(0);
@@ -54,8 +55,10 @@ export default function StudyLoop({
   const [usedCount, setUsedCount] = useState(0);
   const [isInitializing, setIsInitializing] = useState(true);
   const [hasSavedProgress, setHasSavedProgress] = useState(false);
+  const [resumeProgress, setResumeProgress] = useState(0);
 
   const stageIndex = STAGES.indexOf(stage);
+
 
   // ---------------------------------------------------------------------------
   // Inicjalizacja / Wznawianie
@@ -65,10 +68,22 @@ export default function StudyLoop({
 
     if (saved && !saved.completedAt && saved.usedCount !== undefined) {
       setHasSavedProgress(true);
+
+      // Oblicz procent do wyświetlenia na ekranie "Wznów"
+      const sIndex = STAGES.indexOf((saved.stage as Stage) || "flashcards");
+      const groupSize = saved.currentGroupIndices?.length ?? WORDS_PER_LOOP;
+      const added = (sIndex / STAGES.length) * groupSize;
+      const pct = Math.round(
+        (Math.min(saved.usedCount + added, allWords.length) / allWords.length) *
+          100,
+      );
+
+      setResumeProgress(pct);
     } else {
       setIsInitializing(false);
     }
-  }, [chapterId]);
+  }, [chapterId, allWords.length]);
+
 
   const handleResume = () => {
     const saved = getProgress(chapterId);
@@ -128,6 +143,15 @@ export default function StudyLoop({
     });
   };
 
+  const NEXT_STAGE: Record<Stage, Stage | "completed_round"> = {
+    flashcards: "fast_review",
+    fast_review: "matching",
+    matching: "written",
+    written: "sentence_fill",
+    sentence_fill: "completed_round",
+    completed: "completed",
+  };
+
   // ---------------------------------------------------------------------------
   // Zebranie błędów z etapu + przejście do następnego
   // ---------------------------------------------------------------------------
@@ -138,15 +162,12 @@ export default function StudyLoop({
 
     setGlobalErrorIds(updatedErrors);
 
-    const nextStageIndex = stageIndex + 1;
+    const next = NEXT_STAGE[stage];
 
-    if (nextStageIndex < STAGES.length) {
+    if (next !== "completed_round" && next !== "completed") {
       // Kolejny etap w ramach tej samej rundy
-      const nextStage = STAGES[nextStageIndex];
-
-      setStage(nextStage);
-      // Zapisujemy stan (z tym samym usedCount, ale nowym etapem)
-      persistProgress(usedCount, nextStage);
+      setStage(next);
+      persistProgress(usedCount, next);
     } else {
       // Koniec wszystkich etapów dla tej rundy
       const remaining = allWords.slice(usedCount + currentGroup.length); // słowa jeszcze nigdy nie użyte
@@ -256,7 +277,8 @@ export default function StudyLoop({
             size="lg"
             onClick={handleResume}
           >
-            Kontynuuj 🚀 {globalProgress}%
+            Kontynuuj 🚀 {resumeProgress}%
+
           </Button>
           <Button
             className="w-full h-14 font-bold uppercase tracking-widest rounded-2xl"

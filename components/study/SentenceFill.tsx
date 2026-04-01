@@ -6,10 +6,11 @@ import { Card, CardBody } from '@heroui/card'
 import { Button } from '@heroui/button'
 import { Input } from '@heroui/input'
 import { motion, AnimatePresence } from 'framer-motion'
+import { GameButton } from '@/components/ui/GameButton'
 
 import { audioService } from '@/lib/audio'
 import { Word } from '@/types'
-import { WordImage } from '@/components/WordImage'
+import { WordImage } from '@/components/ui/WordImage'
 
 const removeDiacritics = (str: string) =>
   str
@@ -559,14 +560,12 @@ export default function SentenceFill({ words, onComplete }: Props) {
                 ))}
               </div>
 
-              <Button
-                className="font-black uppercase tracking-[0.2em] w-full rounded-2xl h-12"
+              <GameButton
                 color="danger"
-                size="lg"
                 variant="flat"
                 onClick={() => setShowHint(false)}>
                 Zamknij ❌
-              </Button>
+              </GameButton>
             </div>
           </motion.div>
         )}

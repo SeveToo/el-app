@@ -5,8 +5,8 @@ import { motion } from 'framer-motion'
 
 import { audioService } from '@/lib/audio'
 import { Word } from '@/types'
-import { WordImage } from '@/components/WordImage'
-import { StudyHeader } from '@/components/StudyHeader'
+import { WordImage } from '@/components/ui/WordImage'
+import { StudyHeader } from './StudyHeader'
 
 interface Props {
   words: Word[]

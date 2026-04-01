@@ -11,8 +11,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 import NextLink from "next/link";
 
-import { ThemeSwitch } from "@/components/theme-switch";
-import { AppLogo } from "@/components/AppLogo";
+import { ThemeSwitch } from "./theme-switch";
+import { AppLogo } from "./AppLogo";
 
 const NavbarContentWrapper = () => {
   const router = useRouter();

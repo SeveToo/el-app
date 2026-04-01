@@ -5,54 +5,11 @@ import { Suspense, useEffect, useState } from "react";
 import { Tabs, Tab } from "@heroui/tabs";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import ChapterCard from "@/components/ChapterCard";
-import { AdBanner } from "@/components/AdBanner";
+import ChapterCard from "@/components/ui/ChapterCard";
+import { AdBanner } from "@/components/layout/AdBanner";
 import { getAllProgress, calcPercent } from "@/lib/progress";
+import { LESSONS } from "@/config/lessons";
 
-const CHAPTERS = [
-  {
-    id: "action_verbs",
-    title: "Action Verbs",
-    subject: "english",
-    subtitle: "Czasowniki czynnościowe",
-  },
-  {
-    id: "jobs",
-    title: "Jobs & Professions",
-    subject: "english",
-    subtitle: "Zawody i profesje",
-  },
-  {
-    id: "kitchen_tools",
-    title: "Kitchen Tools",
-    subject: "english",
-    subtitle: "Przybory kuchenne",
-  },
-  {
-    id: "prepositions",
-    title: "Prepositions of Place",
-    subject: "english",
-    subtitle: "Przyimki miejsca",
-  },
-  {
-    id: "weather",
-    title: "Weather",
-    subject: "english",
-    subtitle: "Pogoda",
-  },
-  {
-    id: "articles",
-    title: "A, An, The & At",
-    subject: "english",
-    subtitle: "Przedimki w praktyce",
-  },
-  {
-    id: "final_test",
-    title: "Final Test 🏆",
-    subject: "english",
-    subtitle: "Sprawdź swoje umiejętności",
-  },
-];
 
 function HomeContent() {
   const router = useRouter();
@@ -72,7 +29,7 @@ function HomeContent() {
     setProgressMap(pct);
   }, []);
 
-  const filteredChapters = CHAPTERS.filter((c) => c.subject === subjectParam);
+  const filteredChapters = LESSONS.filter((c) => c.subject === subjectParam);
 
   const handleSelectionChange = (key: React.Key) => {
     router.push(`/?subject=${key}`);

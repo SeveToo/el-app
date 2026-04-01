@@ -1,15 +1,17 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Button } from '@heroui/button'
+import React, { useState, useRef, useEffect } from 'react'
 import { Card, CardBody } from '@heroui/card'
 import { Input } from '@heroui/input'
 import { motion, AnimatePresence } from 'framer-motion'
 
+import { GameButton } from '@/components/ui/GameButton'
+import { StatusBadge } from '@/components/ui/StatusBadge'
+import { RepeatMode } from './RepeatMode'
 import { audioService } from '@/lib/audio'
 import { Word } from '@/types'
-import { WordImage } from '@/components/WordImage'
-import { StudyHeader } from '@/components/StudyHeader'
+import { WordImage } from '@/components/ui/WordImage'
+import { StudyHeader } from '../StudyHeader'
 
 interface Props {
   words: Word[]
@@ -17,8 +19,10 @@ interface Props {
 }
 
 const REPEAT_COUNT = 3
+const INPUT_TEXT_CLASS = 'text-xl font-black uppercase tracking-widest'
 
 export default function WrittenTest({ words, onComplete }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [inputValue, setInputValue] = useState('')
   const [status, setStatus] = useState<'idle' | 'success' | 'wrong'>(
@@ -35,6 +39,11 @@ export default function WrittenTest({ words, onComplete }: Props) {
   >('idle')
 
   const currentWord = words[currentIndex]
+
+  // Auto-focus Input
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [currentIndex, repeatMode, repeatLeft, status])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -150,18 +159,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
                   image={currentWord.image}
                 />
 
-                {status !== 'idle' && (
-                  <motion.div
-                    animate={{ opacity: 1, scale: 1 }}
-                    className={`absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-white text-xl shadow-lg z-20 ${
-                      status === 'success'
-                        ? 'bg-success'
-                        : 'bg-danger'
-                    }`}
-                    initial={{ opacity: 0, scale: 0 }}>
-                    {status === 'success' ? '✓' : '✗'}
-                  </motion.div>
-                )}
+                <StatusBadge status={status} />
               </div>
 
               <div className="text-center space-y-1">
@@ -175,112 +173,53 @@ export default function WrittenTest({ words, onComplete }: Props) {
                 </p>
               </div>
 
-              {!repeatMode ? (
-                <form
-                  className="w-full space-y-4"
-                  onSubmit={handleSubmit}>
-                  <Input
-                    autoComplete="off"
-                    classNames={{
-                      input:
-                        'text-center text-xl font-black uppercase tracking-widest',
-                      inputWrapper: 'h-16 border-2',
-                    }}
-                    color={
-                      status === 'success'
-                        ? 'success'
-                        : status === 'wrong'
-                          ? 'danger'
-                          : 'default'
-                    }
-                    isDisabled={status === 'success'}
-                    placeholder="Wpisz słówko..."
-                    radius="lg"
-                    size="lg"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                  />
-                  <Button
-                    className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-lg border-b-4 border-success-600 active:border-b-0 active:translate-y-1 transition-all"
-                    color="success"
-                    isDisabled={status === 'success'}
-                    size="lg"
-                    type="submit">
-                    SPRAWDŹ! 🚀
-                  </Button>
-                </form>
-              ) : (
-                <motion.div
-                  animate={{ opacity: 1, y: 0 }}
-                  className="w-full space-y-4"
-                  initial={{ opacity: 0, y: 10 }}>
-                  <div className="bg-danger/10 border-2 border-danger/20 rounded-[2rem] p-4 text-center relative">
-                    <p className="text-[10px] text-danger font-black uppercase tracking-[0.2em] mb-1">
-                      Poprawna odpowiedź:
-                    </p>
-                    <p className="text-3xl font-black text-danger uppercase tracking-widest">
-                      {currentWord.en}
-                    </p>
-                    <Button
-                      isIconOnly
-                      className="absolute top-2 right-2 text-danger"
-                      size="sm"
-                      variant="light"
-                      onClick={() =>
-                        audioService.speak(currentWord.en)
-                      }>
-                      🔊
-                    </Button>
-                  </div>
-
-                  <div className="flex gap-1.5 justify-center">
-                    {Array.from({ length: REPEAT_COUNT }).map(
-                      (_, i) => (
-                        <div
-                          key={i}
-                          className={`h-2 w-8 rounded-full transition-all duration-300 ${
-                            i < REPEAT_COUNT - repeatLeft
-                              ? 'bg-success shadow-[0_0_10px_rgba(34,197,94,0.5)]'
-                              : 'bg-default-200'
-                          }`}
-                        />
-                      )
-                    )}
-                  </div>
-
-                  <form
-                    className="space-y-4"
-                    onSubmit={handleRepeatSubmit}>
+              <form
+                className="w-full space-y-4"
+                onSubmit={repeatMode ? handleRepeatSubmit : handleSubmit}>
+                {!repeatMode ? (
+                  <>
                     <Input
+                      ref={inputRef}
+                      autoFocus
                       autoComplete="off"
                       classNames={{
-                        input:
-                          'text-center text-xl font-black uppercase tracking-widest placeholder:opacity-20',
+                        input: `text-center ${INPUT_TEXT_CLASS}`,
                         inputWrapper: 'h-16 border-2',
                       }}
                       color={
-                        repeatStatus === 'ok'
+                        status === 'success'
                           ? 'success'
-                          : repeatStatus === 'bad'
+                          : status === 'wrong'
                             ? 'danger'
                             : 'default'
                       }
-                      placeholder={currentWord.en}
+                      isDisabled={status === 'success'}
+                      placeholder="Wpisz słówko..."
                       radius="lg"
                       size="lg"
-                      value={repeatInput}
-                      onChange={(e) => setRepeatInput(e.target.value)}
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
                     />
-                    <Button
-                      className="w-full h-16 text-lg font-black uppercase tracking-widest rounded-2xl shadow-xl border-b-4 border-danger-600 active:border-b-0 active:translate-y-1 transition-all"
-                      color="danger"
-                      size="lg"
+                    <GameButton
+                      color="success"
+                      isDisabled={status === 'success'}
                       type="submit">
-                      PRZEPISZ ({repeatLeft}×) ✍️
-                    </Button>
-                  </form>
-                </motion.div>
-              )}
+                      SPRAWDŹ! 🚀
+                    </GameButton>
+                  </>
+                ) : (
+                  <RepeatMode
+                    currentWord={currentWord}
+                    inputTextClass={INPUT_TEXT_CLASS}
+                    repeatInput={repeatInput}
+                    repeatLeft={repeatLeft}
+                    repeatStatus={repeatStatus}
+                    setRepeatInput={setRepeatInput}
+                    totalRepeatCount={REPEAT_COUNT}
+                    onRepeatSubmit={handleRepeatSubmit}
+                  />
+                )}
+              </form>
             </CardBody>
           </Card>
         </motion.div>
@@ -288,4 +227,3 @@ export default function WrittenTest({ words, onComplete }: Props) {
     </div>
   )
 }
-

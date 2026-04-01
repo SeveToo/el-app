@@ -13,3 +13,21 @@ export interface Word {
   image: string;
   status?: number;
 }
+
+export interface Lesson {
+  id: string;
+  title: string;
+  subject: string;
+  subtitle: string;
+  type?: "standard" | "articles";
+}
+
+export interface Question {
+  id: string;
+  sentence: string;
+  correct: string;
+  explanation: string;
+  pl: string;
+}
+
+

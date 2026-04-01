@@ -1,4 +1,12 @@
-// lib/utils.ts
+import { clsx, type ClassValue } from "clsx";
+
+/**
+ * Merges class names safely using clsx.
+ */
+export function cn(...inputs: ClassValue[]) {
+  return clsx(inputs);
+}
+
 export function prefixPath(src: string): string {
   if (!src) return src;
 

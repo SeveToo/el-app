@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect } from 'react'
 import { Button } from '@heroui/button'
+import { GameButton } from '@/components/ui/GameButton'
 import { Card, CardBody } from '@heroui/card'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { audioService } from '@/lib/audio'
 import { Word } from '@/types'
-import { WordImage } from '@/components/WordImage'
-import { StudyHeader } from '@/components/StudyHeader'
+import { WordImage } from '@/components/ui/WordImage'
+import { StudyHeader } from './StudyHeader'
 
 interface Props {
   words: Word[]
@@ -97,13 +98,11 @@ export default function FastReview({ words, onComplete }: Props) {
       </div>
 
       <div className="flex gap-4 w-full mt-2 px-2">
-        <Button
-          className="w-full h-16 sm:h-20 text-lg sm:text-xl font-black uppercase tracking-widest rounded-3xl shadow-xl border-b-4 sm:border-b-8 border-primary hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-150"
+        <GameButton
           color="primary"
-          variant="shadow"
           onClick={handleNext}>
           DALEJ
-        </Button>
+        </GameButton>
       </div>
     </div>
   )

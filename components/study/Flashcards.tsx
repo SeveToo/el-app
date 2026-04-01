@@ -6,8 +6,9 @@ import { Button } from '@heroui/button'
 import { motion, AnimatePresence } from 'framer-motion'
 import { audioService } from '@/lib/audio'
 import { Word } from '@/types'
-import { WordImage } from '@/components/WordImage'
-import { StudyHeader } from '@/components/StudyHeader'
+import { WordImage } from '@/components/ui/WordImage'
+import { StudyHeader } from './StudyHeader'
+import { GameButton } from '@/components/ui/GameButton'
 
 interface Props {
   words: Word[]
@@ -164,8 +165,8 @@ export default function Flashcards({ words, onComplete }: Props) {
 
       {/* Buttons Section */}
       <div className="flex gap-4 w-full max-w-md px-2 mt-4">
-        <Button
-          className="flex-1 h-16 sm:h-20 text-lg sm:text-xl font-black uppercase tracking-widest rounded-3xl shadow-lg border-b-4 sm:border-b-8 border-danger hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-150"
+        <GameButton
+          className="flex-1 h-16 sm:h-20 text-lg sm:text-xl"
           color="danger"
           variant="flat"
           onClick={(e) => {
@@ -173,9 +174,9 @@ export default function Flashcards({ words, onComplete }: Props) {
             handleNext(false)
           }}>
           NIE ZNAM
-        </Button>
-        <Button
-          className="flex-1 h-16 sm:h-20 text-lg sm:text-xl font-black uppercase tracking-widest rounded-3xl shadow-xl border-b-4 sm:border-b-8 border-success hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-150"
+        </GameButton>
+        <GameButton
+          className="flex-1 h-16 sm:h-20 text-lg sm:text-xl"
           color="success"
           variant="shadow"
           onClick={(e) => {
@@ -183,7 +184,7 @@ export default function Flashcards({ words, onComplete }: Props) {
             handleNext(true)
           }}>
           ZNAM
-        </Button>
+        </GameButton>
       </div>
 
       {/* eslint-disable-next-line react/no-unknown-property */}
@@ -204,4 +205,3 @@ export default function Flashcards({ words, onComplete }: Props) {
     </div>
   )
 }
-

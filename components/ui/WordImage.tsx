@@ -58,8 +58,8 @@ export const WordImage: React.FC<WordImageProps> = ({
       className={`w-full h-full relative overflow-hidden bg-white ${containerClassName}`}
     >
       <div
-        className={`flex w-full h-full items-center justify-center ${
-          isMulti ? "grid grid-cols-2 gap-0.5" : ""
+        className={`w-full h-full ${
+          isMulti ? "grid grid-cols-2 gap-0.5 items-center" : "flex items-center justify-center"
         }`}
       >
         {imageSources.map((src, idx) => (

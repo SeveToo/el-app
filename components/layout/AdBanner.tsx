@@ -1,18 +1,8 @@
-"use client";
-
 import React from "react";
 import { Link } from "@heroui/link";
+import Image from "next/image";
 
 export const AdBanner = () => {
-  // Dynamiczna ścieżka dla GitHub Pages vs Localhost
-  const getPath = (p: string) => {
-    const isGH =
-      typeof window !== "undefined" &&
-      window.location.hostname.includes("github.io");
-
-    return isGH ? `/el-app${p}` : p;
-  };
-
   return (
     <div className="w-full flex justify-center px-0 font-sans my-0">
       <div className="w-full max-w-xl aspect-[843/245] overflow-hidden group cursor-pointer active:scale-95 transition-all duration-300">
@@ -21,13 +11,17 @@ export const AdBanner = () => {
           href="https://hypekorepetycje.pl"
           target="_blank"
         >
-          <img
+          <Image
+            priority
             alt="HypeKorepetycje"
             className="w-full h-full object-contain"
-            src={getPath("/ads/ad.webp")}
+            height={245}
+            src="/ads/ad.webp"
+            width={843}
           />
         </Link>
       </div>
     </div>
   );
 };
+
