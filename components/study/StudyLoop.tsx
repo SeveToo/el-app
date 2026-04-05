@@ -4,15 +4,18 @@ import React from "react";
 import { Progress } from "@heroui/progress";
 import { Button } from "@heroui/button";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import Flashcards from "./Flashcards";
 import FastReview from "./FastReview";
 import MatchingGame from "./MatchingGame";
 import WrittenTest from "./WrittenTest";
 import SentenceFill from "./SentenceFill";
+import { GameButton } from "@/components/ui/GameButton";
 
 import { Word } from "@/types";
-import { useStudyManager, STAGES, Stage } from "@/hooks/useStudyManager";
+import { useStudyManager } from "@/hooks/useStudyManager";
+import { STAGES, Stage } from "@/lib/progress";
 
 export default function StudyLoop({
   words,
@@ -39,34 +42,64 @@ export default function StudyLoop({
 
   if (isInitializing && hasSavedProgress) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-8 text-center px-4 max-w-md mx-auto">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center justify-center min-h-[60vh] gap-12 text-center px-4 max-w-lg mx-auto"
+      >
         <div className="space-y-2">
-          <h2 className="text-4xl font-black text-primary uppercase tracking-tighter">
-            Witaj ponownie! 👋
+          <h2 className="text-4xl sm:text-5xl font-black text-foreground uppercase tracking-tighter leading-tight">
+            Wznów <span className="text-primary italic">naukę</span>
           </h2>
-          <p className="text-default-500 font-medium">
-            Masz niedokończoną lekcję w tej sekcji. Co chcesz zrobić?
-          </p>
         </div>
-        <div className="flex flex-col gap-3 w-full">
-          <Button
-            className="w-full h-16 text-xl font-black uppercase tracking-widest rounded-2xl shadow-xl"
-            color="primary"
-            size="lg"
-            onClick={handleResume}
-          >
-            Kontynuuj 🚀 {resumeProgress}%
-          </Button>
-          <Button
-            className="w-full h-14 font-bold uppercase tracking-widest rounded-2xl"
-            size="lg"
-            variant="ghost"
-            onClick={handleRestart}
-          >
-            Zacznij od nowa 🔄
-          </Button>
+
+        <div className="flex flex-col items-center gap-10 w-full">
+          {/* Progress Indicator */}
+          <div className="relative flex items-center justify-center">
+            <svg className="w-40 h-40 -rotate-90">
+              <circle
+                cx="80" cy="80" r="74"
+                fill="none"
+                className="stroke-default-100"
+                strokeWidth="12"
+              />
+              <motion.circle
+                cx="80" cy="80" r="74"
+                fill="none"
+                stroke="currentColor"
+                className="text-primary"
+                strokeWidth="12"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: resumeProgress / 100 }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-4xl font-black text-foreground">{resumeProgress}%</span>
+              <span className="text-[10px] font-black uppercase text-default-400 tracking-widest">ukończono</span>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 w-full max-w-xs">
+            <GameButton
+              color="primary"
+              onClick={handleResume}
+            >
+              KONTYNUUJ
+            </GameButton>
+            
+            <GameButton
+              color="primary"
+              variant="bordered"
+              className="h-14 text-sm opacity-60 hover:opacity-100 border-none border-b-0 shadow-none hover:bg-default-100"
+              onClick={handleRestart}
+            >
+              ZACZNIJ OD NOWA
+            </GameButton>
+          </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -112,7 +145,7 @@ export default function StudyLoop({
 
         {/* Pasek etapów (wybór etapu) */}
         <div className="flex gap-1.5 w-full mt-2">
-          {STAGES.map((s, idx) => {
+          {STAGES.map((s: Stage, idx: number) => {
             const stageNames = ["Fiszki", "Oceń", "Gra", "Pisanie", "Zdania"];
             const isActive = stage === s;
             const isCompleted = (stageIndex as number) > idx;

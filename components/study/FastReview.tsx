@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Card, CardBody } from "@heroui/card";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { StudyHeader } from "./StudyHeader";
-
 import { GameButton } from "@/components/ui/GameButton";
-import { audioService } from "@/lib/audio";
 import { Word } from "@/types";
 import { WordImage } from "@/components/ui/WordImage";
+import { useFastReview } from "@/hooks/useFastReview";
 
 interface Props {
   words: Word[];
@@ -17,28 +16,10 @@ interface Props {
 }
 
 export default function FastReview({ words, onComplete }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [errorIds] = useState<string[]>([]);
-
-  const currentWord = words[currentIndex];
-
-  // Pronounce English word when it appears
-  useEffect(() => {
-    if (currentWord) {
-      audioService.speak(currentWord.en);
-      if (currentWord.en_example) {
-        audioService.speak(currentWord.en_example, { cancel: false });
-      }
-    }
-  }, [currentIndex, currentWord]);
-
-  const handleNext = () => {
-    if (currentIndex < words.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      onComplete(errorIds);
-    }
-  };
+  const {
+    state: { currentIndex, currentWord },
+    actions: { handleNext },
+  } = useFastReview({ words, onComplete });
 
   if (!currentWord) return null;
 
@@ -51,7 +32,6 @@ export default function FastReview({ words, onComplete }: Props) {
         total={words.length}
       />
 
-      {/* Card Container - Fixed height to prevent jumping */}
       <div className="w-full h-[480px] sm:h-[550px] relative px-2">
         <AnimatePresence mode="wait">
           <motion.div

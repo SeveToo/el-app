@@ -1,10 +1,28 @@
+export type Stage =
+  | "flashcards"
+  | "fast_review"
+  | "matching"
+  | "written"
+  | "sentence_fill"
+  | "completed";
+
+export const STAGES: Stage[] = [
+  "flashcards",
+  "fast_review",
+  "matching",
+  "written",
+  "sentence_fill",
+];
+
+export const WORDS_PER_LOOP = 10;
+
 export type ChapterProgress = {
   learnedCount: number;
   totalWords: number;
   completedAt?: string;
   // State for resuming
   roundIndex?: number;
-  stage?: string;
+  stage?: Stage;
   usedCount?: number;
   globalErrorIds?: string[];
   currentGroupIndices?: number[];
@@ -43,6 +61,13 @@ export function saveProgress(chapterId: string, progress: ChapterProgress) {
 
 export function calcPercent(p: ChapterProgress | null): number {
   if (!p || p.totalWords === 0) return 0;
+  if (p.completedAt) return 100;
 
-  return Math.round((p.learnedCount / p.totalWords) * 100);
+  // Projection logic
+  const sIndex = STAGES.indexOf(p.stage || "flashcards");
+  const groupSize = p.currentGroupIndices?.length ?? WORDS_PER_LOOP;
+  const added = (sIndex / STAGES.length) * groupSize;
+  const rawLearned = (p.usedCount ?? p.learnedCount) + added;
+
+  return Math.min(Math.round((rawLearned / p.totalWords) * 100), 100);
 }

@@ -5,25 +5,8 @@ import confetti from "canvas-confetti";
 
 import { Word } from "@/types";
 import { audioService } from "@/lib/audio";
-import { getProgress, saveProgress } from "@/lib/progress";
+import { getProgress, saveProgress, Stage, STAGES, WORDS_PER_LOOP, calcPercent } from "@/lib/progress";
 
-export type Stage =
-  | "flashcards"
-  | "fast_review"
-  | "matching"
-  | "written"
-  | "sentence_fill"
-  | "completed";
-
-export const STAGES: Stage[] = [
-  "flashcards",
-  "fast_review",
-  "matching",
-  "written",
-  "sentence_fill",
-];
-
-const WORDS_PER_LOOP = 10;
 
 const NEXT_STAGE: Record<Stage, Stage | "completed_round"> = {
   flashcards: "fast_review",
@@ -90,13 +73,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
     if (saved && !saved.completedAt && saved.usedCount !== undefined) {
       setHasSavedProgress(true);
 
-      const sIndex = STAGES.indexOf((saved.stage as Stage) || "flashcards");
-      const groupSize = saved.currentGroupIndices?.length ?? WORDS_PER_LOOP;
-      const added = (sIndex / STAGES.length) * groupSize;
-      const pct = Math.round(
-        (Math.min(saved.usedCount + added, allWords.length) / allWords.length) * 100,
-      );
-
+      const pct = calcPercent(saved);
       setResumeProgress(pct);
     } else {
       setCurrentGroup(allWords.slice(0, WORDS_PER_LOOP));
