@@ -14,15 +14,50 @@ export const removeDiacritics = (str: string) =>
 export const getSentenceParts = (word: { en_example: string; en: string }) => {
   let example = word.en_example || "";
 
+  // 1. Try to use manual brackets if they exist
+  if (example.includes("[")) {
+    return example.split(/\[(.*?)\]/g);
+  }
+
+  // 2. Try to match the keyword or its variants (case-insensitive)
+  const variants = word.en.split("/").map((v) => v.trim());
+  const sortedVariants = [...variants].sort((a, b) => b.length - a.length);
+
+  // Try to match the prefix (first 4 chars) to catch plural forms like Strawberry -> strawberries
+  const findAndWrap = (text: string) => {
+    for (const v of sortedVariants) {
+      // Direct match
+      const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const regex = new RegExp(`\\b${escaped}\\w*\\b`, "gi");
+      if (regex.test(text)) {
+        return text.replace(regex, "[$&]");
+      }
+
+      // Root match (at least 4 chars)
+      if (v.length >= 4) {
+        const root = v.substring(0, v.length - 1); // remove last char to catch y -> i etc.
+        const rootEscaped = root.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const rootRegex = new RegExp(`\\b${rootEscaped}\\w+\\b`, "gi");
+        if (rootRegex.test(text)) {
+          return text.replace(rootRegex, "[$&]");
+        }
+      }
+    }
+    return text;
+  };
+
+  example = findAndWrap(example);
+
+  // 3. Absolute Fallback: If still no brackets, wrap the longest word (min 4 chars)
   if (!example.includes("[")) {
-    const variants = word.en.split("/").map((v) => v.trim());
-    const sortedVariants = [...variants].sort((a, b) => b.length - a.length);
-    const escapedVariants = sortedVariants.map((v) =>
-      v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+    const words = example.split(/\s+/);
+    const longest = words.reduce(
+      (a, b) => (b.replace(/[^a-zA-Z]/g, "").length > a.replace(/[^a-zA-Z]/g, "").length ? b : a),
+      ""
     );
-    const pattern = `(${escapedVariants.join("|")})`;
-    const regex = new RegExp(pattern, "gi");
-    example = example.replace(regex, "[$1]");
+    if (longest.length >= 3) {
+      example = example.replace(longest, `[${longest}]`);
+    }
   }
 
   return example.split(/\[(.*?)\]/g);
