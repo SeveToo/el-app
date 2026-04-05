@@ -15,7 +15,7 @@ import { LESSONS } from "@/config/lessons";
 
 // ─── Nexus Tree Components ──────────────────────────────────────────────────
 
-function NexusShape({ className, fill, stroke, size = 64 }: { className?: string, fill?: string, stroke?: string, size?: number }) {
+function NexusShape({ className, stroke, size = 64 }: { className?: string, stroke?: string, size?: number }) {
   return (
     <svg 
       width={size} height={size} viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -23,9 +23,9 @@ function NexusShape({ className, fill, stroke, size = 64 }: { className?: string
     >
       <path 
         d="M199.469 44.9707C226.799 2.74315 288.585 2.74316 315.916 44.9707C326.631 61.5258 346.46 69.7391 365.743 65.6094C414.928 55.0759 458.617 98.7645 448.083 147.949C443.953 167.232 452.167 187.061 468.722 197.776C510.949 225.107 510.949 286.893 468.722 314.224C452.167 324.939 443.953 344.768 448.083 364.051C458.617 413.236 414.928 456.924 365.743 446.391C346.46 442.261 326.631 450.474 315.916 467.029C288.585 509.257 226.799 509.257 199.469 467.029C188.754 450.474 168.924 442.261 149.642 446.391C100.457 456.924 56.7683 413.236 67.3018 364.051C71.4315 344.768 63.2182 324.939 46.6631 314.224C4.43554 286.893 4.43554 225.107 46.6631 197.776C63.2182 187.061 71.4315 167.232 67.3018 147.949C56.7683 98.7645 100.457 55.0759 149.642 65.6094C168.924 69.7391 188.754 61.5258 199.469 44.9707Z" 
-        fill={fill || "#252422"} 
-        stroke={stroke || "#EB5E28"} 
-        strokeWidth="21.8507"
+        fill="currentColor" 
+        stroke={stroke || "none"} 
+        strokeWidth="20"
       />
     </svg>
   );
@@ -45,10 +45,13 @@ function NexusNode({
   const isTest = lesson.type === "test";
   const isFinal = lesson.type === "final";
   const isCompleted = progress === 100;
+  const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
       whileHover={{ scale: 1.1, translateY: -5 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className="flex flex-col items-center gap-2"
     >
       <Link href={isTest || isFinal ? "#" : `/chapters/${lesson.id}`}>
@@ -65,12 +68,25 @@ function NexusNode({
           }}
         >
           {(isTest || isFinal) && (
-            <NexusShape 
-              size={isFinal ? 80 : 64}
-              className="absolute inset-0"
-              fill="#252422"
-              stroke="#EB5E28"
-            />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div
+                animate={{ rotate: hovered ? 360 : 0 }}
+                transition={{ 
+                  rotate: hovered 
+                    ? { duration: 8, ease: "linear", repeat: Infinity } 
+                    : { duration: 0.5, ease: "easeOut" }
+                }}
+              >
+                <NexusShape 
+                  size={isFinal ? 80 : 64}
+                  className={isFinal 
+                    ? "text-[#ffe9c1] dark:text-[#2d1625]" 
+                    : "text-[#dbe2ff] dark:text-[#101921]"
+                  }
+                  stroke="none"
+                />
+              </motion.div>
+            </div>
           )}
 
           <div className="relative z-10">
@@ -111,7 +127,7 @@ function NexusNode({
         `}>
           {lesson.title}
         </div>
-        {!isFinal && !isTest && (
+        {!isFinal && !isTest && ( progress > 0 &&
           <div className="text-[9px] text-default-500 font-bold mt-0.5">
             {progress}% ukończone
           </div>
@@ -179,14 +195,12 @@ function HomeContent() {
     setProgressMap(pct);
   }, []);
 
-  const filteredChapters = LESSONS.filter((c) => c.subject === subjectParam);
-
   const handleSelectionChange = (key: React.Key) => {
     router.push(`/?subject=${key}`);
   };
 
   return (
-    <section className="py-4 md:py-8">
+    <section className="py-4 md:py-8 pb-32">
       <div className="container mx-auto px-4 max-w-4xl flex flex-col gap-8">
         {/* Banner na górze */}
         <AdBanner />
@@ -265,22 +279,6 @@ function HomeContent() {
               { id: "final_other", type: "final", title: "Egzamin Końcowy", icon: "🏆" },
             ]}
           />
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold opacity-30 uppercase tracking-widest pl-2">Wszystkie Lekcje</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-12">
-            {filteredChapters.map((c) => (
-              <ChapterCard
-                key={c.id}
-                completed={progressMap[c.id] === 100}
-                href={`/chapters/${c.id}`}
-                progress={progressMap[c.id] ?? 0}
-                subtitle={c.subtitle}
-                title={c.title}
-              />
-            ))}
-          </div>
         </div>
       </div>
     </section>
