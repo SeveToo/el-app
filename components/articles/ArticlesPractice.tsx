@@ -50,7 +50,10 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
     const newScore = Math.max(0, Math.min(5, currentScore + delta));
 
     savedScores[qId] = newScore;
-    localStorage.setItem(STORAGE_KEYS.ARTICLE_SCORES, JSON.stringify(savedScores));
+    localStorage.setItem(
+      STORAGE_KEYS.ARTICLE_SCORES,
+      JSON.stringify(savedScores),
+    );
   };
 
   const currentQ = localQuestions[currentIndex];

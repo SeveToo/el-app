@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+
 import { Word } from "@/types";
 import { audioService } from "@/lib/audio";
 
@@ -29,6 +30,7 @@ export const getSentenceParts = (word: { en_example: string; en: string }) => {
       // Direct match
       const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const regex = new RegExp(`\\b${escaped}\\w*\\b`, "gi");
+
       if (regex.test(text)) {
         return text.replace(regex, "[$&]");
       }
@@ -38,11 +40,13 @@ export const getSentenceParts = (word: { en_example: string; en: string }) => {
         const root = v.substring(0, v.length - 1); // remove last char to catch y -> i etc.
         const rootEscaped = root.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const rootRegex = new RegExp(`\\b${rootEscaped}\\w+\\b`, "gi");
+
         if (rootRegex.test(text)) {
           return text.replace(rootRegex, "[$&]");
         }
       }
     }
+
     return text;
   };
 
@@ -52,9 +56,13 @@ export const getSentenceParts = (word: { en_example: string; en: string }) => {
   if (!example.includes("[")) {
     const words = example.split(/\s+/);
     const longest = words.reduce(
-      (a, b) => (b.replace(/[^a-zA-Z]/g, "").length > a.replace(/[^a-zA-Z]/g, "").length ? b : a),
-      ""
+      (a, b) =>
+        b.replace(/[^a-zA-Z]/g, "").length > a.replace(/[^a-zA-Z]/g, "").length
+          ? b
+          : a,
+      "",
     );
+
     if (longest.length >= 3) {
       example = example.replace(longest, `[${longest}]`);
     }
@@ -93,9 +101,11 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const vv = (window as any).visualViewport;
+
     if (!vv) return;
 
     const handleViewport = () => setVOffset(vv.offsetTop);
+
     vv.addEventListener("resize", handleViewport);
     vv.addEventListener("scroll", handleViewport);
     handleViewport();
@@ -111,6 +121,7 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
     setIsPlRevealed(false);
     if (!showHint) {
       const el = inputRefs.current[activeIndex]?.[0];
+
       if (el) {
         el.focus();
         setTimeout(() => {
@@ -151,12 +162,14 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
         const options = targets[i]
           .split("/")
           .map((opt) => opt.trim().toLowerCase());
+
         return options.includes(val);
       });
 
     if (isAllCorrect) {
       if (statuses[index] !== "success") {
         const newStatuses = [...statuses];
+
         newStatuses[index] = "success";
         setStatuses(newStatuses);
         audioService.playSuccess();
@@ -166,13 +179,17 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
       if (index < words.length - 1) {
         setActiveIndex(index + 1);
       } else {
-        const allSuccess = statuses.every((s, i) => i === index || s === "success");
+        const allSuccess = statuses.every(
+          (s, i) => i === index || s === "success",
+        );
+
         if (allSuccess) {
           setTimeout(() => onComplete(errorIds), 1000);
         }
       }
     } else {
       const newStatuses = [...statuses];
+
       newStatuses[index] = "wrong";
       setStatuses(newStatuses);
       audioService.playError();
@@ -181,6 +198,7 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
         ...wrongCount,
         [index]: (wrongCount[index] || 0) + 1,
       };
+
       setWrongCount(newWrongCount);
 
       if (!errorIds.includes(word.id)) {
@@ -194,7 +212,9 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
       setTimeout(() => {
         setStatuses((prev) => {
           const s = [...prev];
+
           s[index] = "idle";
+
           return s;
         });
       }, 1000);
@@ -204,6 +224,7 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
   const handleInputChange = (index: number, gapIdx: number, value: string) => {
     const newInputs = [...inputs];
     const sentenceInputs = [...(newInputs[index] || [])];
+
     sentenceInputs[gapIdx] = value;
     newInputs[index] = sentenceInputs;
     setInputs(newInputs);

@@ -3,8 +3,8 @@ import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
-import { FooterWrapper } from "@/components/layout/FooterWrapper";
 
+import { FooterWrapper } from "@/components/layout/FooterWrapper";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/layout/navbar";
@@ -50,7 +50,7 @@ export default function RootLayout({
             <main className="container mx-auto max-w-7xl pt-3 px-3 md:pt-8 md:px-6 flex-grow">
               {children}
             </main>
-            
+
             <FooterWrapper>
               <p className="text-default-500 text-sm">© 2026 EL APP</p>
             </FooterWrapper>

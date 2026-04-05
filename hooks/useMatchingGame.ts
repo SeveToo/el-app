@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import { Word } from "@/types";
 import { audioService } from "@/lib/audio";
 
@@ -16,7 +17,9 @@ export function useMatchingGame({ words, onComplete }: UseMatchingGameProps) {
   const [errorIds, setErrorIds] = useState<string[]>([]);
   const [shuffledWords, setShuffledWords] = useState<Word[]>([]);
   const [shuffledImages, setShuffledImages] = useState<Word[]>([]);
-  const [flashId, setFlashId] = useState<{ id: string; ok: boolean } | null>(null);
+  const [flashId, setFlashId] = useState<{ id: string; ok: boolean } | null>(
+    null,
+  );
 
   useEffect(() => {
     setShuffledWords([...words].sort(() => Math.random() - 0.5));
@@ -29,14 +32,17 @@ export function useMatchingGame({ words, onComplete }: UseMatchingGameProps) {
         setFlashId({ id: selectedWord, ok: true });
         audioService.playSuccess();
         const wordObj = words.find((w) => w.id === selectedWord);
+
         if (wordObj) audioService.speak(wordObj.en);
 
         setTimeout(() => {
           setMatchedIds((prev) => {
             const next = [...prev, selectedWord!];
+
             if (next.length === words.length) {
               setTimeout(() => onComplete(errorIds), 600);
             }
+
             return next;
           });
           setFlashId(null);

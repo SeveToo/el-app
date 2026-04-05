@@ -12,12 +12,14 @@ export const AdBanner = () => {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
+
     if (!card) return;
     const rect = card.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
     const dx = (e.clientX - cx) / (rect.width / 2);
     const dy = (e.clientY - cy) / (rect.height / 2);
+
     setTilt({ x: dy * -6, y: dx * 6 });
   };
 
@@ -29,7 +31,6 @@ export const AdBanner = () => {
 
   return (
     <div className="hidden sm:flex w-full justify-center px-4 my-2">
-
       {/* ── DESKTOP: full banner with rotating border ────────── */}
       <div
         className="hidden sm:block"
@@ -60,9 +61,6 @@ export const AdBanner = () => {
           {/* Card */}
           <div
             ref={cardRef}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={handleMouseMove}
             style={{
               position: "relative",
               borderRadius: "13px",
@@ -76,6 +74,9 @@ export const AdBanner = () => {
                 : "0 2px 10px rgba(0,0,0,0.07)",
               cursor: "pointer",
             }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
           >
             <a
               href="https://hypekorepetycje.pl"

@@ -4,10 +4,11 @@ import React from "react";
 import { AnimatePresence } from "framer-motion";
 
 import { StudyHeader } from "./StudyHeader";
+import { FlashcardItem } from "./flashcards/FlashcardItem";
+
 import { GameButton } from "@/components/ui/GameButton";
 import { Word } from "@/types";
 import { useFlashcards } from "@/hooks/useFlashcards";
-import { FlashcardItem } from "./flashcards/FlashcardItem";
 
 interface Props {
   words: Word[];
@@ -25,7 +26,8 @@ export default function Flashcards({ words, onComplete, onWordAction }: Props) {
     if (currentWord) onWordAction(currentWord.id);
   }, [currentIndex, currentWord, onWordAction]);
 
-  if (!currentWord) return <div className="text-center py-10 font-bold">Brak słówek...</div>;
+  if (!currentWord)
+    return <div className="text-center py-10 font-bold">Brak słówek...</div>;
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl mx-auto py-6 sm:py-10 relative overflow-hidden">

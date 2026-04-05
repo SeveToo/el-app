@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardBody } from "@heroui/card";
 import { Button } from "@heroui/button";
+
 import { WordImage } from "@/components/ui/WordImage";
 import { Word } from "@/types";
 import { audioService } from "@/lib/audio";
@@ -15,7 +16,12 @@ interface Props {
   direction: number;
 }
 
-export const FlashcardItem = ({ word, isFlipped, onClick, direction }: Props) => {
+export const FlashcardItem = ({
+  word,
+  isFlipped,
+  onClick,
+  direction,
+}: Props) => {
   return (
     <motion.div
       animate={{

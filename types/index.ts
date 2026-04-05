@@ -19,7 +19,7 @@ export interface Lesson {
   title: string;
   subject: string;
   subtitle: string;
-  type?: "standard" | "articles";
+  type?: "standard" | "articles" | "test" | "final";
 }
 
 export interface Question {

@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardBody } from "@heroui/card";
 import { Input } from "@heroui/input";
+
 import { Word } from "@/types";
 import { getSentenceParts } from "@/hooks/useSentenceFill";
 
@@ -15,7 +16,11 @@ interface Props {
   inputs: string[];
   onInputChange: (gapIdx: number, value: string) => void;
   onFocus: (gapIdx: number) => void;
-  onKeyDown: (e: React.KeyboardEvent, gapIdx: number, gapsCount: number) => void;
+  onKeyDown: (
+    e: React.KeyboardEvent,
+    gapIdx: number,
+    gapsCount: number,
+  ) => void;
   onClick: () => void;
   inputRefs: (HTMLInputElement | null)[];
 }
@@ -79,7 +84,9 @@ export const SentenceFillCard = ({
                     autoComplete="off"
                     classNames={{
                       input: `text-base sm:text-lg font-black uppercase text-center tracking-widest ${
-                        activeIndex === index ? "text-amber-600 dark:text-warning" : "text-default-400"
+                        activeIndex === index
+                          ? "text-amber-600 dark:text-warning"
+                          : "text-default-400"
                       }`,
                       inputWrapper: "border-b-2",
                     }}

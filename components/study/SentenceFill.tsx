@@ -2,11 +2,13 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Word } from "@/types";
-import { useSentenceFill, removeDiacritics } from "@/hooks/useSentenceFill";
+
 import { SentenceFillHeader } from "./sentence-fill/SentenceFillHeader";
 import { SentenceFillCard } from "./sentence-fill/SentenceFillCard";
 import { SentenceFillHint } from "./sentence-fill/SentenceFillHint";
+
+import { useSentenceFill, removeDiacritics } from "@/hooks/useSentenceFill";
+import { Word } from "@/types";
 
 interface Props {
   words: Word[];
@@ -14,7 +16,11 @@ interface Props {
   onWordAction: (wordId: string, customPoints?: number) => void;
 }
 
-export default function SentenceFill({ words, onComplete, onWordAction }: Props) {
+export default function SentenceFill({
+  words,
+  onComplete,
+  onWordAction,
+}: Props) {
   const router = useRouter();
   const {
     state: {
@@ -22,7 +28,6 @@ export default function SentenceFill({ words, onComplete, onWordAction }: Props)
       activeGapIndex,
       inputs,
       statuses,
-      errorIds,
       showHint,
       hintOptions,
       isPlRevealed,
@@ -57,7 +62,11 @@ export default function SentenceFill({ words, onComplete, onWordAction }: Props)
     const sentence = word.pl_example || word.pl;
     const baseWord = word.pl;
 
-    if (!sentence || !baseWord || sentence.toLowerCase() === baseWord.toLowerCase())
+    if (
+      !sentence ||
+      !baseWord ||
+      sentence.toLowerCase() === baseWord.toLowerCase()
+    )
       return sentence;
 
     const baseWords = baseWord.toLowerCase().split(/\s+/);
@@ -73,28 +82,51 @@ export default function SentenceFill({ words, onComplete, onWordAction }: Props)
 
       const isMatch = baseWords.some((bw) => {
         const bwClean = removeDiacritics(bw);
+
         if (bwClean.length <= 3) {
-          return partLower === bwClean || (partLower.startsWith(bwClean) && partLower.length - bwClean.length <= 2);
+          return (
+            partLower === bwClean ||
+            (partLower.startsWith(bwClean) &&
+              partLower.length - bwClean.length <= 2)
+          );
         }
         let root = bwClean;
+
         if (root.match(/(owac|awac|iwac|ywac)$/)) root = root.slice(0, -4);
         else if (root.match(/(ac|ec|ic|yc)$/)) root = root.slice(0, -2);
         const prefixLen = Math.min(root.length, 5);
         const prefix = root.substring(0, prefixLen);
-        return (partLower.startsWith(prefix) || partLower.includes(root)) && Math.abs(partLower.length - bwClean.length) <= 5;
+
+        return (
+          (partLower.startsWith(prefix) || partLower.includes(root)) &&
+          Math.abs(partLower.length - bwClean.length) <= 5
+        );
       });
 
       if (isMatch && !highlighted) {
         highlighted = true;
-        return <span key={i} className="text-amber-600 dark:text-warning-500 font-black">{part}</span>;
+
+        return (
+          <span
+            key={i}
+            className="text-amber-600 dark:text-warning-500 font-black"
+          >
+            {part}
+          </span>
+        );
       }
+
       return <React.Fragment key={i}>{part}</React.Fragment>;
     });
 
     return (
       <span className="inline-flex items-center flex-wrap justify-center gap-x-1.5">
         {rendered}
-        {!highlighted && <span className="text-amber-600 dark:text-warning font-black">({word.pl})</span>}
+        {!highlighted && (
+          <span className="text-amber-600 dark:text-warning font-black">
+            ({word.pl})
+          </span>
+        )}
       </span>
     );
   };
@@ -132,8 +164,12 @@ export default function SentenceFill({ words, onComplete, onWordAction }: Props)
               setActiveIndex(index);
               setActiveGapIndex(gapIdx);
             }}
-            onInputChange={(gapIdx, value) => handleInputChange(index, gapIdx, value)}
-            onKeyDown={(e, gapIdx, gapsCount) => handleKeyDown(e, index, gapIdx, gapsCount)}
+            onInputChange={(gapIdx, value) =>
+              handleInputChange(index, gapIdx, value)
+            }
+            onKeyDown={(e, gapIdx, gapsCount) =>
+              handleKeyDown(e, index, gapIdx, gapsCount)
+            }
           />
         ))}
       </div>

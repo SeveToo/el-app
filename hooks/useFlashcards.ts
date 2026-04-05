@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import { Word } from "@/types";
 import { audioService } from "@/lib/audio";
 
@@ -30,9 +31,8 @@ export function useFlashcards({ words, onComplete }: UseFlashcardsProps) {
     if (!currentWord) return;
 
     const wordId = currentWord.id;
-    const newErrorIds = !isKnown && !errorIds.includes(wordId) 
-      ? [...errorIds, wordId] 
-      : errorIds;
+    const newErrorIds =
+      !isKnown && !errorIds.includes(wordId) ? [...errorIds, wordId] : errorIds;
 
     if (!isKnown) {
       setErrorIds(newErrorIds);

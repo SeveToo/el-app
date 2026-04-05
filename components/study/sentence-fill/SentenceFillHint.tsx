@@ -3,7 +3,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardBody } from "@heroui/card";
-import { Button } from "@heroui/button";
+
 import { WordImage } from "@/components/ui/WordImage";
 import { GameButton } from "@/components/ui/GameButton";
 import { audioService } from "@/lib/audio";
@@ -16,7 +16,12 @@ interface Props {
   currentWord: Word;
 }
 
-export const SentenceFillHint = ({ show, onClose, options, currentWord }: Props) => {
+export const SentenceFillHint = ({
+  show,
+  onClose,
+  options,
+  currentWord,
+}: Props) => {
   return (
     <AnimatePresence>
       {show && (

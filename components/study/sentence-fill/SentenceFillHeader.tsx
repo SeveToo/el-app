@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@heroui/button";
+
 import { WordImage } from "@/components/ui/WordImage";
 import { Word } from "@/types";
 
@@ -62,7 +63,9 @@ export const SentenceFillHeader = ({
           <div className="flex items-center gap-4">
             <div className="flex flex-col text-right">
               <span className="opacity-50 leading-none">POSTĘP</span>
-              <span className="text-primary leading-none mt-1">{progress}%</span>
+              <span className="text-primary leading-none mt-1">
+                {progress}%
+              </span>
             </div>
             <Button
               isIconOnly

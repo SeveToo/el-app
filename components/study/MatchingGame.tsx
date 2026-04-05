@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 import { StudyHeader } from "./StudyHeader";
+
 import { WordImage } from "@/components/ui/WordImage";
 import { Word } from "@/types";
 import { useMatchingGame } from "@/hooks/useMatchingGame";
@@ -14,7 +15,11 @@ interface Props {
   onWordAction: (wordId: string, customPoints?: number) => void;
 }
 
-export default function MatchingGame({ words, onComplete, onWordAction }: Props) {
+export default function MatchingGame({
+  words,
+  onComplete,
+  onWordAction,
+}: Props) {
   const {
     state: {
       selectedWord,
@@ -79,7 +84,9 @@ export default function MatchingGame({ words, onComplete, onWordAction }: Props)
               key={word.id}
               layout
               className={`h-12 sm:h-16 px-2 sm:px-4 cursor-pointer rounded-2xl border-2 flex items-center justify-center font-black text-[0.7rem] sm:text-sm uppercase tracking-wider shadow-sm transition-all duration-200 whitespace-nowrap ${getWordStyle(word.id)}`}
-              onClick={() => !matchedIds.includes(word.id) && setSelectedWord(word.id)}
+              onClick={() =>
+                !matchedIds.includes(word.id) && setSelectedWord(word.id)
+              }
             >
               {word.en}
             </motion.button>
@@ -92,7 +99,9 @@ export default function MatchingGame({ words, onComplete, onWordAction }: Props)
               key={word.id}
               layout
               className={`aspect-square sm:aspect-auto sm:h-[140px] cursor-pointer rounded-2xl border-2 overflow-hidden shadow-sm transition-all duration-200 bg-white ${getImageStyle(word.id)}`}
-              onClick={() => !matchedIds.includes(word.id) && setSelectedImage(word.id)}
+              onClick={() =>
+                !matchedIds.includes(word.id) && setSelectedImage(word.id)
+              }
             >
               <WordImage
                 alt="match"
@@ -105,16 +114,6 @@ export default function MatchingGame({ words, onComplete, onWordAction }: Props)
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          20% { transform: translateX(-6px); }
-          40% { transform: translateX(6px); }
-          60% { transform: translateX(-4px); }
-          80% { transform: translateX(4px); }
-        }
-        .shake { animation: shake 0.4s ease; }
-      `}</style>
     </div>
   );
 }

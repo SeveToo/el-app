@@ -5,6 +5,7 @@ import { Card, CardBody } from "@heroui/card";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { StudyHeader } from "./StudyHeader";
+
 import { GameButton } from "@/components/ui/GameButton";
 import { Word } from "@/types";
 import { WordImage } from "@/components/ui/WordImage";

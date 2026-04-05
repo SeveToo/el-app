@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import { Word } from "@/types";
 import { audioService } from "@/lib/audio";
 

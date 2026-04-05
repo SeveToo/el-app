@@ -34,7 +34,7 @@ export function RepeatMode({
   React.useEffect(() => {
     const timer = setTimeout(() => {
       inputRef.current?.focus();
-    }, 50);
+    }, 150);
 
     return () => clearTimeout(timer);
   }, [repeatLeft]);
@@ -70,6 +70,7 @@ export function RepeatMode({
 
       {}
       <Input
+        /* eslint-disable-next-line jsx-a11y/no-autofocus */
         ref={inputRef}
         autoFocus
         autoComplete="off"

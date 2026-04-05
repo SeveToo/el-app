@@ -1,11 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@heroui/button";
+
 import ArticlesLesson from "@/components/articles/ArticlesLesson";
 import StudyLoop from "@/components/study/StudyLoop";
 import { LESSONS } from "@/config/lessons";
 import { Word, Question } from "@/types";
-import { getLessonData } from "@/lib/lessons";
+import { getLessonData, getTestData } from "@/lib/lessons";
+import { getCheckpointLessons } from "@/config/checkpoints";
 
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>;
@@ -13,8 +15,13 @@ export async function generateMetadata(props: {
   const { id } = await props.params;
   const lesson = LESSONS.find((l) => l.id === id);
 
+  let prefix = "";
+
+  if (lesson?.type === "test") prefix = "Test: ";
+  if (lesson?.type === "final") prefix = "Egzamin: ";
+
   return {
-    title: lesson ? `${lesson.title} | EL APP` : "Lekcja",
+    title: lesson ? `${prefix}${lesson.title} | EL APP` : "Lekcja",
     description: lesson?.subtitle || "Rozpocznij naukę w EL APP",
   };
 }
@@ -30,7 +37,16 @@ export default async function ChapterPage(props: {
 }) {
   const { id } = await props.params;
   const lesson = LESSONS.find((l) => l.id === id);
-  const words = lesson ? await getLessonData(id) : [];
+
+  let words: (Word | Question)[] = [];
+
+  if (lesson?.type === "test" || lesson?.type === "final") {
+    const componentIds = getCheckpointLessons(id);
+
+    words = await getTestData(componentIds);
+  } else if (lesson) {
+    words = await getLessonData(id);
+  }
 
   return (
     <section className="py-6 md:py-10 h-full bg-background">
@@ -39,7 +55,11 @@ export default async function ChapterPage(props: {
           lesson?.type === "articles" ? (
             <ArticlesLesson questions={words as Question[]} />
           ) : (
-            <StudyLoop chapterId={id} words={words as Word[]} />
+            <StudyLoop
+              chapterId={id}
+              lessonType={lesson?.type}
+              words={words as Word[]}
+            />
           )
         ) : (
           <div className="flex flex-col items-center gap-6 text-center mt-20">

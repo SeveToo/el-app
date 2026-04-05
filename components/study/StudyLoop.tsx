@@ -11,8 +11,8 @@ import FastReview from "./FastReview";
 import MatchingGame from "./MatchingGame";
 import WrittenTest from "./WrittenTest";
 import SentenceFill from "./SentenceFill";
-import { GameButton } from "@/components/ui/GameButton";
 
+import { GameButton } from "@/components/ui/GameButton";
 import { Word } from "@/types";
 import { useStudyManager } from "@/hooks/useStudyManager";
 import { STAGES, Stage } from "@/lib/progress";
@@ -20,9 +20,11 @@ import { STAGES, Stage } from "@/lib/progress";
 export default function StudyLoop({
   words,
   chapterId,
+  lessonType,
 }: {
   words: Word[];
   chapterId: string;
+  lessonType?: "standard" | "articles" | "test" | "final";
 }): React.JSX.Element | null {
   const {
     state: {
@@ -37,15 +39,21 @@ export default function StudyLoop({
       totalRounds,
       globalProgress,
     },
-    actions: { handleResume, handleRestart, handleStageComplete, goToStage, handleWordAction },
-  } = useStudyManager({ words, chapterId });
+    actions: {
+      handleResume,
+      handleRestart,
+      handleStageComplete,
+      goToStage,
+      handleWordAction,
+    },
+  } = useStudyManager({ words, chapterId, lessonType });
 
   if (isInitializing && hasSavedProgress) {
     return (
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
+      <motion.div
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col items-center justify-center min-h-[60vh] gap-12 text-center px-4 max-w-lg mx-auto"
+        initial={{ opacity: 0, y: 30 }}
       >
         <div className="space-y-2">
           <h2 className="text-4xl sm:text-5xl font-black text-foreground uppercase tracking-tighter leading-tight">
@@ -58,41 +66,46 @@ export default function StudyLoop({
           <div className="relative flex items-center justify-center">
             <svg className="w-40 h-40 -rotate-90">
               <circle
-                cx="80" cy="80" r="74"
-                fill="none"
                 className="stroke-default-100"
+                cx="80"
+                cy="80"
+                fill="none"
+                r="74"
                 strokeWidth="12"
               />
               <motion.circle
-                cx="80" cy="80" r="74"
-                fill="none"
-                stroke="currentColor"
-                className="text-primary"
-                strokeWidth="12"
-                strokeLinecap="round"
-                initial={{ pathLength: 0 }}
                 animate={{ pathLength: resumeProgress / 100 }}
+                className="text-primary"
+                cx="80"
+                cy="80"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                r="74"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth="12"
                 transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-4xl font-black text-foreground">{resumeProgress}%</span>
-              <span className="text-[10px] font-black uppercase text-default-400 tracking-widest">ukończono</span>
+              <span className="text-4xl font-black text-foreground">
+                {resumeProgress}%
+              </span>
+              <span className="text-[10px] font-black uppercase text-default-400 tracking-widest">
+                ukończono
+              </span>
             </div>
           </div>
 
           <div className="flex flex-col gap-3 w-full max-w-xs">
-            <GameButton
-              color="primary"
-              onClick={handleResume}
-            >
+            <GameButton color="primary" onClick={handleResume}>
               KONTYNUUJ
             </GameButton>
-            
+
             <GameButton
+              className="h-14 text-sm opacity-60 hover:opacity-100 border-none border-b-0 shadow-none hover:bg-default-100"
               color="primary"
               variant="bordered"
-              className="h-14 text-sm opacity-60 hover:opacity-100 border-none border-b-0 shadow-none hover:bg-default-100"
               onClick={handleRestart}
             >
               ZACZNIJ OD NOWA
@@ -136,9 +149,11 @@ export default function StudyLoop({
       <div className="mb-6 space-y-3">
         <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest text-default-400">
           <span>
-            Runda {roundIndex + 1} / {totalRounds}
+            {lessonType === "test" || lessonType === "final"
+              ? "EGZAMIN"
+              : `Runda ${roundIndex + 1} / ${totalRounds}`}
           </span>
-          <span>Postęp: {globalProgress}%</span>
+          <span>Wynik: {globalProgress}%</span>
         </div>
 
         <Progress color="primary" size="sm" value={globalProgress} />
@@ -146,6 +161,12 @@ export default function StudyLoop({
         {/* Pasek etapów (wybór etapu) */}
         <div className="flex gap-1.5 w-full mt-2">
           {STAGES.map((s: Stage, idx: number) => {
+            // Pomijamy etapy 1 i 2 w trybie testu/final
+            const isTestMode = lessonType === "test" || lessonType === "final";
+
+            if (isTestMode && (s === "flashcards" || s === "fast_review"))
+              return null;
+
             const stageNames = ["Fiszki", "Oceń", "Gra", "Pisanie", "Zdania"];
             const isActive = stage === s;
             const isCompleted = (stageIndex as number) > idx;
@@ -183,37 +204,37 @@ export default function StudyLoop({
       {/* Aktywny komponent etapu */}
       <div>
         {stage === "flashcards" && (
-          <Flashcards 
-            words={currentGroup} 
-            onComplete={handleStageComplete} 
+          <Flashcards
+            words={currentGroup}
+            onComplete={handleStageComplete}
             onWordAction={handleWordAction}
           />
         )}
         {stage === "fast_review" && (
-          <FastReview 
-            words={currentGroup} 
-            onComplete={handleStageComplete} 
+          <FastReview
+            words={currentGroup}
+            onComplete={handleStageComplete}
             onWordAction={handleWordAction}
           />
         )}
         {stage === "matching" && (
-          <MatchingGame 
-            words={currentGroup} 
-            onComplete={handleStageComplete} 
+          <MatchingGame
+            words={currentGroup}
+            onComplete={handleStageComplete}
             onWordAction={handleWordAction}
           />
         )}
         {stage === "written" && (
-          <WrittenTest 
-            words={currentGroup} 
-            onComplete={handleStageComplete} 
+          <WrittenTest
+            words={currentGroup}
+            onComplete={handleStageComplete}
             onWordAction={handleWordAction}
           />
         )}
         {stage === "sentence_fill" && (
-          <SentenceFill 
-            words={currentGroup} 
-            onComplete={handleStageComplete} 
+          <SentenceFill
+            words={currentGroup}
+            onComplete={handleStageComplete}
             onWordAction={handleWordAction}
           />
         )}

@@ -71,9 +71,12 @@ export function calcPercent(p: ChapterProgress | null): number {
   // Total possible points = totalWords * 5.
   const totalPossiblePoints = p.totalWords * 5;
   const currentPoints = p.usedCount ? p.usedCount * 5 : 0; // Points from fully learned words (previous rounds)
-  
+
   // Points from current round words (stored in roundPoints)
-  const currentRoundPoints = Object.values(p.roundPoints || {}).reduce((sum, val) => sum + val, 0);
+  const currentRoundPoints = Object.values(p.roundPoints || {}).reduce(
+    (sum, val) => sum + val,
+    0,
+  );
 
   const totalPointsEarned = currentPoints + currentRoundPoints;
 
@@ -83,8 +86,12 @@ export function calcPercent(p: ChapterProgress | null): number {
     const groupSize = p.currentGroupIndices?.length ?? WORDS_PER_LOOP;
     const added = (sIndex / STAGES.length) * groupSize;
     const rawLearned = (p.usedCount ?? p.learnedCount) + added;
+
     return Math.min(Math.round((rawLearned / p.totalWords) * 100), 100);
   }
 
-  return Math.min(Math.round((totalPointsEarned / totalPossiblePoints) * 100), 100);
+  return Math.min(
+    Math.round((totalPointsEarned / totalPossiblePoints) * 100),
+    100,
+  );
 }
