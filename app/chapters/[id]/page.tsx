@@ -1,14 +1,11 @@
-import { promises as fs } from "fs";
-import path from "path";
-
+import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@heroui/button";
-import { Metadata } from "next";
-
 import ArticlesLesson from "@/components/articles/ArticlesLesson";
 import StudyLoop from "@/components/study/StudyLoop";
 import { LESSONS } from "@/config/lessons";
 import { Word, Question } from "@/types";
+import { getLessonData } from "@/lib/lessons";
 
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>;
@@ -32,23 +29,8 @@ export default async function ChapterPage(props: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await props.params;
-
-  let words: (Word | Question)[] = [];
-
   const lesson = LESSONS.find((l) => l.id === id);
-
-  // Sprawdź czy jest JSON dla tego id
-  if (lesson) {
-    try {
-      const filePath = path.join(process.cwd(), "public", "data", `${id}.json`);
-      const file = await fs.readFile(filePath, "utf8");
-
-      words = JSON.parse(file) as (Word | Question)[];
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error("Error loading words:", e);
-    }
-  }
+  const words = lesson ? await getLessonData(id) : [];
 
   return (
     <section className="py-6 md:py-10 min-h-screen bg-background">
