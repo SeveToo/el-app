@@ -25,14 +25,15 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
-        <NavbarItem className="flex items-center gap-3">
+        <NavbarItem className="flex items-center gap-2 sm:gap-3">
           <a
-            className="text-xs sm:text-sm font-semibold text-indigo-500 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 px-3 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap"
+            className="relative px-1 py-1 text-[10px] sm:text-xs font-black uppercase tracking-widest text-foreground transition-all duration-300 group"
             href="https://hypekorepetycje.pl"
             rel="noopener noreferrer"
             target="_blank"
           >
             Korepetycje
+            <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
           </a>
           <ThemeSwitch />
         </NavbarItem>

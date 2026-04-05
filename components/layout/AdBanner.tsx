@@ -28,44 +28,7 @@ export const AdBanner = () => {
   };
 
   return (
-    <div className="w-full flex justify-center px-4 my-2">
-
-      {/* ── MOBILE: compact promo strip ─────────────────────── */}
-      <a
-        className="sm:hidden w-full flex items-center justify-between px-4 py-3 rounded-2xl no-underline transition-all duration-200 hover:brightness-95 active:scale-95"
-        href="https://hypekorepetycje.pl"
-        rel="noopener noreferrer"
-        style={{
-          background: "linear-gradient(135deg, #ede9fe 0%, #dbeafe 100%)",
-          border: "1.5px solid #c4b5fd",
-          textDecoration: "none",
-        }}
-        target="_blank"
-      >
-        <div className="flex items-center gap-3">
-          <span style={{ fontSize: "22px" }}>🎓</span>
-          <div>
-            <div
-              style={{
-                fontSize: "13px",
-                fontWeight: 700,
-                color: "#4f46e5",
-                lineHeight: 1.2,
-              }}
-            >
-              Korepetycje z angielskiego
-            </div>
-            <div
-              style={{ fontSize: "11px", color: "#818cf8", marginTop: "1px" }}
-            >
-              hypekorepetycje.pl
-            </div>
-          </div>
-        </div>
-        <span style={{ fontSize: "18px", color: "#6366f1", fontWeight: 600 }}>
-          →
-        </span>
-      </a>
+    <div className="hidden sm:flex w-full justify-center px-4 my-2">
 
       {/* ── DESKTOP: full banner with rotating border ────────── */}
       <div
