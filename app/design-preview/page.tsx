@@ -434,9 +434,205 @@ function ConceptC() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+//  CONCEPT D – "Nexus Tree" (Skill Tree, Kategorie, Minigry, Checkpoints)
+// ═══════════════════════════════════════════════════════════════════════════════
+function ConceptD() {
+  const [hovered, setHovered] = useState<string | null>(null);
+
+  // Kategoryzacja lekcji
+  const categories = [
+    {
+      id: "nouns",
+      name: "Rzeczowniki",
+      color: "#22c55e",
+      glow: "rgba(34,197,94,0.3)",
+      lessons: [
+        { id: "fruits", icon: "🍎", title: "Owoce", subtitle: "Nouns" },
+        { id: "vegetables", icon: "🥦", title: "Warzywa", subtitle: "Nouns" },
+        { id: "food", icon: "🍔", title: "Jedzenie", subtitle: "Nouns" },
+        { id: "CHECKPOINT_1", type: "test", title: "Test: Kuchnia & Food" },
+        { id: "kitchen_tools", icon: "🍳", title: "Kuchnia", subtitle: "Nouns" },
+        { id: "furniture", icon: "🛋️", title: "Dom", subtitle: "Nouns" },
+        { id: "nature", icon: "🌲", title: "Natura", subtitle: "Nouns" },
+        { id: "CHECKPOINT_2", type: "test", title: "Test: Otoczenie" },
+        { id: "body_parts", icon: "🦴", title: "Części ciała", subtitle: "Nouns" },
+        { id: "family", icon: "👨‍👩‍👧", title: "Rodzina", subtitle: "Nouns" },
+        { id: "jobs", icon: "💼", title: "Zawody", subtitle: "Nouns" },
+        { id: "FINAL_NOUNS", type: "final", title: "Mistrz Rzeczowników" },
+      ],
+    },
+    {
+      id: "verbs",
+      name: "Czasowniki",
+      color: "#3b82f6",
+      glow: "rgba(59,130,246,0.3)",
+      lessons: [
+        { id: "action_verbs", icon: "⚡", title: "Czynności", subtitle: "Verbs" },
+        { id: "routines", icon: "⏰", title: "Rutyna", subtitle: "Verbs" },
+        { id: "chores", icon: "🧹", title: "Obowiązki", subtitle: "Verbs" },
+        { id: "FINAL_VERBS", type: "final", title: "Mistrz Czasowników" },
+      ],
+    },
+    {
+      id: "adjectives",
+      name: "Przymiotniki",
+      color: "#a855f7",
+      glow: "rgba(168,85,247,0.3)",
+      lessons: [
+        { id: "emotions", icon: "😊", title: "Emocje", subtitle: "Adj" },
+        { id: "tastes", icon: "🍋", title: "Smaki", subtitle: "Adj" },
+        { id: "weather", icon: "🌤️", title: "Pogoda", subtitle: "Adj" },
+        { id: "hair", icon: "💇", title: "Włosy", subtitle: "Adj" },
+        { id: "FINAL_ADJ", type: "final", title: "Mistrz Przymiotników" },
+      ],
+    },
+    {
+      id: "other",
+      name: "Inne / Inne",
+      color: "#f59e0b",
+      glow: "rgba(245,158,11,0.3)",
+      lessons: [
+        { id: "prepositions", icon: "📍", title: "Przyimki", subtitle: "Misc" },
+        { id: "articles", icon: "📖", title: "Przedimki", subtitle: "Misc" },
+        { id: "FINAL_OTHER", type: "final", title: "Mistrz Gramatyki" },
+      ],
+    },
+  ];
+
+  return (
+    <div style={{ paddingBottom: 40 }}>
+      {/* Minigames Bar ("Góry") */}
+      <div style={{ marginBottom: 40 }}>
+        <div style={{ fontSize: 13, fontWeight: 800, color: "#666", marginBottom: 12, letterSpacing: 1, textAlign: "center" }}>
+          🏔️ GÓRY: STREFA WYZWAŃ (ZABLOKOWANE)
+        </div>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", position: "relative" }}>
+          {[
+            { name: "Matching Master", icon: "🎮" },
+            { name: "Fast Review Blitz", icon: "⚡" },
+            { name: "Sentence Builder", icon: "✍️" },
+          ].map((m) => (
+            <div
+              key={m.name}
+              style={{
+                flex: 1, maxWidth: 160, padding: "16px 10px", borderRadius: 16,
+                background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)",
+                textAlign: "center", filter: "grayscale(1)", opacity: 0.5, cursor: "not-allowed",
+                position: "relative", overflow: "hidden"
+              }}
+            >
+              <div style={{ fontSize: 24, marginBottom: 6 }}>{m.icon}</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#aaa" }}>{m.name}</div>
+              <div style={{
+                position: "absolute", top: 8, right: 8, fontSize: 10, background: "rgba(0,0,0,0.4)",
+                padding: "2px 5px", borderRadius: 6
+              }}>🔒</div>
+            </div>
+          ))}
+          {/* Glass Overlay for the whole section */}
+          <div style={{
+            position: "absolute", inset: -4, background: "rgba(10,10,15,0.1)",
+            backdropFilter: "blur(2px)", zIndex: 5, borderRadius: 20,
+            pointerEvents: "none", border: "1px solid rgba(255,255,255,0.03)"
+          }} />
+        </div>
+      </div>
+
+      {/* Main Nexus Tree Area */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 60, position: "relative" }}>
+        {/* Connection Lines (fake or simplified via border) */}
+        {categories.map((cat) => (
+          <div key={cat.id}>
+            <h3 style={{
+              display: "flex", alignItems: "center", gap: 10,
+              fontSize: 16, fontWeight: 800, color: cat.color, marginBottom: 24
+            }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: cat.color, boxShadow: `0 0 10px ${cat.color}` }} />
+              {cat.name.toUpperCase()}
+            </h3>
+
+            <div style={{
+              display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))",
+              gap: 20, position: "relative"
+            }}>
+              {cat.lessons.map((l, i) => {
+                const isTest = (l as any).type === "test";
+                const isFinal = (l as any).type === "final";
+                const isHovered = hovered === l.id;
+
+                return (
+                  <div
+                    key={l.id}
+                    onMouseEnter={() => setHovered(l.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    style={{
+                      display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+                      cursor: "pointer", transition: "transform .2s",
+                      transform: isHovered ? "scale(1.1) translateY(-5px)" : "scale(1)"
+                    }}
+                  >
+                    {/* Node Circle */}
+                    <div style={{
+                      width: isFinal ? 70 : isTest ? 60 : 60,
+                      height: isFinal ? 70 : isTest ? 60 : 60,
+                      borderRadius: isTest || isFinal ? "30% 70% 70% 30% / 30% 30% 70% 70%" : "50%",
+                      background: isFinal ? "linear-gradient(135deg, #fcd34d 0%, #d97706 100%)" : isTest ? "#333" : "rgba(255,255,255,0.05)",
+                      border: isFinal
+                        ? "3px solid #fff"
+                        : isTest
+                        ? `2px dashed ${cat.color}`
+                        : `2px solid ${isHovered ? cat.color : "rgba(255,255,255,0.12)"}`,
+                      boxShadow: isHovered ? `0 10px 25px ${cat.glow}` : "none",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: isFinal ? 32 : 24, transition: "all .2s",
+                      position: "relative"
+                    }}>
+                      {isFinal ? "🏆" : isTest ? "🛡️" : (l as any).icon}
+
+                      {/* Connection Line to Next */}
+                      {i < cat.lessons.length - 1 && (
+                        <div style={{
+                          position: "absolute", right: -25, top: "50%", width: 25, height: 2,
+                          background: `linear-gradient(90deg, ${cat.color} 0%, rgba(255,255,255,0.05) 100%)`,
+                          opacity: 0.3, pointerEvents: "none", display: "none" // Desktop grid makes lines hard, hide for now
+                        }} />
+                      )}
+                    </div>
+
+                    {/* Label */}
+                    <div style={{ textAlign: "center" }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: isFinal ? "#fcd34d" : isTest ? cat.color : "#eee" }}>
+                        {l.title}
+                      </div>
+                      {!isFinal && !isTest && (
+                        <div style={{ fontSize: 9, color: "#555", marginTop: 2 }}>
+                          { (l as any).subtitle }
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 //  PAGE WRAPPER
 // ═══════════════════════════════════════════════════════════════════════════════
 const CONCEPTS = [
+  {
+    id: "D",
+    name: "Nexus Tree",
+    desc: "Koncepcja Skill Tree (Drzewko Rozwoju). Podział na kategorie gramatyczne, zablokowane minigry na górze i testy kontrole (Checkpointy) wewnątrz ścieżek.",
+    pros: ["Jasna kategoryzacja", "Uczucie postępu (RPG)", "Zgrabne umieszczenie testów"],
+    cons: ["Wymaga precyzyjnego rymowania linii SVG", "Mniej liniowy niż Quest Path"],
+    component: <ConceptD />,
+  },
   {
     id: "A",
     name: "Galaxy Cards",
@@ -464,7 +660,7 @@ const CONCEPTS = [
 ];
 
 export default function DesignPreview() {
-  const [active, setActive] = useState<string>("A");
+  const [active, setActive] = useState<string>("D");
   const concept = CONCEPTS.find(c => c.id === active)!;
 
   return (
@@ -484,9 +680,9 @@ export default function DesignPreview() {
           🎨 DESIGN PREVIEW — TYLKO DO OCENY
         </div>
         <h1 style={{ fontSize:28, fontWeight:800, margin:"0 0 6px", background:"linear-gradient(90deg,#c4b5fd,#818cf8)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
-          3 koncepcje menu głównego
+          Koncepcje menu głównego
         </h1>
-        <p style={{ color:"#666", fontSize:14, margin:0 }}>Kliknij zakładkę żeby porównać tryby</p>
+        <p style={{ color:"#666", fontSize:14, margin:0 }}>Wybierz zakładkę, aby porównać wersję D z poprzednimi</p>
       </div>
 
       {/* Tab switcher */}
@@ -534,7 +730,7 @@ export default function DesignPreview() {
       </div>
 
       {/* Concept */}
-      <div style={{ maxWidth: active === "B" ? 560 : 760, margin:"0 auto" }}>
+      <div style={{ maxWidth: 760, margin:"0 auto" }}>
         {concept.component}
       </div>
 
