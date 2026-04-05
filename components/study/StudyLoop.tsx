@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Progress } from "@heroui/progress";
 import { Button } from "@heroui/button";
 import Link from "next/link";
-import confetti from "canvas-confetti";
 
 import Flashcards from "./Flashcards";
 import FastReview from "./FastReview";
@@ -12,27 +11,8 @@ import MatchingGame from "./MatchingGame";
 import WrittenTest from "./WrittenTest";
 import SentenceFill from "./SentenceFill";
 
-import { saveProgress, getProgress } from "@/lib/progress";
 import { Word } from "@/types";
-import { audioService } from "@/lib/audio";
-
-type Stage =
-  | "flashcards"
-  | "fast_review"
-  | "matching"
-  | "written"
-  | "sentence_fill"
-  | "completed";
-
-const STAGES: Stage[] = [
-  "flashcards",
-  "fast_review",
-  "matching",
-  "written",
-  "sentence_fill",
-];
-
-const WORDS_PER_LOOP = 10;
+import { useStudyManager, STAGES, Stage } from "@/hooks/useStudyManager";
 
 export default function StudyLoop({
   words,
@@ -41,221 +21,21 @@ export default function StudyLoop({
   words: Word[];
   chapterId: string;
 }): React.JSX.Element | null {
-  const [allWords] = useState<Word[]>(words);
-
-  // Indeks bieżącej "rundy" (grupy 10 słówek)
-  const [roundIndex, setRoundIndex] = useState(0);
-
-  // Etap w ramach rundy
-  const [stage, setStage] = useState<Stage>("flashcards");
-  const [globalErrorIds, setGlobalErrorIds] = useState<string[]>([]);
-  const [currentGroup, setCurrentGroup] = useState<Word[]>(
-    allWords.slice(0, WORDS_PER_LOOP),
-  );
-  const [usedCount, setUsedCount] = useState(0);
-  const [isInitializing, setIsInitializing] = useState(true);
-  const [hasSavedProgress, setHasSavedProgress] = useState(false);
-  const [resumeProgress, setResumeProgress] = useState(0);
-
-  const stageIndex = STAGES.indexOf(stage);
-
-  // ---------------------------------------------------------------------------
-  // Inicjalizacja / Wznawianie
-  // ---------------------------------------------------------------------------
-  React.useEffect(() => {
-    const saved = getProgress(chapterId);
-
-    if (saved && !saved.completedAt && saved.usedCount !== undefined) {
-      setHasSavedProgress(true);
-
-      // Oblicz procent do wyświetlenia na ekranie "Wznów"
-      const sIndex = STAGES.indexOf((saved.stage as Stage) || "flashcards");
-      const groupSize = saved.currentGroupIndices?.length ?? WORDS_PER_LOOP;
-      const added = (sIndex / STAGES.length) * groupSize;
-      const pct = Math.round(
-        (Math.min(saved.usedCount + added, allWords.length) / allWords.length) *
-          100,
-      );
-
-      setResumeProgress(pct);
-    } else {
-      setIsInitializing(false);
-    }
-  }, [chapterId, allWords.length]);
-
-  const handleResume = () => {
-    const saved = getProgress(chapterId);
-
-    if (saved) {
-      if (saved.roundIndex !== undefined) setRoundIndex(saved.roundIndex);
-      if (saved.stage !== undefined) setStage(saved.stage as Stage);
-      if (saved.usedCount !== undefined) setUsedCount(saved.usedCount);
-      if (saved.globalErrorIds !== undefined)
-        setGlobalErrorIds(saved.globalErrorIds);
-
-      if (saved.currentGroupIndices !== undefined) {
-        const group = saved.currentGroupIndices
-          .map((idx) => allWords[idx])
-          .filter(Boolean);
-
-        setCurrentGroup(group);
-      } else if (saved.usedCount !== undefined) {
-        // Fallback dla starych zapisów
-        setCurrentGroup(
-          allWords.slice(saved.usedCount, saved.usedCount + WORDS_PER_LOOP),
-        );
-      }
-    }
-    setIsInitializing(false);
-  };
-
-  const handleRestart = () => {
-    saveProgress(chapterId, {
-      learnedCount: 0,
-      totalWords: words.length,
-    });
-    setIsInitializing(false);
-  };
-
-  // ---------------------------------------------------------------------------
-  // Zapis postępu
-  // ---------------------------------------------------------------------------
-  const persistProgress = (
-    learned: number,
-    stageOverride?: Stage,
-    completed = false,
-  ) => {
-    const currentGroupIndices = currentGroup.map((w) =>
-      allWords.findIndex((aw) => aw.id === w.id),
-    );
-
-    saveProgress(chapterId, {
-      learnedCount: learned,
-      totalWords: words.length,
-      completedAt: completed ? new Date().toISOString() : undefined,
+  const {
+    state: {
       roundIndex,
-      stage: stageOverride || stage,
-      usedCount: learned,
+      stage,
       globalErrorIds,
-      currentGroupIndices,
-    });
-  };
-
-  const NEXT_STAGE: Record<Stage, Stage | "completed_round"> = {
-    flashcards: "fast_review",
-    fast_review: "matching",
-    matching: "written",
-    written: "sentence_fill",
-    sentence_fill: "completed_round",
-    completed: "completed",
-  };
-
-  // ---------------------------------------------------------------------------
-  // Zebranie błędów z etapu + przejście do następnego
-  // ---------------------------------------------------------------------------
-  const handleStageComplete = (errorIds: string[]) => {
-    // Dodaj nowe błędy do globalnej listy (bez duplikatów)
-    const newErrors = errorIds.filter((id) => !globalErrorIds.includes(id));
-    const updatedErrors = [...globalErrorIds, ...newErrors];
-
-    setGlobalErrorIds(updatedErrors);
-
-    const next = NEXT_STAGE[stage];
-
-    if (next !== "completed_round" && next !== "completed") {
-      // Kolejny etap w ramach tej samej rundy
-      setStage(next);
-      persistProgress(usedCount, next);
-    } else {
-      // Koniec wszystkich etapów dla tej rundy
-      const remaining = allWords.slice(usedCount + currentGroup.length); // słowa jeszcze nigdy nie użyte
-      const newLearnedInThisRound = currentGroup.filter(
-        (w) => !updatedErrors.includes(w.id),
-      ).length;
-      const totalLearnedSoFar = usedCount + newLearnedInThisRound;
-
-      if (remaining.length > 0) {
-        // Są jeszcze nowe słówka
-        const newWords = remaining.slice(0, WORDS_PER_LOOP);
-        const errorWords = updatedErrors
-          .map((id) => allWords.find((w) => w.id === id)!)
-          .filter(Boolean);
-
-        const slotsForNew = Math.min(newWords.length, WORDS_PER_LOOP);
-        const slotsForErrors = Math.max(0, WORDS_PER_LOOP - slotsForNew);
-
-        const nextGroup = [
-          ...errorWords.slice(0, slotsForErrors),
-          ...newWords.slice(0, slotsForNew),
-        ];
-
-        setCurrentGroup(shuffled(nextGroup));
-        setUsedCount(totalLearnedSoFar);
-        setRoundIndex(roundIndex + 1);
-        setStage("flashcards");
-        setGlobalErrorIds(updatedErrors); // Te błędy przechodzą do następnej rundy
-
-        // Zapisujemy nowy stan
-        const currentGroupIndices = nextGroup.map((w) =>
-          allWords.findIndex((aw) => aw.id === w.id),
-        );
-
-        saveProgress(chapterId, {
-          learnedCount: totalLearnedSoFar,
-          totalWords: words.length,
-          roundIndex: roundIndex + 1,
-          stage: "flashcards",
-          usedCount: totalLearnedSoFar,
-          globalErrorIds: updatedErrors,
-          currentGroupIndices,
-        });
-      } else if (updatedErrors.length > 0) {
-        // Brak nowych słów, ale są błędy
-        const errorWords = updatedErrors
-          .map((id) => allWords.find((w) => w.id === id)!)
-          .filter(Boolean);
-
-        setCurrentGroup(shuffled(errorWords));
-        setGlobalErrorIds([]); // Resetujemy - te błędy są "teraz obsługiwane"
-        setRoundIndex(roundIndex + 1);
-        setStage("flashcards");
-        setUsedCount(totalLearnedSoFar);
-
-        persistProgress(totalLearnedSoFar, "flashcards");
-      } else {
-        // Wszystko ukończone!
-        persistProgress(allWords.length, undefined, true);
-        setStage("completed");
-      }
-    }
-  };
-
-  const goToStage = (targetStage: Stage) => {
-    setStage(targetStage);
-    persistProgress(usedCount, targetStage);
-  };
-
-  const totalRounds = Math.ceil(allWords.length / WORDS_PER_LOOP);
-
-  const currentRoundProgress =
-    (stageIndex / STAGES.length) * currentGroup.length;
-  const globalProgress = Math.round(
-    (Math.min(usedCount + currentRoundProgress, allWords.length) /
-      allWords.length) *
-      100,
-  );
-
-  React.useEffect(() => {
-    if (stage === "completed") {
-      audioService.playSuccess();
-      confetti({
-        particleCount: 300,
-        spread: 100,
-        origin: { y: 0.5 },
-        colors: ["#22c55e", "#3b82f6", "#f59e0b", "#ffffff"],
-      });
-    }
-  }, [stage]);
+      currentGroup,
+      isInitializing,
+      hasSavedProgress,
+      resumeProgress,
+      stageIndex,
+      totalRounds,
+      globalProgress,
+    },
+    actions: { handleResume, handleRestart, handleStageComplete, goToStage },
+  } = useStudyManager({ words, chapterId });
 
   if (isInitializing && hasSavedProgress) {
     return (
@@ -335,7 +115,7 @@ export default function StudyLoop({
           {STAGES.map((s, idx) => {
             const stageNames = ["Fiszki", "Oceń", "Gra", "Pisanie", "Zdania"];
             const isActive = stage === s;
-            const isCompleted = stageIndex > idx;
+            const isCompleted = (stageIndex as number) > idx;
 
             return (
               <Button
@@ -350,7 +130,7 @@ export default function StudyLoop({
                 }
                 size="sm"
                 variant={isActive ? "solid" : isCompleted ? "flat" : "light"}
-                onClick={() => goToStage(s)}
+                onClick={() => goToStage(s as Stage)}
               >
                 {stageNames[idx]}
               </Button>
@@ -387,8 +167,4 @@ export default function StudyLoop({
       </div>
     </div>
   );
-}
-
-function shuffled<T>(arr: T[]): T[] {
-  return [...arr].sort(() => Math.random() - 0.5);
 }
