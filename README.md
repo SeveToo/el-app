@@ -99,6 +99,17 @@ aby zapewnić błyskawiczne ładowanie.
 - **Audio**: Web Speech API (Native TTS)
 - **Deployment**: GitHub Pages (via GitHub Actions)
 
+## 🎨 Prototypowanie UI (Design Exploration)
+
+Aplikacja EL APP stale ewoluuje wizualnie. W ramach prac nad nowym menu
+głównym, stworzyliśmy specjalną stronę z prototypami:
+
+- **Dostęp:** `/design-preview`
+- **Zawartość:** 3 unikalne koncepcje interfejsu (Galaxy Cards, Quest
+  Path, Compact List).
+- **Cel:** Testowanie animacji, przejrzystości i motywacji użytkownika
+  przed wdrożeniem do głównego nurtu aplikacji.
+
 ---
 
 ## 🗺️ Plany Rozwoju (Roadmap)

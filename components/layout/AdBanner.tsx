@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@heroui/link";
 import Image from "next/image";
+
 import { prefixPath } from "@/lib/utils";
 
 export const AdBanner = () => {
