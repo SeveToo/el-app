@@ -70,8 +70,8 @@ export function RepeatMode({
 
       {}
       <Input
-        /* eslint-disable-next-line jsx-a11y/no-autofocus */
         ref={inputRef}
+        /* eslint-disable-next-line jsx-a11y/no-autofocus */
         autoFocus
         autoComplete="off"
         classNames={{
