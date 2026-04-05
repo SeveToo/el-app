@@ -32,7 +32,11 @@ export function RepeatMode({
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
-    inputRef.current?.focus();
+    const timer = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
+
+    return () => clearTimeout(timer);
   }, [repeatLeft]);
 
   return (
@@ -67,6 +71,7 @@ export function RepeatMode({
       {}
       <Input
         ref={inputRef}
+        autoFocus
         autoComplete="off"
         classNames={{
           input: `text-center ${inputTextClass} placeholder:opacity-20`,

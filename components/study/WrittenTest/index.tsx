@@ -42,7 +42,12 @@ export default function WrittenTest({ words, onComplete }: Props) {
 
   // Auto-focus Input
   useEffect(() => {
-    inputRef.current?.focus();
+    // We use a small timeout to ensure focus happens *after* the animation transition
+    const timer = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
+
+    return () => clearTimeout(timer);
   }, [currentIndex, repeatMode, repeatLeft, status]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -185,6 +190,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
                     {}
                     <Input
                       ref={inputRef}
+                      autoFocus
                       autoComplete="off"
                       classNames={{
                         input: `text-center ${INPUT_TEXT_CLASS}`,
