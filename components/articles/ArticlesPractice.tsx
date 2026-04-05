@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GameButton } from "@/components/ui/GameButton";
 import { audioService } from "@/lib/audio";
 import { Question } from "@/types";
+import { STORAGE_KEYS } from "@/config/storage-keys";
 
 interface Props {
   questions: Question[];
@@ -31,7 +32,7 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
   useEffect(() => {
     if (localQuestions.length === 0) {
       const savedScores = JSON.parse(
-        localStorage.getItem("article_scores") || "{}",
+        localStorage.getItem(STORAGE_KEYS.ARTICLE_SCORES) || "{}",
       );
       const available = questions.filter((q) => (savedScores[q.id] || 0) < 5);
       const pool = available.length > 0 ? available : questions;
@@ -43,13 +44,13 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
 
   const updateScore = (qId: string, delta: number) => {
     const savedScores = JSON.parse(
-      localStorage.getItem("article_scores") || "{}",
+      localStorage.getItem(STORAGE_KEYS.ARTICLE_SCORES) || "{}",
     );
     const currentScore = savedScores[qId] || 0;
     const newScore = Math.max(0, Math.min(5, currentScore + delta));
 
     savedScores[qId] = newScore;
-    localStorage.setItem("article_scores", JSON.stringify(savedScores));
+    localStorage.setItem(STORAGE_KEYS.ARTICLE_SCORES, JSON.stringify(savedScores));
   };
 
   const currentQ = localQuestions[currentIndex];

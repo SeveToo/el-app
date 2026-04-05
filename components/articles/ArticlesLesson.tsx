@@ -7,6 +7,7 @@ import ArticlesPractice from "./ArticlesPractice";
 import ArticlesSummary from "./ArticlesSummary";
 
 import { Question } from "@/types";
+import { STORAGE_KEYS } from "@/config/storage-keys";
 
 interface Props {
   questions: Question[];
@@ -54,7 +55,7 @@ export default function ArticlesLesson({ questions }: Props) {
 
     // Save to localStorage for intro screen
     if (typeof window !== "undefined") {
-      localStorage.setItem("article_last_accuracy", accuracy.toString());
+      localStorage.setItem(STORAGE_KEYS.ARTICLE_ACCURACY, accuracy.toString());
     }
 
     return (

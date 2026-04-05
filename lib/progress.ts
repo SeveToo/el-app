@@ -1,3 +1,5 @@
+import { STORAGE_KEYS } from "@/config/storage-keys";
+
 export type Stage =
   | "flashcards"
   | "fast_review"
@@ -28,7 +30,7 @@ export type ChapterProgress = {
   currentGroupIndices?: number[];
 };
 
-const STORAGE_KEY = "el_progress";
+const STORAGE_KEY = STORAGE_KEYS.PROGRESS;
 
 function readAll(): Record<string, ChapterProgress> {
   if (typeof window === "undefined") return {};

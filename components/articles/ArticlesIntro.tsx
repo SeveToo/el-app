@@ -5,6 +5,7 @@ import { Card, CardBody } from "@heroui/card";
 import { Button } from "@heroui/button";
 
 import { Question } from "@/types";
+import { STORAGE_KEYS } from "@/config/storage-keys";
 
 interface Props {
   questions: Question[];
@@ -42,7 +43,7 @@ export const RULES = [
 export default function ArticlesIntro({ questions, onStart }: Props) {
   const lastAccuracy =
     typeof window !== "undefined"
-      ? localStorage.getItem("article_last_accuracy")
+      ? localStorage.getItem(STORAGE_KEYS.ARTICLE_ACCURACY)
       : null;
 
   return (
