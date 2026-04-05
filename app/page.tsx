@@ -15,6 +15,22 @@ import { LESSONS } from "@/config/lessons";
 
 // ─── Nexus Tree Components ──────────────────────────────────────────────────
 
+function NexusShape({ className, fill, stroke, size = 64 }: { className?: string, fill?: string, stroke?: string, size?: number }) {
+  return (
+    <svg 
+      width={size} height={size} viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path 
+        d="M199.469 44.9707C226.799 2.74315 288.585 2.74316 315.916 44.9707C326.631 61.5258 346.46 69.7391 365.743 65.6094C414.928 55.0759 458.617 98.7645 448.083 147.949C443.953 167.232 452.167 187.061 468.722 197.776C510.949 225.107 510.949 286.893 468.722 314.224C452.167 324.939 443.953 344.768 448.083 364.051C458.617 413.236 414.928 456.924 365.743 446.391C346.46 442.261 326.631 450.474 315.916 467.029C288.585 509.257 226.799 509.257 199.469 467.029C188.754 450.474 168.924 442.261 149.642 446.391C100.457 456.924 56.7683 413.236 67.3018 364.051C71.4315 344.768 63.2182 324.939 46.6631 314.224C4.43554 286.893 4.43554 225.107 46.6631 197.776C63.2182 187.061 71.4315 167.232 67.3018 147.949C56.7683 98.7645 100.457 55.0759 149.642 65.6094C168.924 69.7391 188.754 61.5258 199.469 44.9707Z" 
+        fill={fill || "#252422"} 
+        stroke={stroke || "#EB5E28"} 
+        strokeWidth="21.8507"
+      />
+    </svg>
+  );
+}
+
 function NexusNode({ 
   lesson, 
   color, 
@@ -42,21 +58,24 @@ function NexusNode({
             ${isFinal ? "w-20 h-20 text-4xl" : isTest ? "w-16 h-16 text-3xl" : "w-16 h-16 text-3xl"}
           `}
           style={{
-            borderRadius: isTest || isFinal ? "30% 70% 70% 30% / 30% 30% 70% 70%" : "50%",
-            background: isFinal 
-              ? "linear-gradient(135deg, #fcd34d 0%, #d97706 100%)" 
-              : isTest 
-              ? "var(--heroui-default-200)" 
-              : "var(--heroui-default-100)",
-            border: isFinal 
-              ? "3px solid #fff" 
-              : isTest 
-              ? `2px dashed ${color}` 
-              : `2px solid ${isCompleted ? color : "var(--heroui-default-200)"}`,
-            boxShadow: (isCompleted || isFinal) ? `0 0 25px ${glow}` : "none",
+            borderRadius: isTest || isFinal ? "0" : "50%",
+            background: isTest || isFinal ? "transparent" : "var(--heroui-default-100)",
+            border: "none",
+            boxShadow: (!isTest && !isFinal && isCompleted) ? `0 0 25px ${glow}` : "none",
           }}
         >
-          {lesson.icon || (isTest ? "🛡️" : "🧩")}
+          {(isTest || isFinal) && (
+            <NexusShape 
+              size={isFinal ? 80 : 64}
+              className="absolute inset-0"
+              fill="#252422"
+              stroke="#EB5E28"
+            />
+          )}
+
+          <div className="relative z-10">
+            {lesson.icon || (isTest ? "🛡️" : "🧩")}
+          </div>
           
           {/* Progress Ring (Outer) */}
           {!isFinal && !isTest && progress > 0 && (
@@ -66,8 +85,8 @@ function NexusNode({
                 cy="36"
                 r="34"
                 fill="none"
-                className="stroke-default-200"
-                strokeWidth="3"
+                className="stroke-default-200 opacity-20"
+                strokeWidth="4"
               />
               <motion.circle
                 cx="36"
@@ -75,7 +94,7 @@ function NexusNode({
                 r="34"
                 fill="none"
                 stroke={color}
-                strokeWidth="3"
+                strokeWidth="4"
                 strokeLinecap="round"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: progress / 100 }}
@@ -88,7 +107,7 @@ function NexusNode({
       
       <div className="text-center px-1">
         <div className={`text-[11px] font-black leading-tight uppercase tracking-wide
-          ${isFinal ? "text-warning" : isTest ? "text-default-600" : "text-foreground"}
+          ${isFinal ? "text-warning" : isTest ? "text-foreground" : "text-foreground"}
         `}>
           {lesson.title}
         </div>
@@ -186,7 +205,7 @@ function HomeContent() {
         </div>
 
         {/* Sekcja Nexus Tree (Skill Tree) - Nowość */}
-        <div className="flex flex-col gap-10 my-4">
+        <div className="flex flex-col gap-14 my-4">
           <NexusBranch
             color="#22c55e"
             glow="rgba(34,197,94,0.15)"
@@ -204,7 +223,46 @@ function HomeContent() {
               { id: "body_parts", icon: "🦴", title: "Ciało" },
               { id: "family", icon: "👨‍👩‍👧", title: "Rodzina" },
               { id: "jobs", icon: "💼", title: "Zawody" },
-              { id: "final_test", type: "final", title: "Egzamin", icon: "🏆" },
+              { id: "final_nouns", type: "final", title: "Mistrz Rzeczowników", icon: "🏆" },
+            ]}
+          />
+
+          <NexusBranch
+            color="#3b82f6"
+            glow="rgba(59,130,246,0.15)"
+            name="Czasowniki"
+            progressMap={progressMap}
+            lessons={[
+              { id: "action_verbs", icon: "⚡", title: "Czynności" },
+              { id: "routines", icon: "⏰", title: "Rutyna" },
+              { id: "chores", icon: "🧹", title: "Obowiązki" },
+              { id: "final_verbs", type: "final", title: "Mistrz Akcji", icon: "🏆" },
+            ]}
+          />
+
+          <NexusBranch
+            color="#a855f7"
+            glow="rgba(168,85,247,0.15)"
+            name="Przymiotniki"
+            progressMap={progressMap}
+            lessons={[
+              { id: "emotions", icon: "😊", title: "Emocje" },
+              { id: "tastes", icon: "🍋", title: "Smaki" },
+              { id: "weather", icon: "🌤️", title: "Pogoda" },
+              { id: "hair", icon: "💇", title: "Włosy" },
+              { id: "final_adj", type: "final", title: "Mistrz Opisu", icon: "🏆" },
+            ]}
+          />
+
+          <NexusBranch
+            color="#f59e0b"
+            glow="rgba(245,158,11,0.15)"
+            name="Inne / Gramatyka"
+            progressMap={progressMap}
+            lessons={[
+              { id: "prepositions", icon: "📍", title: "Przyimki" },
+              { id: "articles", icon: "📖", title: "Przedimki" },
+              { id: "final_other", type: "final", title: "Egzamin Końcowy", icon: "🏆" },
             ]}
           />
         </div>
