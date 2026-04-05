@@ -269,13 +269,13 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
         })}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t z-[110] shadow-2xl">
+      <div className="fixed bottom-0 left-0 right-0 p-2 sm:p-4 bg-white/80 backdrop-blur-xl border-t z-[110] shadow-2xl">
         <div className="max-w-2xl mx-auto space-y-4">
-          <div className="grid grid-cols-5 gap-2 sm:gap-3">
+          <div className="grid grid-cols-5 gap-1.5 sm:gap-3">
             {OPTIONS.map((opt, i) => (
               <GameButton
                 key={opt}
-                className={`h-16 sm:h-24 text-xl sm:text-3xl rounded-3xl ${currentIndex < localQuestions.length && selectedOption === opt ? (isCorrect ? "" : "shake") : ""}`}
+                className={`min-w-0 px-0 h-16 sm:h-24 text-base sm:text-3xl rounded-2xl sm:rounded-3xl ${currentIndex < localQuestions.length && selectedOption === opt ? (isCorrect ? "" : "shake") : ""}`}
                 color={
                   currentIndex < localQuestions.length && selectedOption === opt
                     ? isCorrect
@@ -292,8 +292,8 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
                 onClick={() => handleChoice(opt)}
               >
                 <div className="flex flex-col items-center">
-                  <span className="text-[10px] opacity-40 mb-1">{i + 1}</span>
-                  <span>{opt}</span>
+                  <span className="text-[10px] opacity-40 mb-0.5 sm:mb-1">{i + 1}</span>
+                  <span className="leading-none">{opt}</span>
                 </div>
               </GameButton>
             ))}
@@ -308,7 +308,7 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
                 initial={{ opacity: 0, y: 20 }}
               >
                 <Card className="border-none bg-white border-2 border-danger/20 rounded-2xl shadow-xl">
-                  <CardBody className="p-5 text-center flex flex-row items-center justify-between gap-4">
+                  <CardBody className="p-4 sm:p-5 text-center flex flex-row items-center justify-between gap-4">
                     <div className="text-left">
                       <p className="text-[10px] font-black text-danger uppercase tracking-widest mb-1">
                         ❌ WYJAŚNIENIE
@@ -318,7 +318,7 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
                       </p>
                     </div>
                     <GameButton
-                      className="rounded-xl px-6 min-w-fit relative overflow-hidden h-12"
+                      className="rounded-xl px-4 sm:px-6 min-w-fit relative overflow-hidden h-10 sm:h-12"
                       color="danger"
                       isDisabled={cooldown < 100}
                       onClick={nextQuestion}
@@ -327,7 +327,7 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
                         className="absolute left-0 bottom-0 top-0 bg-white/20 transition-all duration-75"
                         style={{ width: `${cooldown}%` }}
                       />
-                      <span className="relative z-10">
+                      <span className="relative z-10 text-xs sm:text-base">
                         {cooldown < 100 ? "Analiza..." : "Dalej ➔"}
                       </span>
                     </GameButton>
@@ -338,31 +338,6 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
           </AnimatePresence>
         </div>
       </div>
-
-      {/* eslint-disable-next-line react/no-unknown-property */}
-      <style jsx>{`
-        @keyframes shake {
-          0%,
-          100% {
-            transform: translateX(0);
-          }
-          20% {
-            transform: translateX(-6px);
-          }
-          40% {
-            transform: translateX(6px);
-          }
-          60% {
-            transform: translateX(-4px);
-          }
-          80% {
-            transform: translateX(4px);
-          }
-        }
-        .shake {
-          animation: shake 0.4s ease;
-        }
-      `}</style>
     </div>
   );
 }
