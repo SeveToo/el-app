@@ -3,7 +3,7 @@
     "id": "hair_1",
     "en": "Bald",
     "pl": "Łysy",
-    "image": "hairo/Bald.webp",
+    "image": "hair/Bald.webp",
     "en_example": "He is bald and wears glasses.",
     "pl_example": "Jest łysy i nosi okulary."
   },
@@ -11,7 +11,7 @@
     "id": "hair_2",
     "en": "Curly hair",
     "pl": "Kręcone włosy",
-    "image": "hairo/Curly_hair.webp",
+    "image": "hair/Curly_hair.webp",
     "en_example": "She has beautiful curly hair.",
     "pl_example": "Ona ma piękne kręcone włosy."
   },
@@ -19,7 +19,7 @@
     "id": "hair_3",
     "en": "Straight hair",
     "pl": "Proste włosy",
-    "image": "hairo/Straight_hair.webp",
+    "image": "hair/Straight_hair.webp",
     "en_example": "I wish I had long straight hair.",
     "pl_example": "Chciałabym mieć długie proste włosy."
   },
@@ -27,7 +27,7 @@
     "id": "hair_4",
     "en": "Wavy hair",
     "pl": "Falowane włosy",
-    "image": "hairo/Wavy_hair.webp",
+    "image": "hair/Wavy_hair.webp",
     "en_example": "Her wavy hair looks very natural.",
     "pl_example": "Jej falowane włosy wyglądają bardzo naturalnie."
   },
@@ -35,7 +35,7 @@
     "id": "hair_5",
     "en": "Ponytail",
     "pl": "Kucyk / Koński ogon",
-    "image": "hairo/Ponytail.webp",
+    "image": "hair/Ponytail.webp",
     "en_example": "She always ties her hair in a ponytail.",
     "pl_example": "Zawsze wiąże włosy w kucyk."
   },
@@ -43,7 +43,7 @@
     "id": "hair_6",
     "en": "Bangs",
     "pl": "Grzywka",
-    "image": "hairo/Bangs.webp",
+    "image": "hair/Bangs.webp",
     "en_example": "Do you think bangs would suit me?",
     "pl_example": "Czy myślisz, że grzywka by mi pasowała?"
   },
@@ -51,7 +51,7 @@
     "id": "hair_7",
     "en": "Beard",
     "pl": "Broda",
-    "image": "hairo/Beard.webp",
+    "image": "hair/Beard.webp",
     "en_example": "He decided to grow a beard.",
     "pl_example": "Zdecydował się zapuścić brodę."
   },
@@ -59,7 +59,7 @@
     "id": "hair_8",
     "en": "Mustache",
     "pl": "Wąsy",
-    "image": "hairo/Mustache.webp",
+    "image": "hair/Mustache.webp",
     "en_example": "My grandfather has a thick mustache.",
     "pl_example": "Mój dziadek ma gęste wąsy."
   },
@@ -67,7 +67,7 @@
     "id": "hair_9",
     "en": "Sideburns",
     "pl": "Baki / Pejsy",
-    "image": "hairo/Sideburns.webp",
+    "image": "hair/Sideburns.webp",
     "en_example": "Sideburns were very popular in the 70s.",
     "pl_example": "Baki były bardzo popularne w latach 70-tych."
   },
@@ -75,7 +75,7 @@
     "id": "hair_10",
     "en": "Eyebrows",
     "pl": "Brwi",
-    "image": "hairo/Eyebrows.webp",
+    "image": "hair/Eyebrows.webp",
     "en_example": "She has thick, dark eyebrows.",
     "pl_example": "Ona ma gęste, ciemne brwi."
   }
