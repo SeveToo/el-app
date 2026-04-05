@@ -77,7 +77,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
 
       if (isMatch && !highlighted) {
         highlighted = true;
-        return <span key={i} className="text-warning-500 font-black">{part}</span>;
+        return <span key={i} className="text-amber-600 dark:text-warning-500 font-black">{part}</span>;
       }
       return <React.Fragment key={i}>{part}</React.Fragment>;
     });
@@ -85,7 +85,7 @@ export default function SentenceFill({ words, onComplete }: Props) {
     return (
       <span className="inline-flex items-center flex-wrap justify-center gap-x-1.5">
         {rendered}
-        {!highlighted && <span className="text-warning font-black">({word.pl})</span>}
+        {!highlighted && <span className="text-amber-600 dark:text-warning font-black">({word.pl})</span>}
       </span>
     );
   };

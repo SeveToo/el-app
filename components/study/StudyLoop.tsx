@@ -174,7 +174,7 @@ export default function StudyLoop({
 
       {/* Błędy do powtórki (info) */}
       {globalErrorIds.length > 0 && (
-        <div className="mb-4 px-4 py-2 bg-warning/10 border border-warning/20 rounded-xl text-xs text-warning font-semibold text-center">
+        <div className="mb-4 px-4 py-2 bg-warning/10 border border-warning/20 rounded-xl text-xs text-amber-700 dark:text-warning font-semibold text-center">
           ⚠️ {globalErrorIds.length} słówek trafi do powtórki w następnej
           rundzie
         </div>

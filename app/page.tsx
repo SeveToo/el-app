@@ -123,7 +123,7 @@ function NexusNode({
       
       <div className="text-center px-1">
         <div className={`text-[11px] font-black leading-tight uppercase tracking-wide
-          ${isFinal ? "text-warning" : isTest ? "text-foreground" : "text-foreground"}
+          ${isFinal ? "text-amber-600 dark:text-warning" : "text-foreground"}
         `}>
           {lesson.title}
         </div>

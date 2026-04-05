@@ -76,7 +76,7 @@ export const SentenceFillCard = ({
                     autoComplete="off"
                     classNames={{
                       input: `text-base sm:text-lg font-black uppercase text-center tracking-widest ${
-                        activeIndex === index ? "text-warning" : "text-default-400"
+                        activeIndex === index ? "text-amber-600 dark:text-warning" : "text-default-400"
                       }`,
                       inputWrapper: "border-b-2",
                     }}
