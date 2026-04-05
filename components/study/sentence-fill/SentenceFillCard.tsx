@@ -37,6 +37,8 @@ export const SentenceFillCard = ({
 
   return (
     <Card
+      isPressable
+      aria-label={`Zdanie ${index + 1}: ${word.pl}. Kliknij, aby wybrać.`}
       className={`transition-all duration-500 border-2 active:scale-[0.98] ${
         activeIndex === index
           ? "border-primary ring-8 ring-primary/5 bg-primary/5 shadow-2xl z-10 translate-y-[-2px]"
@@ -73,6 +75,7 @@ export const SentenceFillCard = ({
                     ref={(el: HTMLInputElement | null) => {
                       inputRefs[gapIdx] = el;
                     }}
+                    aria-label={`Luka ${gapIdx + 1} w zdaniu ${index + 1}`}
                     autoComplete="off"
                     classNames={{
                       input: `text-base sm:text-lg font-black uppercase text-center tracking-widest ${

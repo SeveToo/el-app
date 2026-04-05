@@ -191,6 +191,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
                     <Input
                       ref={inputRef}
                       autoFocus
+                      aria-label={`Wpisz po angielsku: ${currentWord.pl}`}
                       autoComplete="off"
                       classNames={{
                         input: `text-center ${INPUT_TEXT_CLASS}`,

@@ -23,10 +23,19 @@ export const FlashcardItem = ({ word, isFlipped, onClick, direction }: Props) =>
         opacity: direction !== 0 ? 0 : 1,
         rotate: direction === 1 ? 25 : direction === -1 ? -25 : 0,
       }}
-      className="relative w-full h-full cursor-pointer"
+      aria-label={`Fiszka: ${isFlipped ? word.en : word.pl}. Kliknij, aby obrócić.`}
+      className="relative w-full h-full cursor-pointer focus:outline-none focus:ring-4 focus:ring-primary/20 rounded-[2.5rem]"
       initial={{ x: 0, opacity: 1, scale: 1 }}
+      role="button"
+      tabIndex={0}
       transition={{ duration: 0.4, ease: "easeOut" }}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick();
+        }
+      }}
     >
       <motion.div
         animate={{ rotateY: isFlipped ? 180 : 0 }}
