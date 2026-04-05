@@ -194,7 +194,6 @@ export default function WrittenTest({ words, onComplete, onWordAction }: Props) 
                       /* eslint-disable-next-line jsx-a11y/no-autofocus */
                       ref={inputRef}
                       autoFocus
-                      autoFocus
                       aria-label={`Wpisz po angielsku: ${currentWord.pl}`}
                       autoComplete="off"
                       classNames={{
