@@ -18,12 +18,13 @@ import { WordImage } from "@/components/ui/WordImage";
 interface Props {
   words: Word[];
   onComplete: (errorIds: string[]) => void;
+  onWordAction: (wordId: string, customPoints?: number) => void;
 }
 
 const REPEAT_COUNT = 3;
 const INPUT_TEXT_CLASS = "text-xl font-black uppercase tracking-widest";
 
-export default function WrittenTest({ words, onComplete }: Props) {
+export default function WrittenTest({ words, onComplete, onWordAction }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
@@ -62,6 +63,7 @@ export default function WrittenTest({ words, onComplete }: Props) {
 
     if (isCorrect) {
       setStatus("success");
+      onWordAction(currentWord.id, 4);
       audioService.playSuccess();
       audioService.speak(currentWord.en);
       setTimeout(() => moveNext(true), 700);

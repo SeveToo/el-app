@@ -12,13 +12,18 @@ import { FlashcardItem } from "./flashcards/FlashcardItem";
 interface Props {
   words: Word[];
   onComplete: (errorIds: string[]) => void;
+  onWordAction: (wordId: string, customPoints?: number) => void;
 }
 
-export default function Flashcards({ words, onComplete }: Props) {
+export default function Flashcards({ words, onComplete, onWordAction }: Props) {
   const {
     state: { currentIndex, isFlipped, direction, currentWord },
     actions: { setIsFlipped, handleNext },
   } = useFlashcards({ words, onComplete });
+
+  React.useEffect(() => {
+    if (currentWord) onWordAction(currentWord.id);
+  }, [currentIndex, currentWord, onWordAction]);
 
   if (!currentWord) return <div className="text-center py-10 font-bold">Brak słówek...</div>;
 

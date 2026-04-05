@@ -13,13 +13,18 @@ import { useFastReview } from "@/hooks/useFastReview";
 interface Props {
   words: Word[];
   onComplete: (errorIds: string[]) => void;
+  onWordAction: (wordId: string, customPoints?: number) => void;
 }
 
-export default function FastReview({ words, onComplete }: Props) {
+export default function FastReview({ words, onComplete, onWordAction }: Props) {
   const {
     state: { currentIndex, currentWord },
     actions: { handleNext },
   } = useFastReview({ words, onComplete });
+
+  React.useEffect(() => {
+    if (currentWord) onWordAction(currentWord.id);
+  }, [currentIndex, currentWord, onWordAction]);
 
   if (!currentWord) return null;
 

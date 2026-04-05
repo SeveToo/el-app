@@ -11,9 +11,10 @@ import { SentenceFillHint } from "./sentence-fill/SentenceFillHint";
 interface Props {
   words: Word[];
   onComplete: (errorIds: string[]) => void;
+  onWordAction: (wordId: string, customPoints?: number) => void;
 }
 
-export default function SentenceFill({ words, onComplete }: Props) {
+export default function SentenceFill({ words, onComplete, onWordAction }: Props) {
   const router = useRouter();
   const {
     state: {
@@ -39,6 +40,14 @@ export default function SentenceFill({ words, onComplete }: Props) {
     },
     refs: { inputRefs },
   } = useSentenceFill({ words, onComplete });
+
+  React.useEffect(() => {
+    statuses.forEach((status, idx) => {
+      if (status === "success") {
+        onWordAction(words[idx].id, 5);
+      }
+    });
+  }, [statuses, words, onWordAction]);
 
   const progress = Math.round(
     (statuses.filter((s) => s === "success").length / words.length) * 100,

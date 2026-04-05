@@ -32,6 +32,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
   const [isInitializing, setIsInitializing] = useState(true);
   const [hasSavedProgress, setHasSavedProgress] = useState(false);
   const [resumeProgress, setResumeProgress] = useState(0);
+  const [roundPoints, setRoundPoints] = useState<Record<string, number>>({});
 
   const stageIndex = useMemo(() => STAGES.indexOf(stage), [stage]);
 
@@ -61,6 +62,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
       usedCount: learned,
       globalErrorIds,
       currentGroupIndices,
+      roundPoints,
     });
   };
 
@@ -116,6 +118,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
           allWords.slice(saved.usedCount, saved.usedCount + WORDS_PER_LOOP),
         );
       }
+      if (saved.roundPoints !== undefined) setRoundPoints(saved.roundPoints);
     }
     setIsInitializing(false);
   };
@@ -129,6 +132,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
     setStage("flashcards");
     setUsedCount(0);
     setGlobalErrorIds([]);
+    setRoundPoints({});
     setCurrentGroup(allWords.slice(0, WORDS_PER_LOOP));
     setIsInitializing(false);
   };
@@ -170,6 +174,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
         setRoundIndex((prev) => prev + 1);
         setStage("flashcards");
         setGlobalErrorIds(updatedErrors);
+        setRoundPoints({});
 
         const currentGroupIndices = nextGroup.map((w) =>
           allWords.findIndex((aw) => aw.id === w.id),
@@ -183,6 +188,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
           usedCount: totalLearnedSoFar,
           globalErrorIds: updatedErrors,
           currentGroupIndices,
+          roundPoints: {},
         });
       } else if (updatedErrors.length > 0) {
         const errorWords = updatedErrors
@@ -194,6 +200,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
         setGlobalErrorIds([]);
         setRoundIndex((prev) => prev + 1);
         setStage("flashcards");
+        setRoundPoints({});
         setUsedCount(totalLearnedSoFar);
 
         persistProgress(totalLearnedSoFar, shuffledGroup, "flashcards");
@@ -204,20 +211,36 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
     }
   };
 
-  const goToStage = (targetStage: Stage) => {
-    setStage(targetStage);
-    persistProgress(usedCount, currentGroup, targetStage);
+  const handleWordAction = (wordId: string, customPoints?: number) => {
+    const points = customPoints ?? stageIndex + 1;
+    setRoundPoints((prev) => {
+      const current = prev[wordId] || 0;
+      if (points <= current) return prev;
+      const next = { ...prev, [wordId]: points };
+      // Debounced-like auto save could go here, but we'll stick to persistProgress on stage change
+      return next;
+    });
   };
 
   // ---------------------------------------------------------------------------
   // Computed values
   // ---------------------------------------------------------------------------
   const totalRounds = Math.ceil(allWords.length / WORDS_PER_LOOP);
-  const currentRoundProgress = (stageIndex / STAGES.length) * currentGroup.length;
-  const globalProgress = Math.round(
-    (Math.min(usedCount + currentRoundProgress, allWords.length) / allWords.length) * 100,
-  );
 
+  const globalProgress = useMemo(() => {
+    return calcPercent({
+      learnedCount: usedCount,
+      totalWords: allWords.length,
+      usedCount,
+      roundPoints,
+    });
+  }, [usedCount, allWords.length, roundPoints]);
+
+
+  const goToStage = (targetStage: Stage) => {
+    setStage(targetStage);
+    persistProgress(usedCount, currentGroup, targetStage);
+  };
 
   return {
     state: {
@@ -238,6 +261,7 @@ export function useStudyManager({ words, chapterId }: UseStudyManagerProps) {
       handleRestart,
       handleStageComplete,
       goToStage,
+      handleWordAction,
     },
   };
 }

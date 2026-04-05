@@ -37,7 +37,7 @@ export default function StudyLoop({
       totalRounds,
       globalProgress,
     },
-    actions: { handleResume, handleRestart, handleStageComplete, goToStage },
+    actions: { handleResume, handleRestart, handleStageComplete, goToStage, handleWordAction },
   } = useStudyManager({ words, chapterId });
 
   if (isInitializing && hasSavedProgress) {
@@ -183,19 +183,39 @@ export default function StudyLoop({
       {/* Aktywny komponent etapu */}
       <div>
         {stage === "flashcards" && (
-          <Flashcards words={currentGroup} onComplete={handleStageComplete} />
+          <Flashcards 
+            words={currentGroup} 
+            onComplete={handleStageComplete} 
+            onWordAction={handleWordAction}
+          />
         )}
         {stage === "fast_review" && (
-          <FastReview words={currentGroup} onComplete={handleStageComplete} />
+          <FastReview 
+            words={currentGroup} 
+            onComplete={handleStageComplete} 
+            onWordAction={handleWordAction}
+          />
         )}
         {stage === "matching" && (
-          <MatchingGame words={currentGroup} onComplete={handleStageComplete} />
+          <MatchingGame 
+            words={currentGroup} 
+            onComplete={handleStageComplete} 
+            onWordAction={handleWordAction}
+          />
         )}
         {stage === "written" && (
-          <WrittenTest words={currentGroup} onComplete={handleStageComplete} />
+          <WrittenTest 
+            words={currentGroup} 
+            onComplete={handleStageComplete} 
+            onWordAction={handleWordAction}
+          />
         )}
         {stage === "sentence_fill" && (
-          <SentenceFill words={currentGroup} onComplete={handleStageComplete} />
+          <SentenceFill 
+            words={currentGroup} 
+            onComplete={handleStageComplete} 
+            onWordAction={handleWordAction}
+          />
         )}
       </div>
     </div>

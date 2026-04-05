@@ -11,9 +11,10 @@ import { useMatchingGame } from "@/hooks/useMatchingGame";
 interface Props {
   words: Word[];
   onComplete: (errorIds: string[]) => void;
+  onWordAction: (wordId: string, customPoints?: number) => void;
 }
 
-export default function MatchingGame({ words, onComplete }: Props) {
+export default function MatchingGame({ words, onComplete, onWordAction }: Props) {
   const {
     state: {
       selectedWord,
@@ -25,6 +26,11 @@ export default function MatchingGame({ words, onComplete }: Props) {
     },
     actions: { setSelectedWord, setSelectedImage },
   } = useMatchingGame({ words, onComplete });
+
+  React.useEffect(() => {
+    // Only report matched items as 3 points
+    matchedIds.forEach((id) => onWordAction(id, 3));
+  }, [matchedIds, onWordAction]);
 
   const getWordStyle = (id: string) => {
     if (matchedIds.includes(id))
