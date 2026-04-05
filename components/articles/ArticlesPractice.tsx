@@ -206,7 +206,9 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
           return (
             <Card
               key={q.id}
-              ref={(el: any) => (cardRefs.current[index] = el)}
+              ref={(el: HTMLDivElement | null) => {
+                cardRefs.current[index] = el;
+              }}
               className={`transition-all duration-500 border-2 active:scale-[0.98] ${
                 isActive
                   ? "border-primary ring-8 ring-primary/5 bg-primary/5 shadow-2xl z-10 translate-y-[-2px]"

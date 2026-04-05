@@ -70,8 +70,8 @@ export const SentenceFillCard = ({
               return (
                 <div key={i} className="inline-block min-w-[70px]">
                   <Input
-                    ref={(el: any) => {
-                      inputRefs[gapIdx] = el as HTMLInputElement;
+                    ref={(el: HTMLInputElement | null) => {
+                      inputRefs[gapIdx] = el;
                     }}
                     autoComplete="off"
                     classNames={{
