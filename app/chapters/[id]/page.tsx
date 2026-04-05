@@ -33,7 +33,7 @@ export default async function ChapterPage(props: {
   const words = lesson ? await getLessonData(id) : [];
 
   return (
-    <section className="py-6 md:py-10 min-h-screen bg-background">
+    <section className="py-6 md:py-10 h-full bg-background">
       <div className="container mx-auto max-w-4xl px-4">
         {words.length > 0 ? (
           lesson?.type === "articles" ? (
