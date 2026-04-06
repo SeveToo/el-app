@@ -6,7 +6,7 @@
 
 ---
 
-**🔗 [🔴 Zobacz Demo na żywo / Live Demo (Kliknij tutaj)](https://sevetoo.github.io/el-app) 🔗**
+**[🇺🇸 English Version](README_EN.md)** | **🔗 [🔴 Zobacz Demo na żywo / Live Demo (Kliknij tutaj)](https://sevetoo.github.io/el-app) 🔗**
 
 ## 📖 Spis Treści
 - [✨ Pierwsze Wrażenie](#-pierwsze-wrażenie)
