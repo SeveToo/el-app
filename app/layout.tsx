@@ -9,6 +9,8 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/layout/navbar";
 
+const basePath = process.env.NODE_ENV === 'production' ? '/el-app' : '';
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -16,11 +18,11 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/logo.webp",
+    icon: `${basePath}/favicon.ico`,
+    shortcut: `${basePath}/favicon.ico`,
+    apple: `${basePath}/logo.webp`,
   },
-  manifest: "/site.webmanifest",
+  manifest: `${basePath}/site.webmanifest`,
 };
 
 export const viewport: Viewport = {
