@@ -16,10 +16,13 @@
 *.png
 *.jpg
 *.jpeg
+*.mkv
 new_photos/
 /scripts/tmp_*
 /public/comparison_test/
 /app/preview-new-cards/
+/public/app_screens/*.png
+/public/app_screens/*.mkv
 
 # allow optimized images
 !*.webp

@@ -1,75 +1,84 @@
-# 🚀 EL APP - Twój Interaktywny Nauczyciel Angielskiego
-
-**🔗 [🔴 Zobacz Demo na żywo / Live Demo (Kliknij tutaj)](https://sevetoo.github.io/el-app) 🔗**
-
-![EL APP Main Menu](public/app_screens/showcase_light_1.webp)
-
-**EL APP** to nowoczesna aplikacja webowa do nauki języka angielskiego, zaprojektowana z myślą o maksymalnej efektywności i przyjemności z nauki. System oparny na etapach (Stages) pozwala na płynne przejście od poznania słowa do jego swobodnego użycia w kontekście.
-
-## 📈 Wydajność i Optymalizacja (Lighthouse 99%+)
-
-Projekt został poddany rygorystycznym testom wydajnościowym pod kątem Core Web Vitals. Dzięki optymalizacji obrazów, nowoczesnemu ładowaniu czcionek i precyzyjnemu zarządzaniu zasobami, aplikacja osiąga najwyższe noty w audytach:
-
-![Lighthouse Score Placeholder](https://via.placeholder.com/800x200?text=Lighthouse+Score+99-100%25+Showcase)
-
-> [!TIP]
-> **Dlaczego 99%, a nie 100%?** Wynik powyżej 90% jest uznawany za doskonały. Różnica 1% wynika często z narzutu renderowania JavaScriptu w frameworkach typu SPA (React/NextJS) oraz zmienności sieciowej przy wczytywaniu zewnętrznych zasobów multimedialnych.
+<div align="left">
+  <img src="public/logo.webp" alt="EL APP Logo" width="120" />
+  <h1>Twój Interaktywny Nauczyciel Angielskiego</h1>
+  <p><b>Nowoczesna nauka języka angielskiego oparta na etapach i wizualnych skojarzeniach.</b></p>
+</div>
 
 ---
 
-## 🌓 Dark Mode & UI Showcase
+**🔗 [🔴 Zobacz Demo na żywo / Live Demo (Kliknij tutaj)](https://sevetoo.github.io/el-app) 🔗**
 
-Aplikacja wspiera pełne przełączanie motywów, dbając o komfort wzroku użytkownika o każdej porze dnia. Dzięki **HeroUI** i **TailwindCSS**, interfejs jest spójny i czytelny w obu wariantach:
+## 📖 Spis Treści
+- [✨ Pierwsze Wrażenie (Loader)](#-pierwsze-wrażenie-loader)
+- [✨ Etapy Nauki (Learning Flow)](#-etapy-nauki-learning-flow)
+- [📈 Wydajność i Optymalizacja (98%+)](#-wydajność-i-optymalizacja-98)
+- [🌓 Dark Mode & UI Showcase](#-dark-mode--ui-showcase)
+- [🛠️ Wyzwania Techniczne](#-wyzwania-techniczne-deep-dive)
+- [🚀 Jak uruchomić to samemu](#-jak-uruchomić-to-samemu)
+- [🗺️ Plany Rozwoju (Roadmap)](#-plany-rozwoju-roadmap)
 
-| Tryb Jasny (Light Mode) | Tryb Ciemny (Dark Mode) |
-| :---: | :---: |
-| ![Light Mode](public/app_screens/showcase_light_1.webp) | ![Dark Mode](public/app_screens/showcase_dark_1.webp) |
-| _Katalog główny (Jasny)_ | _Katalog główny (Ciemny)_ |
+---
+
+## ✨ Pierwsze Wrażenie (Loader)
+
+Zamiast pustej strony, użytkownik widzi autorsko zaprojektowany ekran ładowania, który przygotowuje silnik nauki:
+
+![Loading Screen Flow](public/app_screens/loading_screen.gif)
+
+*   **Animowane Logo**: Pulsujące i obracające się logo **EL APP**.
+*   **Adaptacyjność**: Loader automatycznie wykrywa motyw przeglądarki.
 
 ---
 
 ## ✨ Etapy Nauki (Learning Flow)
 
-Aplikacja prowadzi użytkownika przez 5 inteligentnych etapów nauki:
+Aplikacja prowadzi użytkownika przez 5 inteligentnych etapów nauki, od poznania słowa do jego użycia w zdaniu:
 
 1.  **🗂️ Etap 1: Fiszki (Flashcards)**
+    - Dynamiczne karty z obrazkami i wymową native speakera.
+    - ![Fiszki Flow](public/app_screens/stage_1.gif)
 
-    - Dynamiczne karty z obrazkami i przykładami.
-    - Pełna wymowa audio (native speaker).
-    - ![Fiszki](public/app_screens/stage_avers_1.webp)
-
-2.  **⚖️ Etap 1.5: Szybka Ocena (Fast Review)**
-
+2.  **⚖️ Etap 2: Szybka Ocena (Fast Review)**
     - Błyskawiczna weryfikacja znajomości słówek.
-    - ![Oceń](public/app_screens/stage_2.webp)
+    - ![Oceń Flow](public/app_screens/stage_2.gif)
 
 3.  **🎮 Etap 3: Gra w Dopasowywanie (Matching Game)**
-
-    - Dopasuj angielskie słowo do odpowiedniego obrazka. Trening skojarzeń wizualnych.
-    - ![Gra](public/app_screens/stage_3.gif)
+    - Trening skojarzeń wizualnych - dopasuj słowo do obrazka.
+    - ![Gra Flow](public/app_screens/stage_3.gif)
 
 4.  **✍️ Etap 4: Test Pisemny (Written Test)**
-
-    - Wpisywanie słówek z pamięci z **Trybem Karnym** za błędy.
-    - ![Pisanie](public/app_screens/stage_4.webp)
+    - Wpisywanie słówek z pamięci z trybem karnym za błędy.
+    - ![Pisanie Flow](public/app_screens/stage_4.gif)
 
 5.  **📝 Etap 5: Uzupełnianie Zdań (Sentences)**
-    - Użycie słowa w prawdziwym kontekście z systemem inteligentnych podpowiedzi (💡).
-    - ![Zdania](public/app_screens/stage_5.gif)
+    - Użycie słowa w prawdziwym kontekście z systemem podpowiedzi.
+    - ![Zdania Flow](public/app_screens/stage_5.gif)
 
 ---
 
+## 📈 Wydajność i Optymalizacja (98%+)
+
+Projekt osiąga najwyższe noty w audytach Lighthouse dzięki optymalizacji obrazów WebP i nowoczesnemu ładowaniu zasobów:
+
+| Wynik Lighthouse (Mobile) | Wynik Lighthouse (Desktop) |
+| :---: | :---: |
+| ![Lighthouse Mobile 98](public/app_screens/lighthouse_mobile.webp) | ![Lighthouse Desktop 99](public/app_screens/lighthouse_desktop.webp) |
+
 ---
 
-## ✨ Nowoczesny Loader (User Experience)
+## 🌓 Dark Mode & UI Showcase
 
-Pierwsze wrażenie jest najważniejsze. Dlatego zamiast pustej strony, użytkownik widzi autorsko zaprojektowany ekran ładowania:
+Pełne wsparcie dla motywów jasnych i ciemnych z responsywnym układem dostosowanym do urządzeń mobilnych:
 
-![Loading Screen](public/app_screens/loading_screen.webp)
+| Wariant | Desktop | Mobile |
+| :--- | :---: | :---: |
+| ☀️ **Tryb Jasny** | ![Desktop Light](public/app_screens/showcase_light_1.webp) | ![Mobile Light](public/app_screens/mobile_main_menu.webp) |
+| 🌙 **Tryb Ciemny** | ![Desktop Dark](public/app_screens/showcase_dark_1.webp) | ![Mobile Dark](public/app_screens/mobile_main_menu_dark.webp) |
 
-*   **Animowane Logo**: Pulsujące i obracające się logo **EL APP** przygotowuje użytkownika na wysoką jakość doświadczenia.
-*   **Łagodne Przejście**: Dzięki bibliotece **Framer Motion**, ładowanie silnika nauki jest płynne i profesjonalne.
-*   **Adaptacyjność**: Loader automatycznie wykrywa motyw przeglądarki, zapewniając spójność od pierwszej milisekundy.
+### 📱 Podgląd Mobilny (Stages)
+| Etap 1 | Etap 2 | Etap 3 | Etap 4 | Etap 5 |
+| :---: | :---: | :---: | :---: | :---: |
+| ![S1](public/app_screens/1.webp) | ![S2](public/app_screens/2.webp) | ![S3](public/app_screens/3.webp) | ![S4](public/app_screens/4.webp) | ![S5](public/app_screens/5.webp) |
 
 ---
 
@@ -123,7 +132,7 @@ Obrazki użyte w aplikacji zostały wygenerowane za pomocą **Gemini Nanobanana*
 ## 🛠️ Stack Technologiczny
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=nextjs,react,ts,tailwind,framer,html,css,git,vscode" alt="Tech Stack - Next.js, React, TypeScript, Tailwind, Framer, HTML, CSS, Git, VSCode" />
+  <img src="https://skillicons.dev/icons?i=nextjs,react,ts,tailwind,framer,html,css,git,vscode" alt="Tech Stack" />
 </div>
 
 - **Framework**: [Next.js 15](https://nextjs.org/) (App Router, App Context)
