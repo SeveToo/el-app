@@ -17,6 +17,7 @@ export const AppLogo: React.FC<IconSvgProps> = ({
       .animate-logo-bg {
         animation: logo-spin 20s linear infinite;
         transform-origin: 256px 256px;
+        will-change: transform;
       }
     `}</style>
     <svg

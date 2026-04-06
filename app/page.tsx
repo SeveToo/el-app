@@ -137,7 +137,7 @@ function NexusNode({
       <div className="text-center px-1">
         <div
           className={`text-[11px] font-black leading-tight uppercase tracking-wide
-          ${isFinal ? "text-amber-600 dark:text-warning" : "text-foreground"}
+          ${isFinal ? "text-amber-800 dark:text-warning" : "text-foreground"}
         `}
         >
           {lesson.title}
@@ -219,19 +219,6 @@ function HomeContent() {
       <div className="container mx-auto px-4 max-w-4xl flex flex-col gap-8">
         {/* Banner na górze */}
         <AdBanner />
-
-        {/* Swicz widoczny tylko na mobile, zastępuje h1 */}
-        <div className="flex justify-center -mb-2 sm:hidden">
-          <Tabs
-            aria-label="Wybierz przedmiot"
-            color="primary"
-            radius="full"
-            selectedKey={subjectParam}
-            onSelectionChange={handleSelectionChange}
-          >
-            <Tab key="english" title="Angielski" />
-          </Tabs>
-        </div>
 
         {/* Sekcja Nexus Tree (Skill Tree) - Nowość */}
         <div className="flex flex-col gap-14 my-4">
@@ -331,6 +318,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 w-full">
           <motion.div
             animate={{ scale: [0.95, 1.05, 0.95], opacity: [0.8, 1, 0.8] }}
+            style={{ willChange: "transform" }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
             <AppLogo size={120} />
