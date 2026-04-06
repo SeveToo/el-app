@@ -88,10 +88,10 @@ export const AdBanner = () => {
                 priority
                 fetchPriority="high"
                 alt="HypeKorepetycje – Korepetycje z angielskiego online"
-                height={245}
+                height={150}
                 src={prefixPath("/ads/ad.webp")}
                 style={{ display: "block", width: "100%", height: "auto" }}
-                width={843}
+                width={700}
               />
               {/* Dark mode dim overlay */}
               <div
