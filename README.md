@@ -2,7 +2,7 @@
 
 **🔗 [🔴 Zobacz Demo na żywo / Live Demo (Kliknij tutaj)](https://sevetoo.github.io/el-app) 🔗**
 
-![EL APP Main Menu](public/app_screens/menu.png)
+![EL APP Main Menu](public/app_screens/showcase_light_1.webp)
 
 **EL APP** to nowoczesna aplikacja webowa do nauki języka angielskiego, zaprojektowana z myślą o maksymalnej efektywności i przyjemności z nauki. System oparny na etapach (Stages) pozwala na płynne przejście od poznania słowa do jego swobodnego użycia w kontekście.
 
@@ -23,7 +23,7 @@ Aplikacja wspiera pełne przełączanie motywów, dbając o komfort wzroku użyt
 
 | Tryb Jasny (Light Mode) | Tryb Ciemny (Dark Mode) |
 | :---: | :---: |
-| ![Light Mode](public/app_screens/menu.png) | ![Dark Mode](public/app_screens/menu.png) |
+| ![Light Mode](public/app_screens/showcase_light_1.webp) | ![Dark Mode](public/app_screens/showcase_dark_1.webp) |
 | _Katalog główny (Jasny)_ | _Katalog główny (Ciemny)_ |
 
 ---
@@ -36,30 +36,26 @@ Aplikacja prowadzi użytkownika przez 5 inteligentnych etapów nauki:
 
     - Dynamiczne karty z obrazkami i przykładami.
     - Pełna wymowa audio (native speaker).
-    - ![Fiszki](public/app_screens/etap1.png)
+    - ![Fiszki](public/app_screens/stage_avers_1.webp)
 
 2.  **⚖️ Etap 1.5: Szybka Ocena (Fast Review)**
 
     - Błyskawiczna weryfikacja znajomości słówek.
-    - ![Oceń](public/app_screens/etap1.5.png)
+    - ![Oceń](public/app_screens/stage_2.webp)
 
 3.  **🎮 Etap 3: Gra w Dopasowywanie (Matching Game)**
 
-    - Dopasuj angielskie słowo do odpowiedniego obrazka. Trening
-      skojarzeń wizualnych.
-    - ![Gra](public/app_screens/etap3.png)
+    - Dopasuj angielskie słowo do odpowiedniego obrazka. Trening skojarzeń wizualnych.
+    - ![Gra](public/app_screens/stage_3.gif)
 
 4.  **✍️ Etap 4: Test Pisemny (Written Test)**
 
     - Wpisywanie słówek z pamięci z **Trybem Karnym** za błędy.
-    - ![Pisanie](public/app_screens/etap4.png)
-    - _Tryb karny przy błędzie:_
-    - ![Błąd](public/app_screens/etap4_wrong_answer.png)
+    - ![Pisanie](public/app_screens/stage_4.webp)
 
 5.  **📝 Etap 5: Uzupełnianie Zdań (Sentences)**
-    - Użycie słowa w prawdziwym kontekście z systemem inteligentnych
-      podpowiedzi (💡).
-    - ![Zdania](public/app_screens/etap5.png)
+    - Użycie słowa w prawdziwym kontekście z systemem inteligentnych podpowiedzi (💡).
+    - ![Zdania](public/app_screens/stage_5.gif)
 
 ---
 
@@ -68,6 +64,9 @@ Aplikacja prowadzi użytkownika przez 5 inteligentnych etapów nauki:
 ## ✨ Nowoczesny Loader (User Experience)
 
 Pierwsze wrażenie jest najważniejsze. Dlatego zamiast pustej strony, użytkownik widzi autorsko zaprojektowany ekran ładowania:
+
+![Loading Screen](public/app_screens/loading_screen.webp)
+
 *   **Animowane Logo**: Pulsujące i obracające się logo **EL APP** przygotowuje użytkownika na wysoką jakość doświadczenia.
 *   **Łagodne Przejście**: Dzięki bibliotece **Framer Motion**, ładowanie silnika nauki jest płynne i profesjonalne.
 *   **Adaptacyjność**: Loader automatycznie wykrywa motyw przeglądarki, zapewniając spójność od pierwszej milisekundy.
@@ -146,7 +145,7 @@ Aplikacja EL APP stale ewoluuje wizualnie. W ramach prac nad nowym menu główny
 
 ## 🗺️ Plany Rozwoju (Roadmap)
 
-- **🎮 Mini-gry (Gamification):** Wdrażanie interaktywnych gier odblokowywanych wraz z postępem:
+- **🎮 Mini-gry (Gamification):** Wdrażanie interaktywnych gier odblokowywanych wraz z postępem nauki:
   - **Snajper**: Ćwiczenie rozumienia szybkich instrukcji i zawodów.
   - **Zgadnij Kto To?**: Wykorzystanie przymiotników i cech wyglądu.
   - **Misja Zakupy**: Symulacja realnych sytuacji w sklepie.
