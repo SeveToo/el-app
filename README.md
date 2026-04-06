@@ -146,7 +146,11 @@ Aplikacja EL APP stale ewoluuje wizualnie. W ramach prac nad nowym menu główny
 
 ## 🗺️ Plany Rozwoju (Roadmap)
 
-- **🧮 Rozszerzenie na Matematykę:** Rozbudowa systemu o moduły matematyczne.
+- **🎮 Mini-gry (Gamification):** Wdrażanie interaktywnych gier odblokowywanych wraz z postępem:
+  - **Snajper**: Ćwiczenie rozumienia szybkich instrukcji i zawodów.
+  - **Zgadnij Kto To?**: Wykorzystanie przymiotników i cech wyglądu.
+  - **Misja Zakupy**: Symulacja realnych sytuacji w sklepie.
+  - **Kreator Sceny**: Praktyczna nauka przyimków miejsca (Drag & Drop).
 - **🎙️ Tryb Dyktowania:** Zapisywanie usłyszanych zdań.
 - **🎧 Rozumienie ze Słuchu:** Zaawansowane ćwiczenia audio.
 - **🏙️ Tryb "Miasto":** Interaktywna mapa do nauki przyimków.
