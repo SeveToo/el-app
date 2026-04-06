@@ -90,6 +90,10 @@ aby zapewnić błyskawiczne ładowanie.
 
 ## 🛠️ Stack Technologiczny
 
+<div align="center">
+  <img src="https://skillicons.dev/icons?i=html,css,js,git,vscode" alt="Tech Stack - HTML, CSS, JavaScript, Git, VSCode" />
+</div>
+
 - **Framework**: [Next.js 15](https://nextjs.org/) (App Router, App
   Context)
 - **Styling**: [TailwindCSS](https://tailwindcss.com/)

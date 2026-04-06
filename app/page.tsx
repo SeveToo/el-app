@@ -8,6 +8,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { AdBanner } from "@/components/layout/AdBanner";
+import { AppLogo } from "@/components/layout/AppLogo";
 import { getAllProgress, calcPercent } from "@/lib/progress";
 
 // ─── Nexus Tree Components ──────────────────────────────────────────────────
@@ -327,8 +328,16 @@ export default function Home() {
   return (
     <Suspense
       fallback={
-        <div className="text-center py-20 font-bold uppercase tracking-widest animate-pulse">
-          Ładowanie Centrum Nauki...
+        <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 w-full">
+          <motion.div
+            animate={{ scale: [0.95, 1.05, 0.95], opacity: [0.8, 1, 0.8] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <AppLogo size={120} />
+          </motion.div>
+          <h2 className="text-sm md:text-base font-bold uppercase tracking-[0.3em] text-default-500 animate-pulse">
+            Ładowanie Centrum Nauki...
+          </h2>
         </div>
       }
     >
