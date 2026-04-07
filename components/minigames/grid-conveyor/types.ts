@@ -6,6 +6,8 @@ export interface BeltItem {
   en: string;
   belt: "green" | "red";
   startTime: number;
+  duration: number;
+  expiryTime: number;
 }
 
 export interface GridItem {
@@ -13,6 +15,7 @@ export interface GridItem {
   image: string;
   en: string;
   pl: string;
+  hits: number;
 }
 
 export interface Projectile {

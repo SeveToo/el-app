@@ -54,7 +54,7 @@ export const ConveyorTracks: React.FC<ConveyorTracksProps> = React.memo(({ beltI
                   key={item.id}
                   initial={{ left: '100%' }}
                   animate={{ left: '-10%' }}
-                  transition={{ duration: speed / 1000, ease: "linear" }}
+                  transition={{ duration: item.duration / 1000, ease: "linear" }}
                   className="absolute top-1/2 -translate-y-1/2 flex items-center gap-1 sm:gap-3 z-10"
                 >
                   <div className="bg-white dark:bg-content1 px-3 py-1.5 sm:px-6 sm:py-3 rounded-lg sm:rounded-2xl shadow-lg sm:shadow-xl border-1 sm:border-2 border-r-4 sm:border-r-8 border-success font-black text-[10px] sm:text-xl uppercase tracking-wider text-success whitespace-nowrap">
@@ -88,7 +88,7 @@ export const ConveyorTracks: React.FC<ConveyorTracksProps> = React.memo(({ beltI
                 key={item.id}
                 initial={{ left: '100%' }}
                 animate={{ left: '-10%' }}
-                transition={{ duration: speed / 1000, ease: "linear" }}
+                transition={{ duration: item.duration / 1000, ease: "linear" }}
                 className="absolute top-1/2 -translate-y-1/2 flex items-center gap-1 sm:gap-3 z-10"
               >
                 <div className="bg-white dark:bg-content1 px-3 py-1.5 sm:px-6 sm:py-3 rounded-lg sm:rounded-2xl shadow-lg sm:shadow-xl border-1 sm:border-2 border-r-4 sm:border-r-8 border-danger font-black text-[10px] sm:text-xl uppercase tracking-wider text-danger whitespace-nowrap">

@@ -51,14 +51,29 @@ export default function GridConveyorGame({ sourceWords }: { sourceWords: Word[] 
   const spawnCooldown = useRef<number>(SPAWN_COOLDOWN_INITIAL);
   const lastHeartDrop = useRef<number>(0);
   const gameLoopRef = useRef<number>();
+  const scoreRef = useRef<number>(0);
+  const statsRef = useRef({ correct: 0, wrong: 0 });
+  const gridRef = useRef<GridItem[]>([]);
+  const beltItemsRef = useRef<BeltItem[]>([]);
+  const processedIdsRef = useRef<Set<string>>(new Set());
+  const hasEndedRef = useRef<boolean>(false);
+  const speedRef = useRef<number>(INITIAL_BELT_SPEED);
+
+  useEffect(() => { 
+    gridRef.current = grid; 
+    beltItemsRef.current = beltItems;
+  }, [grid, beltItems]);
 
   const initGame = useCallback(() => {
+    hasEndedRef.current = false;
+    processedIdsRef.current.clear();
     const shuffled = [...sourceWords].sort(() => Math.random() - 0.5);
     const gridItems = shuffled.slice(0, GRID_SIZE).map((w) => ({
       wordId: w.id,
       image: w.image,
       en: w.en,
       pl: w.pl,
+      hits: 0,
     }));
     
     setGrid(gridItems);
@@ -66,10 +81,13 @@ export default function GridConveyorGame({ sourceWords }: { sourceWords: Word[] 
     setProjectiles([]);
     setHearts([]);
     setScore(0);
+    scoreRef.current = 0;
     setCombo(0);
     setLives(3);
     setStats({ correct: 0, wrong: 0 });
+    statsRef.current = { correct: 0, wrong: 0 };
     setSpeed(INITIAL_BELT_SPEED);
+    speedRef.current = INITIAL_BELT_SPEED;
     setCountdown(3);
     setGameState("countdown");
     lastSpawnTime.current = Date.now();
@@ -87,21 +105,21 @@ export default function GridConveyorGame({ sourceWords }: { sourceWords: Word[] 
     return () => clearTimeout(timer);
   }, [gameState, countdown]);
 
-  const spawnWord = useCallback(() => {
-    // CRITICAL: Always use current stable grid
-    if (grid.length === 0) return;
-    
-    const target = grid[Math.floor(Math.random() * grid.length)];
-    const newWord: BeltItem = {
+  const getNewWord = useCallback((currentGrid: GridItem[]) => {
+    if (currentGrid.length === 0) return null;
+    const target = currentGrid[Math.floor(Math.random() * currentGrid.length)];
+    const spd = speedRef.current;
+    const ts = Date.now();
+    return {
       id: Math.random().toString(36).substring(7),
       wordId: target.wordId,
       en: target.en,
-      belt: Math.random() > 0.5 ? "green" : "red",
-      startTime: Date.now(),
+      belt: (Math.random() > 0.5 ? "green" : "red") as "green" | "red",
+      startTime: ts,
+      duration: spd,
+      expiryTime: ts + spd
     };
-
-    setBeltItems((prev) => [...prev, newWord]);
-  }, [grid]);
+  }, []);
 
   const spawnHeart = useCallback(() => {
     const newHeart: HeartItem = {
@@ -126,6 +144,9 @@ export default function GridConveyorGame({ sourceWords }: { sourceWords: Word[] 
   };
 
   const saveScore = useCallback((finalScore: number, correct: number, wrong: number) => {
+    if (hasEndedRef.current) return;
+    hasEndedRef.current = true;
+    
     const total = correct + wrong;
     const acc = total > 0 ? Math.round((correct / total) * 100) : 0;
     
@@ -136,51 +157,69 @@ export default function GridConveyorGame({ sourceWords }: { sourceWords: Word[] 
       date: new Date().toLocaleDateString('pl-PL', { hour: '2-digit', minute: '2-digit' })
     };
 
-    setRecords(prev => {
-      const next = [newRecord, ...prev].slice(0, 5);
-      localStorage.setItem("grid_game_records", JSON.stringify(next));
-      return next;
-    });
+    const saved = localStorage.getItem("grid_game_records");
+    let currentRecords: GameRecord[] = [];
+    if (saved) currentRecords = JSON.parse(saved);
+    
+    const next = [newRecord, ...currentRecords].slice(0, 15);
+    localStorage.setItem("grid_game_records", JSON.stringify(next));
+    setRecords(next);
   }, []);
 
-  // Optimized Game Loop (Checks roughly every 100ms)
+  // Optimized Game Loop (Strict Mode Safe)
   useEffect(() => {
     if (gameState !== "playing") return;
 
     const tick = () => {
       const now = Date.now();
 
-      // 1. Spawning
-      if (now - lastSpawnTime.current > spawnCooldown.current) {
-         setBeltItems(prev => {
-            if (prev.length < maxBeltItems) {
-               spawnWord();
-               lastSpawnTime.current = now;
-               // Dynamic cooldown
-               spawnCooldown.current = Math.max(1500, SPAWN_COOLDOWN_INITIAL - Math.floor(score / 40) * 200);
-            }
-            return prev;
-         });
-      }
+      const currentItems = beltItemsRef.current;
+      const expired = currentItems.filter((item) => now > item.expiryTime && !processedIdsRef.current.has(item.id));
 
-      // 2. Miss Check (Expiry)
-      setBeltItems((prev) => {
-        const expired = prev.filter((item) => now - item.startTime > speed);
-        if (expired.length > 0) {
+      if (expired.length > 0) {
+        expired.forEach(e => processedIdsRef.current.add(e.id));
+        console.log(`💥 [MINIĘCIE] Przepuszczono rakiety: ${expired.map(e => e.en).join(', ')}. (Życie -${expired.length})`);
+        
+        if (!hasEndedRef.current) {
           setLives((l) => {
-            const nextL = l - expired.length;
-            if (nextL <= 0) {
+            const nextL = Math.max(0, l - expired.length);
+            if (nextL <= 0 && l > 0) {
                setGameState("ended");
-               saveScore(score, stats.correct, stats.wrong + expired.length);
+               saveScore(scoreRef.current, statsRef.current.correct, statsRef.current.wrong + expired.length);
             }
-            return Math.max(0, nextL);
+            return nextL;
           });
           setCombo(0);
-          setStats(ps => ({ ...ps, wrong: ps.wrong + expired.length }));
+          setStats(ps => {
+             const n = { ...ps, wrong: ps.wrong + expired.length };
+             statsRef.current = n;
+             return n;
+          });
           audioService.playError();
-          return prev.filter((item) => now - item.startTime <= speed);
         }
-        return prev;
+      }
+
+      setBeltItems((prev) => {
+        let changed = false;
+        let next = prev;
+
+        const freshExpired = prev.filter((item) => now > item.expiryTime);
+        if (freshExpired.length > 0) {
+          next = prev.filter((item) => now <= item.expiryTime);
+          changed = true;
+        }
+
+        if (now - lastSpawnTime.current > spawnCooldown.current && next.length < maxBeltItems) {
+           const newWord = getNewWord(gridRef.current);
+           if (newWord) {
+             next = [...next, newWord];
+             changed = true;
+             lastSpawnTime.current = now;
+             spawnCooldown.current = Math.max(1500, SPAWN_COOLDOWN_INITIAL - Math.floor(scoreRef.current / 40) * 200);
+           }
+        }
+
+        return changed ? next : prev;
       });
 
       gameLoopRef.current = setTimeout(tick, 200) as unknown as number;
@@ -190,82 +229,112 @@ export default function GridConveyorGame({ sourceWords }: { sourceWords: Word[] 
     return () => {
       if (gameLoopRef.current) clearTimeout(gameLoopRef.current);
     };
-  }, [gameState, spawnWord, score, speed, maxBeltItems, stats, saveScore]);
+  }, [gameState, maxBeltItems, getNewWord, saveScore]);
 
   const handleGridClick = useCallback((wordId: string, isRightClick: boolean) => {
-    if (gameState !== "playing") return;
+    if (gameState !== "playing" || hasEndedRef.current) return;
 
-    // 1. Audio and Context Resume (Immediate)
     const typeNeeded = isRightClick ? "red" : "green";
+    const now = Date.now();
     
-    // 2. Find match locally to avoid nested state updates
-    let matchedItem: BeltItem | undefined;
-    setBeltItems(prev => {
-      matchedItem = prev.find(item => item.wordId === wordId && item.belt === typeNeeded);
-      if (matchedItem) {
-        return prev.filter(item => item.id !== matchedItem!.id);
-      }
-      return prev;
-    });
-
-    // 3. Handle Result (outside setBeltItems)
-    // We use a small delay or trust the closure for matchedItem
-    // Better: use a temporary variable if possible, but setBeltItems is async.
-    // Instead, let's peek at the current state via a ref or just use the find logic again
-    // but that's expensive. Let's try the direct approach:
-    
-    const actualMatch = beltItems.find(item => item.wordId === wordId && item.belt === typeNeeded);
+    // Evaluate the match synchronously against the reliably synchronized reference array!
+    const actualMatch = beltItemsRef.current.find(item => item.wordId === wordId && item.belt === typeNeeded && !processedIdsRef.current.has(item.id));
 
     if (actualMatch) {
+      processedIdsRef.current.add(actualMatch.id);
+      console.log(`✅ [TRAFIENIE] Zestrzelono: ${actualMatch.en} (Strona: ${typeNeeded})! Opcje na pasie: ${beltItemsRef.current.map(i => i.en).join(', ')}`);
+      
+      const matchedCell = gridRef.current.find(c => c.wordId === wordId);
+      const willRetire = matchedCell && (matchedCell.hits || 0) + 1 >= 5;
+
+      // Ensure the hit object is eliminated AND check if we need to auto-destroy any duplicate rockets 
+      // because the word grid icon is about to vanish!
+      setBeltItems(prev => {
+         const cleaned = prev.filter(item => item.id !== actualMatch.id);
+         if (willRetire) {
+             // Word is retiring from the grid. Vaporize all other instances of this word currently on the belts!
+             const orphaned = cleaned.filter(b => b.wordId === wordId);
+             orphaned.forEach(o => processedIdsRef.current.add(o.id)); // Add deleted orphans to processed list
+             return cleaned.filter(b => b.wordId !== wordId);
+         }
+         return cleaned;
+      });
+      
       audioService.playSuccess();
       
-      // Projectile
       const projectileId = Math.random().toString(36).substring(7);
       setProjectiles(p => [...p, { id: projectileId, fromX: 0, fromY: 0, toBelt: actualMatch.belt, targetWordId: actualMatch.wordId }]);
       setTimeout(() => setProjectiles(p => p.filter(proj => proj.id !== projectileId)), 400);
 
-      // Scoring & Stats
-      const points = 10 + (combo * 2);
-      setScore(s => {
-        const next = s + points;
-        // Heart Condition: Must have lost health AND 15% chance AND 10s cooldown
-        const now = Date.now();
-        if (lives < 3 && Math.random() < 0.15 && (now - lastHeartDrop.current > 10000)) {
-           spawnHeart();
-           lastHeartDrop.current = now;
+      setCombo(c => {
+        const newC = c + 1;
+        const points = 10 + (newC * 2);
+        setScore(s => {
+          const nextS = s + points;
+          scoreRef.current = nextS;
+          
+          if (nextS > 0 && nextS % 20 === 0) {
+             setSpeed(prev => {
+                const nextSpd = Math.max(prev - 200, 3000);
+                speedRef.current = nextSpd;
+                return nextSpd;
+             });
+             spawnCooldown.current = Math.max(1000, spawnCooldown.current - 100);
+          }
+          if (nextS > 0 && nextS % 100 === 0) setMaxBeltItems(prev => Math.min(prev + 1, 8));
+          
+          return nextS;
+        });
+        return newC;
+      });
+
+      setStats(ps => {
+         const n = { ...ps, correct: ps.correct + 1 };
+         statsRef.current = n;
+         return n;
+      });
+
+      if (lives < 3 && Math.random() < 0.15 && (now - lastHeartDrop.current > 10000)) {
+         spawnHeart();
+         lastHeartDrop.current = now;
+      }
+
+      setGrid(prev => {
+         return prev.map(cell => {
+            if (cell.wordId === wordId) {
+               const newHits = (cell.hits || 0) + 1;
+               if (newHits >= 5) {
+                  const usedIds = new Set(prev.map(p => p.wordId));
+                  const available = sourceWords.filter(sw => !usedIds.has(sw.id));
+                  if (available.length > 0) {
+                     const newWord = available[Math.floor(Math.random() * available.length)];
+                     return { wordId: newWord.id, image: newWord.image, en: newWord.en, pl: newWord.pl, hits: 0 };
+                  }
+               }
+               return { ...cell, hits: newHits };
+            }
+            return cell;
+         });
+      });
+    } else {
+      console.log(`❌ [PUDŁO] Błędny strzał! Szukano: słowo ID ${wordId}, strona: ${typeNeeded}. Opcje na pasie: ${beltItemsRef.current.map(i => `${i.wordId}(${i.belt})`).join(', ')}. (Życie -1)`);
+      audioService.playError();
+      setCombo(0);
+      setStats(ps => {
+         const n = { ...ps, wrong: ps.wrong + 1 };
+         statsRef.current = n;
+         return n;
+      });
+      setLives(l => {
+        const next = Math.max(0, l - 1);
+        if (next <= 0 && l > 0) {
+           setGameState("ended");
+           saveScore(scoreRef.current, statsRef.current.correct, statsRef.current.wrong);
         }
         return next;
       });
-      setCombo(c => c + 1);
-      setStats(ps => ({ ...ps, correct: ps.correct + 1 }));
-
-      // Difficulty
-      setTimeout(() => {
-        setScore(current => {
-          if (current > 0 && current % 20 === 0) {
-            setSpeed(prev => Math.max(prev - 200, 3000));
-            spawnCooldown.current = Math.max(1000, spawnCooldown.current - 100);
-          }
-          if (current > 0 && current % 100 === 0) {
-            setMaxBeltItems(prev => Math.min(prev + 1, 8));
-          }
-          return current;
-        });
-      }, 0);
-    } else {
-      audioService.playError();
-      setCombo(0);
-      setStats(ps => ({ ...ps, wrong: ps.wrong + 1 }));
-      setLives(l => {
-        const next = l - 1;
-        if (next <= 0) {
-           setGameState("ended");
-           saveScore(score, stats.correct, stats.wrong + 1);
-        }
-        return Math.max(0, next);
-      });
     }
-  }, [gameState, combo, spawnHeart, beltItems, score, stats, saveScore]);
+  }, [gameState, spawnHeart, saveScore, lives, sourceWords]);
 
   if (gameState === "ready") return <TutorialScreen onStart={initGame} records={records} />;
   if (gameState === "ended") return <GameOverScreen score={score} stats={stats} onRetry={initGame} records={records} />;
@@ -275,22 +344,24 @@ export default function GridConveyorGame({ sourceWords }: { sourceWords: Word[] 
       <AnimatePresence mode="wait">
         {gameState === "countdown" && (
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-black/40 backdrop-blur-md rounded-2xl sm:rounded-[3rem]"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="absolute top-4 left-0 right-0 z-[100] flex justify-center pointer-events-none"
           >
-            <p className="text-white/60 text-[8px] sm:text-xs font-black uppercase tracking-[0.3em] mb-2 sm:mb-4">PRZYGOTUJ SIĘ</p>
-            <motion.div
-              key={countdown}
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1.2, opacity: 1 }}
-              exit={{ scale: 2, opacity: 0 }}
-              transition={{ duration: 0.8, ease: "backOut" }}
-              className="text-7xl sm:text-9xl font-black text-white drop-shadow-[0_0_50px_rgba(255,255,255,0.8)]"
-            >
-              {countdown}
-            </motion.div>
+            <div className="bg-background/80 backdrop-blur-md px-6 py-2 rounded-full border-2 border-primary/20 shadow-lg flex items-center gap-3">
+               <p className="text-primary text-[10px] font-black uppercase tracking-[0.2em] animate-pulse">Przygotuj się:</p>
+               <motion.div
+                 key={countdown}
+                 initial={{ scale: 0.5, opacity: 0 }}
+                 animate={{ scale: 1.2, opacity: 1 }}
+                 exit={{ scale: 0.5, opacity: 0 }}
+                 transition={{ duration: 0.5 }}
+                 className="text-xl font-black text-foreground"
+               >
+                 {countdown}
+               </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
