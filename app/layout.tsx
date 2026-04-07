@@ -9,7 +9,7 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/layout/navbar";
 
-const basePath = process.env.NODE_ENV === 'production' ? '/el-app' : '';
+const basePath = process.env.NODE_ENV === "production" ? "/el-app" : "";
 
 export const metadata: Metadata = {
   title: {
@@ -40,8 +40,12 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link
+          crossOrigin="anonymous"
+          href="https://fonts.gstatic.com"
+          rel="preconnect"
+        />
       </head>
       <body
         className={clsx(

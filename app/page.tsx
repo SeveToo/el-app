@@ -2,15 +2,14 @@
 
 import * as React from "react";
 import { Suspense, useEffect, useState } from "react";
-import { Tabs, Tab } from "@heroui/tabs";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Card, CardBody } from "@heroui/card";
+import { Button } from "@heroui/button";
 
 import { AdBanner } from "@/components/layout/AdBanner";
 import { AppLogo } from "@/components/layout/AppLogo";
-import { Card, CardBody } from "@heroui/card";
-import { Button } from "@heroui/button";
 import { getAllProgress, calcPercent } from "@/lib/progress";
 
 // ─── Nexus Tree Components ──────────────────────────────────────────────────
@@ -168,7 +167,7 @@ function MinigameCard({
 
   const toggleLesson = (id: string) => {
     setSelected((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
 
@@ -248,18 +247,19 @@ function MinigameCard({
                         : completedLessons.map((l) => l.id).join(",")
                     }`}
                   >
-                    <Button
-                      className="h-14 px-10 text-lg font-black rounded-2xl bg-primary text-white w-full sm:w-auto shadow-xl hover:scale-105 active:scale-95 transition-all"
-                    >
+                    <Button className="h-14 px-10 text-lg font-black rounded-2xl bg-primary text-white w-full sm:w-auto shadow-xl hover:scale-105 active:scale-95 transition-all">
                       URUCHOM GRĘ
                     </Button>
                   </Link>
                   <div className="flex flex-col">
                     <p className="text-[10px] font-black text-default-400 uppercase tracking-widest">
-                       Status: Gotowy
+                      Status: Gotowy
                     </p>
                     <p className="text-[10px] font-bold text-primary italic">
-                      * {selected.length > 0 ? `Wybrano ${selected.length} lekcji` : 'Wszystkie ukończone'}
+                      *{" "}
+                      {selected.length > 0
+                        ? `Wybrano ${selected.length} lekcji`
+                        : "Wszystkie ukończone"}
                     </p>
                   </div>
                 </div>
@@ -349,19 +349,19 @@ function HomeContent() {
             </h3>
           </div>
 
-          <MinigameCard 
-            progressMap={progressMap} 
+          <MinigameCard
             lessons={[
-               { id: "fruits", title: "Owoce" },
-               { id: "vegetables", title: "Warzywa" },
-               { id: "food", title: "Jedzenie" },
-               { id: "kitchen_tools", title: "Kuchnia" },
-               { id: "furniture", title: "Dom" },
-               { id: "nature", title: "Natura" },
-               { id: "body_parts", title: "Ciało" },
-               { id: "family", title: "Rodzina" },
-               { id: "jobs", title: "Zawody" },
+              { id: "fruits", title: "Owoce" },
+              { id: "vegetables", title: "Warzywa" },
+              { id: "food", title: "Jedzenie" },
+              { id: "kitchen_tools", title: "Kuchnia" },
+              { id: "furniture", title: "Dom" },
+              { id: "nature", title: "Natura" },
+              { id: "body_parts", title: "Ciało" },
+              { id: "family", title: "Rodzina" },
+              { id: "jobs", title: "Zawody" },
             ]}
+            progressMap={progressMap}
           />
         </div>
 

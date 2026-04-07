@@ -113,7 +113,6 @@ export default function MatchingGame({
           ))}
         </div>
       </div>
-
     </div>
   );
 }

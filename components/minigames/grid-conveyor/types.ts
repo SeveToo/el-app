@@ -1,4 +1,4 @@
-import { Word } from "@/types";
+// types.ts
 
 export interface BeltItem {
   id: string;

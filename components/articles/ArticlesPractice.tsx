@@ -292,7 +292,9 @@ export default function ArticlesPractice({ questions, onComplete }: Props) {
                 onClick={() => handleChoice(opt)}
               >
                 <div className="flex flex-col items-center">
-                  <span className="text-[10px] opacity-40 mb-0.5 sm:mb-1">{i + 1}</span>
+                  <span className="text-[10px] opacity-40 mb-0.5 sm:mb-1">
+                    {i + 1}
+                  </span>
                   <span className="leading-none">{opt}</span>
                 </div>
               </GameButton>

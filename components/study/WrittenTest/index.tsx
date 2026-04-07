@@ -24,7 +24,11 @@ interface Props {
 const REPEAT_COUNT = 3;
 const INPUT_TEXT_CLASS = "text-xl font-black uppercase tracking-widest";
 
-export default function WrittenTest({ words, onComplete, onWordAction }: Props) {
+export default function WrittenTest({
+  words,
+  onComplete,
+  onWordAction,
+}: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");

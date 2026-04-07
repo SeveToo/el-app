@@ -115,8 +115,10 @@ export const SentenceFillCard = ({
             }
 
             if (numberMismatch && typeof part === "string") {
-              const regex = numberMismatch === "plural" ? /\bare\b/gi : /\bis\b/gi;
+              const regex =
+                numberMismatch === "plural" ? /\bare\b/gi : /\bis\b/gi;
               const matches = part.split(regex);
+
               if (matches.length > 1) {
                 return (
                   <span key={i}>

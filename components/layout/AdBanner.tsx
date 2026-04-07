@@ -86,8 +86,8 @@ export const AdBanner = () => {
             >
               <Image
                 priority
-                fetchPriority="high"
                 alt="HypeKorepetycje – Korepetycje z angielskiego online"
+                fetchPriority="high"
                 height={150}
                 src={prefixPath("/ads/ad.webp")}
                 style={{ display: "block", width: "100%", height: "auto" }}

@@ -2,14 +2,18 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@heroui/button";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { SentenceFillHeader } from "./sentence-fill/SentenceFillHeader";
 import { SentenceFillCard } from "./sentence-fill/SentenceFillCard";
 import { SentenceFillHint } from "./sentence-fill/SentenceFillHint";
-import { Button } from "@heroui/button";
-import { motion, AnimatePresence } from "framer-motion";
 
-import { useSentenceFill, removeDiacritics, getSentenceParts } from "@/hooks/useSentenceFill";
+import {
+  useSentenceFill,
+  removeDiacritics,
+  getSentenceParts,
+} from "@/hooks/useSentenceFill";
 import { Word } from "@/types";
 
 interface Props {
@@ -167,8 +171,8 @@ export default function SentenceFill({
             index={index}
             inputRefs={inputRefs.current[index]}
             inputs={inputs[index] || []}
-            status={statuses[index]}
             numberMismatch={activeIndex === index ? numberMismatch : null}
+            status={statuses[index]}
             word={word}
             onClick={() => setActiveIndex(index)}
             onFocus={(gapIdx) => {
@@ -218,45 +222,93 @@ export default function SentenceFill({
                       </div>
                     </div>
                     <div className="space-y-2">
-                       <p className="text-default-700 font-bold text-lg leading-tight">
-                         Słówko <span className="text-warning-600 dark:text-warning-500 font-black italic underline underline-offset-4">{numberMismatch === "plural" ? "are" : "is"}</span> wskazuje na liczbę {numberMismatch === "plural" ? "mnogą" : "pojedynczą"}!
-                       </p>
-                       <div className="h-0.5 w-12 bg-warning/30 mx-auto rounded-full" />
-                       <p className="text-default-700 text-sm font-semibold leading-relaxed">
-                         {numberMismatch === "plural" 
-                           ? <>Wystarczy dodać <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">s</span>, <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">es</span> lub <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">ies</span> na końcu!</>
-                           : <>Musisz usunąć końcówkę <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">s</span>, <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">es</span> lub <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">ies</span>!</>
-                         }
-                       </p>
+                      <p className="text-default-700 font-bold text-lg leading-tight">
+                        Słówko{" "}
+                        <span className="text-warning-600 dark:text-warning-500 font-black italic underline underline-offset-4">
+                          {numberMismatch === "plural" ? "are" : "is"}
+                        </span>{" "}
+                        wskazuje na liczbę{" "}
+                        {numberMismatch === "plural" ? "mnogą" : "pojedynczą"}!
+                      </p>
+                      <div className="h-0.5 w-12 bg-warning/30 mx-auto rounded-full" />
+                      <p className="text-default-700 text-sm font-semibold leading-relaxed">
+                        {numberMismatch === "plural" ? (
+                          <>
+                            Wystarczy dodać{" "}
+                            <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">
+                              s
+                            </span>
+                            ,{" "}
+                            <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">
+                              es
+                            </span>{" "}
+                            lub{" "}
+                            <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">
+                              ies
+                            </span>{" "}
+                            na końcu!
+                          </>
+                        ) : (
+                          <>
+                            Musisz usunąć końcówkę{" "}
+                            <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">
+                              s
+                            </span>
+                            ,{" "}
+                            <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">
+                              es
+                            </span>{" "}
+                            lub{" "}
+                            <span className="text-primary font-black px-1.5 py-0.5 bg-primary-50 dark:bg-primary-500/10 rounded-md ring-1 ring-primary-500/20">
+                              ies
+                            </span>
+                            !
+                          </>
+                        )}
+                      </p>
                     </div>
-                
+
                     <div className="flex flex-col gap-2 mt-2">
                       <div className="bg-default-50 dark:bg-default-100 p-4 rounded-xl border border-dashed border-warning/50">
-                        <div className="text-[10px] uppercase font-black text-default-400 mb-1">Pamiętaj:</div>
+                        <div className="text-[10px] uppercase font-black text-default-400 mb-1">
+                          Pamiętaj:
+                        </div>
                         <div className="text-base font-bold flex flex-wrap justify-center gap-1.5 items-center">
-                           W tym przypadku: 
-                           <span className="font-black flex gap-2">
-                             {currentTargets.map((target, idx) => {
-                               if (numberMismatch === "plural") {
-                                 const match = target.match(/^(.*)(ies|es|s)$/i);
-                                 if (match) {
-                                   return (
-                                     <span key={idx} className="text-default-700 bg-white dark:bg-black/20 px-2 py-0.5 rounded-lg border border-default-100 shadow-sm">
-                                       "{match[1]}
-                                       <span className="text-primary font-black">
-                                         {match[2]}
-                                       </span>"
-                                     </span>
-                                   );
-                                 }
-                               }
-                               return (
-                                 <span key={idx} className="text-warning-600 bg-white dark:bg-black/20 px-2 py-0.5 rounded-lg border border-default-100 shadow-sm">
-                                   "{target}"
-                                 </span>
-                               );
-                             })}
-                           </span>
+                          W tym przypadku:
+                          <span className="font-black flex gap-2">
+                            {currentTargets.map((target, idx) => {
+                              if (numberMismatch === "plural") {
+                                const match = target.match(/^(.*)(ies|es|s)$/i);
+
+                                if (match) {
+                                  return (
+                                    <span
+                                      key={idx}
+                                      className="text-default-700 bg-white dark:bg-black/20 px-2 py-0.5 rounded-lg border border-default-100 shadow-sm"
+                                    >
+                                      {'"'}
+                                      {match[1]}
+                                      <span className="text-primary font-black">
+                                        {match[2]}
+                                      </span>
+                                      {'"'}
+                                    </span>
+                                  );
+                                }
+                              }
+
+                              return (
+                                <span
+                                  key={idx}
+                                  className="text-warning-600 bg-white dark:bg-black/20 px-2 py-0.5 rounded-lg border border-default-100 shadow-sm"
+                                >
+                                  {'"'}
+                                  {target}
+                                  {'"'}
+                                </span>
+                              );
+                            })}
+                          </span>
                         </div>
                       </div>
                     </div>
