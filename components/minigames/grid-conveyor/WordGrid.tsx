@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardBody } from "@heroui/card";
-import Image from "next/image";
+import { WordImage } from "@/components/ui/WordImage";
 
 import { GridItem } from "./types";
 
@@ -88,13 +88,11 @@ export const WordGrid: React.FC<WordGridProps> = React.memo(
                     </div>
 
                     <div className="w-[70%] h-[70%] relative z-10">
-                      <Image
-                        fill
-                        priority
+                      <WordImage
                         alt={item.en}
-                        className="object-contain"
-                        sizes="(max-width: 768px) 30vw, 150px"
-                        src={`/${item.image}`}
+                        containerClassName="bg-transparent"
+                        fit="contain"
+                        image={item.image}
                       />
                     </div>
 
