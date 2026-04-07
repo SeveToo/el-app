@@ -9,6 +9,8 @@ import { motion } from "framer-motion";
 
 import { AdBanner } from "@/components/layout/AdBanner";
 import { AppLogo } from "@/components/layout/AppLogo";
+import { Card, CardBody } from "@heroui/card";
+import { Button } from "@heroui/button";
 import { getAllProgress, calcPercent } from "@/lib/progress";
 
 // ─── Nexus Tree Components ──────────────────────────────────────────────────
@@ -64,10 +66,11 @@ function NexusNode({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Link href={`/chapters/${lesson.id}`}>
+      <Link href={lesson.href || `/chapters/${lesson.id}`}>
         <div
           className={`
             relative flex items-center justify-center transition-all duration-300
+            ${lesson.isLocked ? "grayscale opacity-40 cursor-not-allowed pointer-events-none" : "hover:shadow-2xl"}
             ${isFinal ? "w-20 h-20 text-4xl" : isTest ? "w-16 h-16 text-3xl" : "w-16 h-16 text-3xl"}
           `}
           style={{
@@ -152,6 +155,123 @@ function NexusNode({
   );
 }
 
+function MinigameCard({
+  progressMap,
+  lessons,
+}: {
+  progressMap: Record<string, number>;
+  lessons: any[];
+}) {
+  const completedLessons = lessons.filter((l) => progressMap[l.id] === 100);
+  const isUnlocked = completedLessons.length >= 3;
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const toggleLesson = (id: string) => {
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  return (
+    <Card
+      className={`overflow-hidden border-2 transition-all duration-500 rounded-[2.5rem] sm:rounded-[3rem] ${
+        isUnlocked
+          ? "border-primary/20 bg-primary/[0.03] hover:border-primary/40"
+          : "border-default-100 bg-default-50 grayscale opacity-80"
+      }`}
+    >
+      <CardBody className="p-6 sm:p-10">
+        <div className="flex flex-col md:flex-row gap-8 items-center">
+          {/* Left side: Icon/Banner */}
+          <div className="w-full md:w-48 aspect-square bg-gradient-to-br from-primary/20 to-primary/5 rounded-[2rem] flex flex-col items-center justify-center p-6 text-center border border-primary/20">
+            <span className="text-6xl mb-2 drop-shadow-xl animate-bounce">
+              🚀
+            </span>
+            <p className="text-xs font-black uppercase text-primary/80 tracking-widest leading-none">
+              Rocket
+            </p>
+            <p className="text-[10px] font-bold text-foreground opacity-60 uppercase">
+              Defense
+            </p>
+          </div>
+
+          {/* Right side: Controls */}
+          <div className="flex-1 space-y-6 w-full">
+            <div className="space-y-1">
+              <h2 className="text-2xl font-black uppercase text-foreground leading-none tracking-tight">
+                Obrona Bazy: <span className="text-primary italic">Grid</span>
+              </h2>
+              <p className="text-sm font-medium text-default-500">
+                Chroń system przed rakietami, dopasowując słowa z Twoich lekcji.
+              </p>
+            </div>
+
+            {!isUnlocked ? (
+              <div className="bg-default-200/50 p-6 rounded-[2rem] border border-default-300">
+                <p className="text-xs font-black text-default-600 uppercase tracking-widest mb-2 flex items-center gap-2">
+                  🔒 Zablokowane
+                </p>
+                <p className="text-sm font-bold text-default-500 leading-relaxed">
+                  Ukończ minimum{" "}
+                  <span className="text-primary text-base">3 lekcje</span> na
+                  100%, aby odblokować ten tryb! ({completedLessons.length}/3)
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">
+                  Wybierz lekcje do gry:
+                </p>
+                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto pr-2 custom-scrollbar">
+                  {completedLessons.map((l) => (
+                    <button
+                      key={l.id}
+                      className={`px-4 py-2 rounded-2xl text-[11px] font-black uppercase transition-all border-2 
+                                  ${
+                                    selected.includes(l.id)
+                                      ? "bg-primary border-primary text-white shadow-[0_5px_15px_rgba(34,197,94,0.4)]"
+                                      : "bg-white border-default-200 text-default-500 hover:border-primary/50"
+                                  }`}
+                      onClick={() => toggleLesson(l.id)}
+                    >
+                      {l.title}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+                  <Link
+                    className="w-full sm:w-auto"
+                    href={`/minigames/grid?lessons=${
+                      selected.length > 0
+                        ? selected.join(",")
+                        : completedLessons.map((l) => l.id).join(",")
+                    }`}
+                  >
+                    <Button
+                      className="h-14 px-10 text-lg font-black rounded-2xl bg-primary text-white w-full sm:w-auto shadow-xl hover:scale-105 active:scale-95 transition-all"
+                    >
+                      URUCHOM GRĘ
+                    </Button>
+                  </Link>
+                  <div className="flex flex-col">
+                    <p className="text-[10px] font-black text-default-400 uppercase tracking-widest">
+                       Status: Gotowy
+                    </p>
+                    <p className="text-[10px] font-bold text-primary italic">
+                      * {selected.length > 0 ? `Wybrano ${selected.length} lekcji` : 'Wszystkie ukończone'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </CardBody>
+    </Card>
+  );
+}
+
 function NexusBranch({
   name,
   lessons,
@@ -220,6 +340,31 @@ function HomeContent() {
         {/* Banner na górze */}
         <AdBanner />
 
+        {/* ─── Nowa Sekcja: Mini-Gry ─────────────────────────────────────── */}
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center gap-3 px-2">
+            <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+            <h3 className="text-sm font-black uppercase tracking-[0.25em] text-foreground opacity-90">
+              Mini-Gry
+            </h3>
+          </div>
+
+          <MinigameCard 
+            progressMap={progressMap} 
+            lessons={[
+               { id: "fruits", title: "Owoce" },
+               { id: "vegetables", title: "Warzywa" },
+               { id: "food", title: "Jedzenie" },
+               { id: "kitchen_tools", title: "Kuchnia" },
+               { id: "furniture", title: "Dom" },
+               { id: "nature", title: "Natura" },
+               { id: "body_parts", title: "Ciało" },
+               { id: "family", title: "Rodzina" },
+               { id: "jobs", title: "Zawody" },
+            ]}
+          />
+        </div>
+
         {/* Sekcja Nexus Tree (Skill Tree) - Nowość */}
         <div className="flex flex-col gap-14 my-4">
           <NexusBranch
@@ -229,6 +374,16 @@ function HomeContent() {
               { id: "fruits", icon: "🍎", title: "Owoce" },
               { id: "vegetables", icon: "🥦", title: "Warzywa" },
               { id: "food", icon: "🍔", title: "Jedzenie" },
+              {
+                id: "minigame_grid",
+                icon: "🎮",
+                title: "Mini Gra: Grid",
+                href: "/minigames/grid",
+                isLocked:
+                  (progressMap["fruits"] || 0) < 100 ||
+                  (progressMap["vegetables"] || 0) < 100 ||
+                  (progressMap["food"] || 0) < 100,
+              },
               {
                 id: "CHECKPOINT_1",
                 type: "test",
