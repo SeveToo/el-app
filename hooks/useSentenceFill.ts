@@ -92,6 +92,7 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
   const [hintOptions, setHintOptions] = useState<Word[]>([]);
   const [wrongCount, setWrongCount] = useState<Record<number, number>>({});
   const [isPlRevealed, setIsPlRevealed] = useState(false);
+  const [numberMismatch, setNumberMismatch] = useState<"plural" | "singular" | null>(null);
   const [vOffset, setVOffset] = useState(0);
 
   const inputRefs = useRef<(HTMLInputElement | null)[][]>(words.map(() => []));
@@ -119,6 +120,7 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
   // Focus and scroll
   useEffect(() => {
     setIsPlRevealed(false);
+    setNumberMismatch(null);
     if (!showHint) {
       const el = inputRefs.current[activeIndex]?.[0];
 
@@ -188,11 +190,53 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
         }
       }
     } else {
-      const newStatuses = [...statuses];
+      // Check for plural mismatch (singular instead of plural when "are" is used)
+      const hasAre = /\bare\b/i.test(word.en_example);
+      const isSingular = targets.some((target, i) => {
+        const input = userInputs[i];
 
-      newStatuses[index] = "wrong";
-      setStatuses(newStatuses);
-      audioService.playError();
+        if (!input) return false;
+        const isS = target === input + "s";
+        const isES = target === input + "es";
+        const isIES =
+          target.endsWith("ies") &&
+          input.endsWith("y") &&
+          target.slice(0, -3) === input.slice(0, -1);
+
+        return isS || isES || isIES;
+      });
+
+      // Check for singular mismatch (plural instead of singular when "is" is used)
+      const hasIs = /\bis\b/i.test(word.en_example);
+      const isPluralInput = targets.some((target, i) => {
+        const input = userInputs[i];
+
+        if (!input) return false;
+        // Basic check for plural input -> singular target
+        const isS = input === target + "s";
+        const isES = input === target + "es";
+        const isIES =
+          input.endsWith("ies") &&
+          target.endsWith("y") &&
+          input.slice(0, -3) === target.slice(0, -1);
+
+        return isS || isES || isIES;
+      });
+
+      const isPluralProblem = hasAre && isSingular;
+      const isSingularProblem = hasIs && isPluralInput;
+
+      if (isPluralProblem || isSingularProblem) {
+        setNumberMismatch(isPluralProblem ? "plural" : "singular");
+        audioService.playError();
+      } else {
+        setNumberMismatch(null);
+        const newStatuses = [...statuses];
+
+        newStatuses[index] = "wrong";
+        setStatuses(newStatuses);
+        audioService.playError();
+      }
 
       const newWrongCount = {
         ...wrongCount,
@@ -201,11 +245,11 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
 
       setWrongCount(newWrongCount);
 
-      if (!errorIds.includes(word.id)) {
+      if (index === 0 || !errorIds.includes(word.id)) {
         setErrorIds((prev) => [...prev, word.id]);
       }
 
-      if (newWrongCount[index] >= 2) {
+      if (newWrongCount[index] >= 2 && !isPluralProblem && !isSingularProblem) {
         setTimeout(() => triggerHint(index), 500);
       }
 
@@ -262,6 +306,7 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
       showHint,
       hintOptions,
       isPlRevealed,
+      numberMismatch,
       vOffset,
       currentWord,
     },
@@ -270,6 +315,7 @@ export function useSentenceFill({ words, onComplete }: UseSentenceFillProps) {
       setActiveGapIndex,
       setShowHint,
       setIsPlRevealed,
+      setNumberMismatch,
       triggerHint,
       handleSubmit,
       handleInputChange,

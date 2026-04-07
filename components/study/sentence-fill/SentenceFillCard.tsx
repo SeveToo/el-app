@@ -13,6 +13,7 @@ interface Props {
   index: number;
   activeIndex: number;
   status: "idle" | "success" | "wrong";
+  numberMismatch?: "plural" | "singular" | null;
   inputs: string[];
   onInputChange: (gapIdx: number, value: string) => void;
   onFocus: (gapIdx: number) => void;
@@ -22,6 +23,7 @@ interface Props {
     gapsCount: number,
   ) => void;
   onClick: () => void;
+  onShowExplanation?: () => void;
   inputRefs: (HTMLInputElement | null)[];
 }
 
@@ -30,11 +32,13 @@ export const SentenceFillCard = ({
   index,
   activeIndex,
   status,
+  numberMismatch,
   inputs,
   onInputChange,
   onFocus,
   onKeyDown,
   onClick,
+  onShowExplanation,
   inputRefs,
 }: Props) => {
   const parts = getSentenceParts(word);
@@ -110,9 +114,57 @@ export const SentenceFillCard = ({
               );
             }
 
+            if (numberMismatch && typeof part === "string") {
+              const regex = numberMismatch === "plural" ? /\bare\b/gi : /\bis\b/gi;
+              const matches = part.split(regex);
+              if (matches.length > 1) {
+                return (
+                  <span key={i}>
+                    {matches.map((text, idx) => (
+                      <React.Fragment key={idx}>
+                        {text}
+                        {idx < matches.length - 1 && (
+                          <motion.span
+                            animate={{
+                              scale: [1, 1.05, 1],
+                            }}
+                            className="inline-block px-1 rounded bg-primary-50 dark:bg-primary-500/20 text-primary font-black sm:mx-0.5"
+                            transition={{ duration: 2, repeat: Infinity }}
+                          >
+                            {numberMismatch === "plural" ? "are" : "is"}
+                          </motion.span>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </span>
+                );
+              }
+            }
+
             return <span key={i}>{part}</span>;
           })}
         </div>
+
+        {numberMismatch && (
+          <motion.div
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-6 flex justify-center"
+            initial={{ opacity: 0, y: 10 }}
+          >
+            <button
+              className="group flex items-center gap-2 px-6 py-3 rounded-2xl bg-warning-50 dark:bg-warning/10 border-2 border-warning/30 hover:border-warning text-warning transition-all active:scale-95"
+              onClick={(e) => {
+                e.stopPropagation();
+                onShowExplanation?.();
+              }}
+            >
+              <span className="text-xl">🧐</span>
+              <span className="font-black uppercase tracking-widest text-xs sm:text-sm">
+                Dalej nie czaję?
+              </span>
+            </button>
+          </motion.div>
+        )}
       </CardBody>
     </Card>
   );
